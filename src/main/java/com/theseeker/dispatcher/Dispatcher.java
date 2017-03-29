@@ -3,7 +3,6 @@ package com.theseeker.dispatcher;
 import com.theseeker.fetcher.Fetcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -31,21 +30,24 @@ public class Dispatcher {
         brQueuedURL = new BufferedReader( new FileReader(System.getProperty("user.dir") + "/database/queuedURLs.txt") );
         String read = null;
 
+
         while ( ( read = brQueuedURL.readLine() ) != null ) {
+
             for(int i = 0; i < 10; i++){
                 String readAux = null;
                 readAux = brQueuedURL.readLine();
+                System.out.println("ReadAux: " + readAux);
                 if(readAux != null){
-                    read += "\n" + brQueuedURL.readLine();
+                    read += "\n" + readAux;
                 }else{
                     i = 10;
                 }
             }
-
-
             Fetcher fetcher = ctx.getBean(Fetcher.class);
             fetcher.start(read);
 
         }
+
+        brQueuedURL.close();
     }
 }

@@ -1,3 +1,4 @@
 http://www.globo.com
 http://www.google.com
 http://www.tecmundo.com.br
+http://www.facebook.com

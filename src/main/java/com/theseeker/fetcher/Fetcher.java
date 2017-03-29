@@ -56,13 +56,16 @@ public class Fetcher {
 
         for(int i = 0; i < domains.length; i++){
             String dominio = domains[i];
+            System.out.println("Dominio: " + dominio);
 
             /*Procuro se existe no banco de dns*/
             DNS dns = dnsDao.getDNS(dominio);
             if(dns == null){
                 InetAddress ip = DNSUtil.getIp(dominio);
-                dns = new DNS(dominio, ip.getHostAddress());
-                dnsDao.insertDNS(dns);
+                if(ip != null){
+                    dns = new DNS(dominio, ip.getHostAddress());
+                    dnsDao.insertDNS(dns);
+                }
             }
 
             /*Acessar através do IP*/
