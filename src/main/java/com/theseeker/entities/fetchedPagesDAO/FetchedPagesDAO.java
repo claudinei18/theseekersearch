@@ -15,4 +15,5 @@ public interface FetchedPagesDAO {
     public void insertFetPag(FetchedPages fp);
     public FetchedPages getFetchedPage(String dominio);
     public FetchedPages retrieveAndDelete();
+    public boolean fetchedPageIsEmpty();
 }

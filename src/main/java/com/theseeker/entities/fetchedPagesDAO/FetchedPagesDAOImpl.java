@@ -76,4 +76,16 @@ public class FetchedPagesDAOImpl implements FetchedPagesDAO {
         System.out.println("Inserindo fetchedpages");
         em.persist(fp);
     }
+
+    @Override
+    public boolean fetchedPageIsEmpty(){
+        Query q = em.createQuery ("SELECT count(x) FROM FetchedPages x");
+        Number result = (Number) q.getSingleResult ();
+        Number zero = 0;
+        if(result.equals(zero)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

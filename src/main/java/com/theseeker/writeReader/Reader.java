@@ -29,9 +29,16 @@ public class Reader {
         Thread thread = new Thread(){
             public void run(){
                 while(true){
-                    FetchedPages fp = fpDao.retrieveAndDelete();
-                    if(fp != null){
-                        parser.parseFetchedPage(fp);
+                    while( !(fpDao.fetchedPageIsEmpty()) ){
+                        FetchedPages fp = fpDao.retrieveAndDelete();
+                        if(fp != null){
+                            parser.parseFetchedPage(fp);
+                        }
+                    }
+                    try {
+                        sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
             }
