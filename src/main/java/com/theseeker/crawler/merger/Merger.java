@@ -7,4 +7,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Merger {
+    public Merger(){
+
+    }
 }

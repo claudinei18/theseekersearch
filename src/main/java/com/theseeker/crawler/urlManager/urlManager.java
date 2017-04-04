@@ -1,21 +1,28 @@
 package com.theseeker.crawler.urlManager;
 
+import com.theseeker.crawler.merger.Merger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by claudinei on 04/04/17.
  */
 @Component
 public class urlManager {
+
+    @Autowired
+    Merger m;
+
+    public urlManager(){
+
+    }
+
     public static boolean isHtml(String dominio) throws IOException {
         boolean resp = false;
         URL url = new URL(dominio);

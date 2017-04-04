@@ -14,6 +14,10 @@ public class Writer {
     @Autowired
     FetchedPagesDAO fpDao;
 
+    public Writer(){
+
+    }
+
     public void writerInFetchedPages(FetchedPages fp){
         fpDao.insertFetPag(fp);
     }

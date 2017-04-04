@@ -1,6 +1,7 @@
 package com.theseeker.crawler.parser;
 
 import com.theseeker.crawler.entities.FetchedPages;
+import com.theseeker.crawler.filter.Filter;
 import com.theseeker.crawler.urlManager.urlManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,8 +19,16 @@ import java.util.regex.Pattern;
  */
 @Component
 public class Parser {
+
     @Autowired
-    urlManager um;
+    private urlManager um;
+
+    @Autowired
+    private Filter filter;
+
+    public Parser(){
+
+    }
 
 
     public static List getLinksFromPage(String page) throws IOException {
@@ -45,6 +54,6 @@ public class Parser {
 
     public void parseFetchedPage(FetchedPages fp) throws IOException {
         um.recebendoUrl(getLinksFromPage(fp.getConteudo()));
-
+        filter.filtrar(getTextoDoHtml(fp.getConteudo()));
     }
 }
