@@ -1,4 +1,3 @@
 http://www.globo.com
-http://www.google.com
 http://www.tecmundo.com.br
-http://www.facebook.com
+https://pt.wikipedia.org/wiki/Barack_Obama
