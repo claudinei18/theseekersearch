@@ -1,6 +1,7 @@
 package com.theseeker.crawler.parser;
 
 import com.theseeker.crawler.entities.FetchedPages;
+import com.theseeker.crawler.entities.Pages;
 import com.theseeker.crawler.filter.Filter;
 import com.theseeker.crawler.urlManager.urlManager;
 import org.jsoup.Jsoup;
@@ -54,6 +55,9 @@ public class Parser {
 
     public void parseFetchedPage(FetchedPages fp) throws IOException {
         um.recebendoUrl(getLinksFromPage(fp.getConteudo()));
-        filter.filtrar(getTextoDoHtml(fp.getConteudo()));
+
+        String texto = getTextoDoHtml(fp.getConteudo());
+        Pages page = new Pages(fp.getIp(), fp.getDominio(), fp.getTitulo(), texto);
+        filter.filtrar(page);
     }
 }

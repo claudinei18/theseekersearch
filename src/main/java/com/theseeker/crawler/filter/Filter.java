@@ -1,5 +1,8 @@
 package com.theseeker.crawler.filter;
 
+import com.theseeker.crawler.entities.Pages;
+import com.theseeker.crawler.entities.pagesDAO.PagesDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,7 +19,11 @@ import java.util.regex.Pattern;
 @Component
 public class Filter {
 
-    public void filtrar(String page){
+    @Autowired
+    PagesDAO pagesDAO;
+
+    public void filtrar(Pages page){
+        pagesDAO.insertPage(page);
 
     }
 

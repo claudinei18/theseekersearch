@@ -27,7 +27,6 @@ public class urlManager {
         boolean resp = false;
         URL url = new URL(dominio);
 
-
         HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
         urlc.setAllowUserInteraction( false );
         urlc.setDoInput( true );

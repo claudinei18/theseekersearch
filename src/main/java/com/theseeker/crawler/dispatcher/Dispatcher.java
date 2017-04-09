@@ -31,6 +31,7 @@ public class Dispatcher {
         String read = null;
 
 
+
         while ( ( read = brQueuedURL.readLine() ) != null ) {
 
             for(int i = 0; i < 10; i++){

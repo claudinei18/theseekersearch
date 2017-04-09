@@ -70,7 +70,7 @@ public class FetchedPagesDAOImpl implements FetchedPagesDAO {
 
     @Transactional
     public void insertFetPag(FetchedPages fp){
-        System.out.println("Inserindo fetchedpages");
+        System.out.println("Inserindo fetchedpages: " + fp.getDominio());
         em.persist(fp);
     }
 
@@ -80,8 +80,10 @@ public class FetchedPagesDAOImpl implements FetchedPagesDAO {
         Number result = (Number) q.getSingleResult ();
         Number zero = 0;
         if(result.equals(zero)){
+            System.out.println("eh zero");
             return true;
         }else{
+            System.out.println("nao eh zero");
             return false;
         }
     }

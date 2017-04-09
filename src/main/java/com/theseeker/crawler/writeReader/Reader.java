@@ -3,15 +3,20 @@ package com.theseeker.crawler.writeReader;
 import com.theseeker.crawler.entities.FetchedPages;
 import com.theseeker.crawler.entities.fetchedPagesDAO.FetchedPagesDAO;
 import com.theseeker.crawler.parser.Parser;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by claudinei on 28/03/17.
  */
+
 @Component
 public class Reader {
     @Autowired
@@ -20,19 +25,27 @@ public class Reader {
     @Autowired
     Parser parser;
 
+    ExecutorService executorService;
+
     public Reader(){
 
     }
 
     @PostConstruct
-    public void readerFromFatchedPages(){
-        Thread thread = new Thread(){
-            public void run(){
+    public void init() {
+        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+                .namingPattern("myspringbean-thread-%d").build();
+
+        executorService =  Executors.newSingleThreadExecutor(factory);
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
                 while(true){
                     while( !(fpDao.fetchedPageIsEmpty()) ){
                         FetchedPages fp = fpDao.retrieveAndDelete();
                         if(fp != null){
                             try {
+                                System.out.println("Chamando parser");
                                 parser.parseFetchedPage(fp);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -40,14 +53,15 @@ public class Reader {
                         }
                     }
                     try {
-                        sleep(5000);
+                        synchronized (this) {
+                            this.wait(2000);
+                        }
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
-        };
-
-        thread.start();
+        });
+        executorService.shutdown();
     }
 }

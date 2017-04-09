@@ -35,7 +35,6 @@ public class DNSDaoImpl implements DNSDao {
         try{
             result = (DNS) query.getSingleResult();
         }catch (Exception e){
-            e.printStackTrace();
             result = null;
         }
         return result;
