@@ -1,5 +1,7 @@
 package com.theseeker;
 
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -30,6 +32,38 @@ public class TheSeekerApplication {
 				InetAddress.getLocalHost().getHostAddress(),
 				env.getProperty("server.port"));
 
-		NaturalLanguageUnderstandingIT x;
+		NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
+				NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
+				"b845dcb3-1e77-4eb1-bf43-3cd7d71f9067",
+				"Pd7kWrDmARew"
+		);
+
+
+
+		String text =
+				"In 2009, Elliot Turner launched AlchemyAPI to process the written word, with all of its quirks and nuances,"
+						+ " and got immediate traction.";
+
+		EntitiesOptions entities = new EntitiesOptions.Builder()
+				.limit(200)
+				.sentiment(true)
+				.build();
+
+		Features features = new Features.Builder()
+				.entities(entities)
+				.build();
+
+		AnalyzeOptions parameters = new AnalyzeOptions.Builder()
+				.text(text)
+				.features(features)
+				.returnAnalyzedText(true)
+				.build();
+
+		AnalysisResults results = service.analyze(parameters).execute();
+
+
+		for (EntitiesResult result : results.getEntities()) {
+			System.out.println(result.getText());
+		}
 	}
 }

@@ -37,8 +37,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.apache.storm/storm-core
 	compile group: 'org.apache.storm', name: 'storm-core', version: '1.1.0'
 
-	compile group: 'java-sdk', name: 'natural-language-understanding'
-
+	compile files('java-sdk-3.7.2-jar-with-dependencies.jar')
 
 	runtime('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
