@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created by claudinei on 28/03/17.
@@ -19,6 +20,11 @@ public class seenURLDAOImpl implements seenURLDAO {
 
     @Transactional
     public void insertURL(seenURL sl){
-        em.persist(sl);
+        List<Object> o = em.createQuery("SELECT t FROM seenURL t where t.dominio = :dominio")
+                .setParameter("dominio", sl.getDominio()).getResultList();
+
+        if(o.isEmpty()){
+            em.persist(sl);
+        }
     }
 }

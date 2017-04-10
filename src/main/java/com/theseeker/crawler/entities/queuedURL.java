@@ -7,11 +7,11 @@ import java.math.BigInteger;
  * Created by claudinei on 28/03/17.
  */
 @Entity
-@Table(name = "seenurl")
-@SequenceGenerator(name = "seq_seenurl", sequenceName = "seenurl_seq", initialValue = 1, allocationSize = 1)
-public class seenURL {
+@Table(name = "queuedURL")
+@SequenceGenerator(name = "seq_queuedURL", sequenceName = "queuedURL_seq", initialValue = 1, allocationSize = 1)
+public class queuedURL {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_seenurl")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_queuedURL")
     @Column(name="id")
     private BigInteger id;
 
@@ -21,16 +21,11 @@ public class seenURL {
     @Column(name="ip")
     private String ip;
 
-    public seenURL(){
+    public queuedURL(){
 
     }
 
-    public seenURL(String dominio, String ip) {
-        this.dominio = dominio;
-        this.ip = ip;
-    }
-
-    public seenURL(String dominio) {
+    public queuedURL(String dominio) {
         this.dominio = dominio;
         this.ip = "";
     }
@@ -62,7 +57,8 @@ public class seenURL {
     @Override
     public String toString() {
         return String.format(
-                "seenURL[id=%d, domain='%s']",
+                "queuedURL[id=%d, domain='%s']",
                 id, dominio);
     }
 }
+

@@ -7,6 +7,8 @@ import com.theseeker.crawler.urlManager.urlManager;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,22 +41,25 @@ public class Parser {
 
 
     public static List getLinksFromPage(String page) throws IOException {
-        List link = new ArrayList<String>();
-        String urlRegex = "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
-        Pattern p = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(page);
-        while(m.find()) {
-            if( (!m.group(1).endsWith(".png"))  &&
-                    (!m.group(1).endsWith(".jpeg")) &&
-                    (!m.group(1).endsWith(".jpg"))  &&
-                    (!m.group(1).endsWith(".css"))  &&
-                    (!m.group(1).endsWith(".png"))  &&
-                    (!m.group(1).contains(".svg"))  &&
-                    (!m.group(1).endsWith(".js")) ){
-                link.add(m.group(1));
+        Document doc = Jsoup.parse(page);
+        Elements es = doc.select("a[href]");
+        List links = new ArrayList<String>();
+
+
+        for(Element e: es){
+            String link = e.attr("abs:href");
+            if( (!link.endsWith(".png"))  &&
+                    (!link.endsWith(".jpeg")) &&
+                    (!link.endsWith(".jpg"))  &&
+                    (!link.endsWith(".css"))  &&
+                    (!link.endsWith(".png"))  &&
+                    (!link.contains(".svg"))  &&
+                    (!link.endsWith(".js")) ){
+                links.add(link);
             }
         }
-        return link;
+        return links;
+
     }
 
     public String getTextoDoHtml(String page){
