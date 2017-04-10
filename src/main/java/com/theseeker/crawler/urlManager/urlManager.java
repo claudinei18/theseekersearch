@@ -1,6 +1,7 @@
 package com.theseeker.crawler.urlManager;
 
 import com.theseeker.crawler.merger.Merger;
+import com.theseeker.util.url.URLCanonicalizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +26,13 @@ public class urlManager {
 
     public static boolean isHtml(String dominio) throws IOException {
         boolean resp = false;
+
+        System.out.println("before" + dominio);
+        dominio = URLCanonicalizer.getCanonicalURL(dominio);
+        System.out.println("after" + dominio);
         URL url = new URL(dominio);
+
+
 
         HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
         urlc.setAllowUserInteraction( false );

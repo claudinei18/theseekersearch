@@ -24,7 +24,6 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-//	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.flywaydb:flyway-core')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-web-services')
@@ -33,6 +32,13 @@ dependencies {
 	compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
 
 	compile('com.ibm.watson.developer_cloud:java-sdk:3.7.1')
+
+	// https://mvnrepository.com/artifact/com.sleepycat/je
+	compile group: 'com.sleepycat', name: 'je', version: '5.0.73'
+
+	// https://mvnrepository.com/artifact/org.apache.storm/storm-core
+	compile group: 'org.apache.storm', name: 'storm-core', version: '1.1.0'
+
 
 	runtime('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

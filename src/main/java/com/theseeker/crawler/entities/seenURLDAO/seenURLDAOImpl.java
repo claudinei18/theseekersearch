@@ -1,7 +1,9 @@
 package com.theseeker.crawler.entities.seenURLDAO;
 
 import com.theseeker.crawler.entities.Pages;
+import com.theseeker.crawler.entities.seenURL;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,13 +12,13 @@ import javax.persistence.PersistenceContext;
  * Created by claudinei on 28/03/17.
  */
 @Repository
-public class SeelURLDAOImpl implements seelURLDAO {
+public class seenURLDAOImpl implements seenURLDAO {
 
     @PersistenceContext
     protected EntityManager em;
 
-    @Override
-    public void insertPage(Pages page){
-        em.persist(page);
+    @Transactional
+    public void insertURL(seenURL sl){
+        em.persist(sl);
     }
 }

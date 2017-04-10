@@ -6,6 +6,8 @@ import com.theseeker.crawler.entities.DNS;
 import com.theseeker.crawler.entities.FetchedPages;
 import com.theseeker.crawler.entities.dnsDAO.DNSDao;
 import com.theseeker.crawler.entities.fetchedPagesDAO.FetchedPagesDAO;
+import com.theseeker.crawler.entities.seenURL;
+import com.theseeker.crawler.entities.seenURLDAO.seenURLDAO;
 import com.theseeker.crawler.writeReader.Writer;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +35,17 @@ public class Fetcher {
     @Autowired
     private Writer writer;
 
+    @Autowired
+    private seenURLDAO seenURLDAO;
+
     public Fetcher(){
 
     }
 
-    public Document getHtmlContent(String dominio) throws IOException {
+    public Document getHtmlContent(String dominio, String ip) throws IOException {
         Document doc = Jsoup.connect(dominio).get();
-
+        seenURL sl = new seenURL(dominio, ip);
+        seenURLDAO.insertURL(sl);
         return doc;
     }
 
@@ -70,7 +76,7 @@ public class Fetcher {
             /*Acessar através do IP*/
 
             /*Acessando atraves do LINK*/
-            Document doc = getHtmlContent(dominio);
+            Document doc = getHtmlContent(dominio, dns.getIp());
             FetchedPages fp = new FetchedPages(dns.getIp(), dominio, doc.title(), doc.html());
 
             /*Chamando o Writer para escrever no banco de dados*/

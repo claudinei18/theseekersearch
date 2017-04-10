@@ -7,23 +7,27 @@ import java.math.BigInteger;
  * Created by claudinei on 28/03/17.
  */
 @Entity
-@Table(name = "fetchedpages")
-@SequenceGenerator(name = "seq_fetchedpages", sequenceName = "fetchedpages_seq", initialValue = 1, allocationSize = 1)
+@Table(name = "seenurl")
+@SequenceGenerator(name = "seq_seenurl", sequenceName = "seenurl_seq", initialValue = 1, allocationSize = 1)
 public class seenURL {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_fetchedpages")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_seenurl")
     @Column(name="id")
     private BigInteger id;
 
     @Column(name="dominio")
     private String dominio;
 
+    @Column(name="ip")
+    private String ip;
+
     public seenURL(){
 
     }
 
-    public seenURL(String dominio) {
+    public seenURL(String dominio, String ip) {
         this.dominio = dominio;
+        this.ip = ip;
     }
 
     public BigInteger getId() {
@@ -40,6 +44,14 @@ public class seenURL {
 
     public void setDominio(String dominio) {
         this.dominio = dominio;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     @Override

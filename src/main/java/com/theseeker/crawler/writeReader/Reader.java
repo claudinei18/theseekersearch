@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,29 +28,26 @@ public class Reader {
 
     ExecutorService executorService;
 
-    public Reader(){
+    public Reader() {
 
     }
 
     @PostConstruct
     public void init() {
+
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
                 .namingPattern("myspringbean-thread-%d").build();
 
-        executorService =  Executors.newSingleThreadExecutor(factory);
+        executorService = Executors.newSingleThreadExecutor(factory);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                while(true){
-                    while( !(fpDao.fetchedPageIsEmpty()) ){
+                while (true) {
+                    while (!(fpDao.fetchedPageIsEmpty())) {
                         FetchedPages fp = fpDao.retrieveAndDelete();
-                        if(fp != null){
-                            try {
-                                System.out.println("Chamando parser");
-                                parser.parseFetchedPage(fp);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        if (fp != null) {
+                            System.out.println("Chamando parser" + fp.getDominio());
+                            parser.parseFetchedPage(fp);
                         }
                     }
                     try {
@@ -62,6 +60,12 @@ public class Reader {
                 }
             }
         });
+
+
+    }
+
+    @PreDestroy
+    public void destroy() {
         executorService.shutdown();
     }
 }
