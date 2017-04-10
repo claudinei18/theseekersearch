@@ -77,7 +77,8 @@ public class Parser {
             @Override
             public void run() {
                 try {
-                    inserirUrlsDaPagina(fp);
+                    System.out.println("GetLinksFromPage: " + fp.getDominio());
+                    um.recebendoUrl(getLinksFromPage(fp.getConteudo()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -94,17 +95,18 @@ public class Parser {
             public void run() {
                 String texto = getTextoDoHtml(fp.getConteudo());
                 Pages page = new Pages(fp.getIp(), fp.getDominio(), fp.getTitulo(), texto);
-                filtrarPagina(page);
+                System.out.println("Filtrando: " + page);
+                filter.filtrar(page);
             }
         });
 
     }
 
-    public void inserirUrlsDaPagina(FetchedPages fp) throws IOException {
-        um.recebendoUrl(getLinksFromPage(fp.getConteudo()));
-    }
-
-    public void filtrarPagina(Pages page){
-        filter.filtrar(page);
-    }
+//    public void inserirUrlsDaPagina(FetchedPages fp) throws IOException {
+//
+//    }
+//
+//    public void filtrarPagina(Pages page){
+//
+//    }
 }

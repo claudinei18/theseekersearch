@@ -31,13 +31,13 @@ dependencies {
 // https://mvnrepository.com/artifact/org.jsoup/jsoup
 	compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
 
-	compile('com.ibm.watson.developer_cloud:java-sdk:3.7.1')
-
 	// https://mvnrepository.com/artifact/com.sleepycat/je
 	compile group: 'com.sleepycat', name: 'je', version: '5.0.73'
 
 	// https://mvnrepository.com/artifact/org.apache.storm/storm-core
 	compile group: 'org.apache.storm', name: 'storm-core', version: '1.1.0'
+
+	compile group: 'java-sdk', name: 'natural-language-understanding'
 
 
 	runtime('org.postgresql:postgresql')

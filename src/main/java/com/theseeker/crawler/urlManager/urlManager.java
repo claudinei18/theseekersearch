@@ -23,9 +23,6 @@ public class urlManager {
     @Autowired
     Merger m;
 
-    @Autowired
-    seenURLDAO seenURLDAO;
-
     public urlManager(){
 
     }
@@ -34,7 +31,12 @@ public class urlManager {
         boolean resp = false;
 
         dominio = URLCanonicalizer.getCanonicalURL(dominio);
-        URL url = new URL(dominio);
+        URL url = null;
+        try{
+            url = new URL(dominio);
+        }catch (Exception e){
+
+        }
 
         if(url != null) {
             HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
@@ -50,8 +52,6 @@ public class urlManager {
                 if(contentType != null){
                     if (contentType.startsWith("text/html")) {
                         resp = true;
-                        seenURL sl = new seenURL(dominio);
-                        seenURLDAO.insertURL(sl);
                     }
                 }
             }catch (Exception e){
@@ -63,7 +63,6 @@ public class urlManager {
     }
 
     public void recebendoUrl(List urls) throws IOException {
-        System.out.println("Recebendo URLS");
         List htmlUrl = new ArrayList<String>();
         List noHtmlUrl = new ArrayList<String>();
 
@@ -75,6 +74,10 @@ public class urlManager {
                 noHtmlUrl.add(element);
             }
         }
+
+        m.execute(htmlUrl);
+
+
 
     }
 }

@@ -70,7 +70,6 @@ public class FetchedPagesDAOImpl implements FetchedPagesDAO {
 
     @Transactional
     public void insertFetPag(FetchedPages fp){
-        System.out.println("Inserindo fetchedpages: " + fp.getDominio());
         em.persist(fp);
     }
 

@@ -38,7 +38,7 @@ public class Fetcher {
     @Autowired
     private seenURLDAO seenURLDAO;
 
-    public Fetcher(){
+    public Fetcher() {
 
     }
 
@@ -49,38 +49,32 @@ public class Fetcher {
         return doc;
     }
 
-    private boolean alreadyCollected(String dominio){
-        if( fpDao.getIdDNS(dominio) != null ){
+    private boolean alreadyCollected(String dominio) {
+        if (fpDao.getIdDNS(dominio) != null) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public void start(String listDomains) throws IOException {
-        String[] domains = listDomains.split("\n");
-
-        for(int i = 0; i < domains.length; i++){
-            String dominio = domains[i];
-
-            /*Procuro se existe no banco de dns*/
-            DNS dns = dnsDao.getDNS(dominio);
-            if(dns == null){
-                InetAddress ip = DNSUtil.getIp(dominio);
-                if(ip != null){
-                    dns = new DNS(dominio, ip.getHostAddress());
-                    dnsDao.insertDNS(dns);
-                }
+    public void start(String dominio) throws IOException {
+        /*Procuro se existe no banco de dns*/
+        DNS dns = dnsDao.getDNS(dominio);
+        if (dns == null) {
+            InetAddress ip = DNSUtil.getIp(dominio);
+            if (ip != null) {
+                dns = new DNS(dominio, ip.getHostAddress());
+                dnsDao.insertDNS(dns);
             }
-
-            /*Acessar através do IP*/
-
-            /*Acessando atraves do LINK*/
-            Document doc = getHtmlContent(dominio, dns.getIp());
-            FetchedPages fp = new FetchedPages(dns.getIp(), dominio, doc.title(), doc.html());
-
-            /*Chamando o Writer para escrever no banco de dados*/
-            writer.writerInFetchedPages(fp);
         }
+
+        /*Acessar através do IP*/
+
+        /*Acessando atraves do LINK*/
+        Document doc = getHtmlContent(dominio, dns.getIp());
+        FetchedPages fp = new FetchedPages(dns.getIp(), dominio, doc.title(), doc.html());
+
+        /*Chamando o Writer para escrever no banco de dados*/
+        writer.writerInFetchedPages(fp);
     }
 }

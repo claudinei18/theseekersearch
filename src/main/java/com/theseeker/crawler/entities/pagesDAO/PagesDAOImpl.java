@@ -18,7 +18,6 @@ public class PagesDAOImpl implements PagesDAO {
 
     @Transactional
     public void insertPage(Pages page){
-        System.out.println("Inserindo page" + page.getDominio());
         em.persist(page);
     }
 }

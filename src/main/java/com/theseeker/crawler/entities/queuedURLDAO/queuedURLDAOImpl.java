@@ -33,12 +33,12 @@ public class queuedURLDAOImpl implements queuedURLDAO {
     @Transactional
     public queuedURL retrieveAndDelete(){
         Query query = em.createNativeQuery("SELECT MIN(qurl.id) FROM queuedURL qurl");
-
         queuedURL qurl = null;
         BigInteger id = null;
         id = (BigInteger) query.getSingleResult();
         if(id != null){
             qurl = em.find(queuedURL.class, id);
+            System.out.println(qurl.getDominio());
             em.remove(qurl);
         }
         return qurl;
