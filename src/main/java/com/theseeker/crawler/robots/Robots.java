@@ -78,8 +78,10 @@ public class Robots {
 
 
                         String hardCode = null;
+                        hardCode = "file:///"+new File(System.getProperty("user.dir") + "/src/main/resources/robotsData/").getAbsoluteFile()+ "/";
+String base = "";
                         try {
-                            hardCode = "file:///"+new File(System.getProperty("user.dir") + "/src/main/resources/robotsData/").getAbsoluteFile()+getDomainName(dns.getDominio());
+                            base = hardCode + getDomainName(dns.getDominio()) + "/";
                         } catch (URISyntaxException e) {
                             e.printStackTrace();
                         }
@@ -87,14 +89,14 @@ public class Robots {
 
                         NoRobotClient nrc = new NoRobotClient("SeekerRobot-1.0");
                         try {
-                            nrc.parse( new URL(hardCode) );
+                            nrc.parse( new URL(base) );
                         } catch (NoRobotException e) {
                             e.printStackTrace();
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
                         try {
-                            System.out.println( nrc.isUrlAllowed( new URL(hardCode+urlRestante) ) ) ;
+                            System.out.println( nrc.isUrlAllowed( new URL(base+urlRestante) ) ) ;
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
