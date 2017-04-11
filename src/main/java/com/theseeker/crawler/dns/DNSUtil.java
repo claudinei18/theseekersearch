@@ -58,7 +58,6 @@ public class DNSUtil {
             @Override
             public void run() {
                 while(true){
-                    System.out.println("1 - Executando");
                     List<DNS> listDNS = dnsDAO.getDNS();
                     List<OrderedURL> listOrdered = orderedURLDAO.getList();
 
@@ -68,19 +67,18 @@ public class DNSUtil {
                     for(OrderedURL ourl: listOrdered){
                         String url = ourl.getUrl();
                         InetAddress ip = getIp(ourl.getUrl());
-                        DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(url), ip.getHostAddress().toString(), nowLong);
+                        DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(url), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(url)));
                         dnsDAO.remove(dns);
                         dnsDAO.setTime(dns);
                     }
 
-                    System.out.println("2 - Executando");
                     for(DNS dns: listDNS){
                         if(nowLong - dns.getTime() >= 300){
                             String dominio = dns.getDominio();
 
                             InetAddress ip = getIp(dominio);
 
-                            DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong);
+                            DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(dominio)));
                             dnsDAO.remove(newDns);
                             dnsDAO.setTime(newDns);
                         }

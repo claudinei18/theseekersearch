@@ -1,8 +1,1 @@
-User-agent: Scooter-W3.1.2
-Disallow: /
-User-agent: *
-Disallow: /download/
-Disallow: /view-cvs/
-Disallow: /*products
-Disallow: /*contact-form/
-Disallow: /*.asp$
+

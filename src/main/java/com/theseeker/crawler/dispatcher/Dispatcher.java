@@ -39,29 +39,29 @@ public class Dispatcher {
     @PostConstruct
     public void readFromQueuedURLs() throws IOException {
 
-        BasicThreadFactory factory = new BasicThreadFactory.Builder()
-                .namingPattern("myspringbean-thread-%d").build();
-
-        executorService = Executors.newSingleThreadExecutor(factory);
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    while(!(queuedURLDAO.queuedURLIsEmpty())){
-                        queuedURL qurl = queuedURLDAO.retrieveAndDelete();
-                        if(qurl != null){
-                            System.out.println("QUEUED URL: " + qurl.getDominio());
-                            Fetcher fetcher = ctx.getBean(Fetcher.class);
-                            try {
-                                fetcher.start(qurl.getDominio());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }
-        });
+//        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+//                .namingPattern("myspringbean-thread-%d").build();
+//
+//        executorService = Executors.newSingleThreadExecutor(factory);
+//        executorService.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true){
+//                    while(!(queuedURLDAO.queuedURLIsEmpty())){
+//                        queuedURL qurl = queuedURLDAO.retrieveAndDelete();
+//                        if(qurl != null){
+//                            System.out.println("QUEUED URL: " + qurl.getDominio());
+//                            Fetcher fetcher = ctx.getBean(Fetcher.class);
+//                            try {
+//                                fetcher.start(qurl.getDominio());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
     }
 }

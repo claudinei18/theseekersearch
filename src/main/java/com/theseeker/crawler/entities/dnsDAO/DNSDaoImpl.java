@@ -51,11 +51,23 @@ public class DNSDaoImpl implements DNSDao {
     public void remove(DNS dns){
         DNS aux = getDNS(dns.getDominio());
         if(aux != null){
-            System.out.println("DEVERIA REMOVER: " + dns.getDominio());
             Query query = em.createQuery(
                     "DELETE FROM DNS d WHERE d.dominio = :dominio").setParameter("dominio", dns.getDominio());
             query.executeUpdate();
         }
+    }
+
+    @Override
+    public boolean getRobots(String dominio) throws DataAccessException {
+        Query query = em.createQuery("select d.robots from DNS d where d.dominio = :dominio").setParameter("dominio", dominio);
+        query.setMaxResults(1);
+        boolean result = false;
+        try{
+            result = (boolean) query.getSingleResult();
+        }catch (Exception e){
+
+        }
+        return result;
     }
 
     @Transactional

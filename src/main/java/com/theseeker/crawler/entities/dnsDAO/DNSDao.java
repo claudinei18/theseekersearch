@@ -15,4 +15,5 @@ public interface DNSDao {
     public void setTime(DNS dns);
     public void updateTime(DNS dns);
     public void remove(DNS dns);
+    public boolean getRobots(String dominio);
 }
