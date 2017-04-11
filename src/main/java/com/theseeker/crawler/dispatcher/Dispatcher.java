@@ -23,7 +23,6 @@ import java.util.concurrent.Executors;
  */
 @Component
 public class Dispatcher {
-    BufferedReader brQueuedURL;
 
     @Autowired
     ApplicationContext ctx;
@@ -39,14 +38,6 @@ public class Dispatcher {
 
     @PostConstruct
     public void readFromQueuedURLs() throws IOException {
-        brQueuedURL = new BufferedReader( new FileReader(System.getProperty("user.dir") + "/database/queuedURLs.txt") );
-        String read = null;
-
-        while ( ( read = brQueuedURL.readLine() ) != null ) {
-            queuedURLDAO.insertURL(new queuedURL(read));
-        }
-
-        brQueuedURL.close();
 
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
                 .namingPattern("myspringbean-thread-%d").build();

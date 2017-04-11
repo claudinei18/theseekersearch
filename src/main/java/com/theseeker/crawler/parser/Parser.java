@@ -101,12 +101,4 @@ public class Parser {
         });
 
     }
-
-//    public void inserirUrlsDaPagina(FetchedPages fp) throws IOException {
-//
-//    }
-//
-//    public void filtrarPagina(Pages page){
-//
-//    }
 }

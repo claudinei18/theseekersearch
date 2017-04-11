@@ -1,9 +1,7 @@
 package com.theseeker;
 
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
-import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
-import com.theseeker.util.url.robots.NoRobotClient;
-import com.theseeker.util.url.robots.NoRobotException;
+import com.theseeker.util.robots.NoRobotClient;
+import com.theseeker.util.robots.NoRobotException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;

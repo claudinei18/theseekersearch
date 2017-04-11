@@ -29,50 +29,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.theseeker.util.url.robots;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+package com.theseeker.util.robots;
 
 /**
- * Provides implementation for the path property and a handy toString. 
+ * Application exception for anything that might go wrong 
+ * in the checking of a robots.txt file. It does not 
+ * wrap an Exception to maintain support for older JDKs.
  */
-abstract class AbstractRule implements Rule {
+public class NoRobotException extends Exception {
 
-    private String path;
-    private boolean wildcardsAllowed;
-
-    public AbstractRule(String path, boolean wildcardsAllowed) {
-        this.path = path.trim();
-        this.wildcardsAllowed = wildcardsAllowed;
+    public NoRobotException(String message) {
+        super(message);
     }
 
-    /**
-     * A url path snippet for which a rule exists
-     */
-    public String getPath() {
-        return this.path;
+    public NoRobotException(String message, Throwable t) {
+        super(message + " :::: " + t.getMessage());
     }
 
-    public abstract Boolean isAllowed(String query);
-
-    public String toString() {
-        return getClass().getName() + " on " + this.path;
-    }
-    
-    protected boolean match(String query) {
-        if (!wildcardsAllowed || (path.indexOf("*")==-1 && path.indexOf("$")==-1)) return query.startsWith(path);
-        
-        String regExp = path;
-        regExp = regExp.replace("/", "\\/");
-        regExp = regExp.replace("-", "\\-");
-        regExp = regExp.replace(".", "\\.");
-        regExp = regExp.replace("*", ".*");
-
-        Pattern p = Pattern.compile(regExp);
-        Matcher m = p.matcher(query);
-        boolean r = m.find();
-        return r;
-     
-    }
 }

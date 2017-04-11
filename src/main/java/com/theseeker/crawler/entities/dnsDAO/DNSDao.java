@@ -12,4 +12,7 @@ public interface DNSDao {
     public List<DNS> getDNS() throws DataAccessException;
     public DNS getDNS(String dominio) throws DataAccessException;
     public void insertDNS(DNS dns);
+    public void setTime(DNS dns);
+    public void updateTime(DNS dns);
+    public void remove(DNS dns);
 }

@@ -21,13 +21,18 @@ public class queuedURLDAOImpl implements queuedURLDAO {
     protected EntityManager em;
 
     @Transactional
-    public void insertURL(queuedURL sl){
-        List<Object> o = em.createQuery("SELECT t FROM queuedURL t where t.dominio = :dominio")
-                .setParameter("dominio", sl.getDominio()).getResultList();
-
-        if(o.isEmpty()){
-            em.persist(sl);
+    public void insertURL(queuedURL qurl){
+        if(! (exists(qurl))){
+            em.persist(qurl);
         }
+    }
+
+    @Override
+    public boolean exists(queuedURL qurl){
+        List<Object> o = em.createQuery("SELECT t FROM queuedURL t where t.dominio = :dominio")
+                .setParameter("dominio", qurl.getDominio()).getResultList();
+
+        return (! o.isEmpty());
     }
 
     @Transactional

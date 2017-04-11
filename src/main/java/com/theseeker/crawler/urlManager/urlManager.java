@@ -35,7 +35,6 @@ public class urlManager {
         try{
             url = new URL(dominio);
         }catch (Exception e){
-
         }
 
         if(url != null) {
@@ -67,11 +66,14 @@ public class urlManager {
         List noHtmlUrl = new ArrayList<String>();
 
         for (Object element : urls) {
-            if( isHtml( element.toString() )){
-                htmlUrl.add(element);
+            if(element != null){
+                System.out.println("Element: " + element);
+                if( isHtml( element.toString() )){
+                    htmlUrl.add(element);
 
-            }else{
-                noHtmlUrl.add(element);
+                }else{
+                    noHtmlUrl.add(element);
+                }
             }
         }
 

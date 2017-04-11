@@ -20,11 +20,15 @@ public class seenURLDAOImpl implements seenURLDAO {
 
     @Transactional
     public void insertURL(seenURL sl){
-        List<Object> o = em.createQuery("SELECT t FROM seenURL t where t.dominio = :dominio")
-                .setParameter("dominio", sl.getDominio()).getResultList();
-
-        if(o.isEmpty()){
+        if(!(exists(sl))){
             em.persist(sl);
         }
+    }
+
+    @Override
+    public boolean exists(seenURL sl) {
+        List<Object> o = em.createQuery("SELECT t FROM seenURL t where t.dominio = :dominio")
+                .setParameter("dominio", sl.getDominio()).getResultList();
+        return !(o.isEmpty());
     }
 }

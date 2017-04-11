@@ -29,18 +29,50 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.theseeker.util.url.robots;
+package com.theseeker.util.robots;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
- * A robots.txt rule. Is a particular path allowed?
+ * Provides implementation for the path property and a handy toString. 
  */
-public interface Rule {
+abstract class AbstractRule implements Rule {
+
+    private String path;
+    private boolean wildcardsAllowed;
+
+    public AbstractRule(String path, boolean wildcardsAllowed) {
+        this.path = path.trim();
+        this.wildcardsAllowed = wildcardsAllowed;
+    }
 
     /**
-     * Boolean.TRUE means it is allowed. 
-     * Boolean.FALSE means it is not allowed.
-     * null means that this rule is not applicable.
+     * A url path snippet for which a rule exists
      */
-    Boolean isAllowed(String path);
+    public String getPath() {
+        return this.path;
+    }
 
+    public abstract Boolean isAllowed(String query);
+
+    public String toString() {
+        return getClass().getName() + " on " + this.path;
+    }
+    
+    protected boolean match(String query) {
+        if (!wildcardsAllowed || (path.indexOf("*")==-1 && path.indexOf("$")==-1)) return query.startsWith(path);
+        
+        String regExp = path;
+        regExp = regExp.replace("/", "\\/");
+        regExp = regExp.replace("-", "\\-");
+        regExp = regExp.replace(".", "\\.");
+        regExp = regExp.replace("*", ".*");
+
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(query);
+        boolean r = m.find();
+        return r;
+     
+    }
 }

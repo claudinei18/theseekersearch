@@ -58,7 +58,7 @@ public class Fetcher {
     }
 
     public void start(String dominio) throws IOException {
-        /*Procuro se existe no banco de dns*/
+        /*Procuro se existe no banco de dns*//*
         DNS dns = dnsDao.getDNS(dominio);
         if (dns == null) {
             InetAddress ip = DNSUtil.getIp(dominio);
@@ -68,13 +68,13 @@ public class Fetcher {
             }
         }
 
-        /*Acessar através do IP*/
+        *//*Acessar através do IP*//*
 
-        /*Acessando atraves do LINK*/
+        *//*Acessando atraves do LINK*//*
         Document doc = getHtmlContent(dominio, dns.getIp());
         FetchedPages fp = new FetchedPages(dns.getIp(), dominio, doc.title(), doc.html());
 
-        /*Chamando o Writer para escrever no banco de dados*/
-        writer.writerInFetchedPages(fp);
+        *//*Chamando o Writer para escrever no banco de dados*//*
+        writer.writerInFetchedPages(fp);*/
     }
 }

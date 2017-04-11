@@ -29,7 +29,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.theseeker.util.url.robots;
+package com.theseeker.util.robots;
 
 import java.io.IOException;
 import java.io.StringReader;

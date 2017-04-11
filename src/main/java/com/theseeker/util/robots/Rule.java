@@ -29,21 +29,18 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.theseeker.util.url.robots;
+package com.theseeker.util.robots;
 
 /**
- * Application exception for anything that might go wrong 
- * in the checking of a robots.txt file. It does not 
- * wrap an Exception to maintain support for older JDKs.
+ * A robots.txt rule. Is a particular path allowed?
  */
-public class NoRobotException extends Exception {
+public interface Rule {
 
-    public NoRobotException(String message) {
-        super(message);
-    }
-
-    public NoRobotException(String message, Throwable t) {
-        super(message + " :::: " + t.getMessage());
-    }
+    /**
+     * Boolean.TRUE means it is allowed. 
+     * Boolean.FALSE means it is not allowed.
+     * null means that this rule is not applicable.
+     */
+    Boolean isAllowed(String path);
 
 }

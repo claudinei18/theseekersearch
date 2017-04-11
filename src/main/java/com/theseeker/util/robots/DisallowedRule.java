@@ -29,28 +29,27 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package com.theseeker.util.url.robots;
+package com.theseeker.util.robots;
 
 /**
- * A norobots Allow: rule. 
+ * A norobots Disallow: rule. 
  * Any path which begins with the rule's path is 
- * allowed. 
+ * not allowed. 
  */
-class AllowedRule extends AbstractRule {
+class DisallowedRule extends AbstractRule {
 
-    public AllowedRule(String path, boolean wildcardsAllowed) {
+    public DisallowedRule(String path, boolean wildcardsAllowed) {
         super(path, wildcardsAllowed);
     }
 
     public Boolean isAllowed(String query) {
         if("".equals(super.getPath())) {
-            // What does the spec say here? Until I know, I'll just ignore this.
-            return null;
+            return Boolean.TRUE;
         }
         if (!match(query)) {
             return null;
         } else {
-            return Boolean.TRUE;
+            return Boolean.FALSE;
         }
     }
 }

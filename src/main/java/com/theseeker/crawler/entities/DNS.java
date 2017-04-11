@@ -8,34 +8,30 @@ import java.math.BigInteger;
  */
 @Entity
 @Table(name = "dns")
-@SequenceGenerator(name = "dns_generator", sequenceName = "dns_seq", initialValue = 1, allocationSize = 1)
 public class DNS {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dns_generator")
-    @Column(name="id")
-    private BigInteger id;
-
     @Column(name="dominio")
     private String dominio;
 
     @Column(name = "ip")
     private String ip;
 
+    @Column(name="lasttimeaccess")
+    private long time;
+
+    @Column(name="robots")
+    private boolean robots;
+
+
     public DNS(){
 
     }
 
-    public DNS(String dominio, String ip) {
+    public DNS(String dominio, String ip, long time, boolean robots) {
         this.dominio = dominio;
         this.ip = ip;
-    }
-
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
+        this.time = time;
+        this.robots = robots;
     }
 
     public String getDominio() {
@@ -54,10 +50,26 @@ public class DNS {
         this.ip = ip;
     }
 
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public boolean isRobots() {
+        return robots;
+    }
+
+    public void setRobots(boolean robots) {
+        this.robots = robots;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "DNS[id=%d, domain='%s', ip='%s']",
-                id, dominio, ip);
+                "DNS[domain='%s', ip='%s', lta='%d']",
+                dominio, ip, time);
     }
 }

@@ -9,4 +9,5 @@ public interface queuedURLDAO {
     public void insertURL(queuedURL sl);
     public boolean queuedURLIsEmpty();
     public queuedURL retrieveAndDelete();
+    public boolean exists(queuedURL qurl);
 }
