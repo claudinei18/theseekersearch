@@ -61,13 +61,13 @@ public class urlManager {
         return resp;
     }
 
-    public void recebendoUrl(List urls) throws IOException {
+    public void recebendoUrl(List urls, String origemDaLista) throws IOException {
+        System.out.println("URLMANAGER RECEBEU: " + origemDaLista);
         List htmlUrl = new ArrayList<String>();
         List noHtmlUrl = new ArrayList<String>();
 
         for (Object element : urls) {
             if(element != null){
-                System.out.println("Element: " + element);
                 if( isHtml( element.toString() )){
                     htmlUrl.add(element);
 
@@ -77,9 +77,6 @@ public class urlManager {
             }
         }
 
-        m.execute(htmlUrl);
-
-
-
+        m.execute(htmlUrl, origemDaLista);
     }
 }

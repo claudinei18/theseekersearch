@@ -10,11 +10,11 @@ import java.math.BigInteger;
 @Table(name = "seenurl")
 @SequenceGenerator(name = "seq_seenurl", sequenceName = "seenurl_seq", initialValue = 1, allocationSize = 1)
 public class seenURL {
-    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_seenurl")
     @Column(name="id")
     private BigInteger id;
 
+    @Id
     @Column(name="dominio")
     private String dominio;
 

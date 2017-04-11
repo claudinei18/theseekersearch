@@ -21,8 +21,8 @@ public class Merger {
 
     }
 
-    public void execute(List urls){
-        System.out.println("MERGE");
+    public void execute(List urls, String origemdalista){
+        System.out.println("MERGE RECEBEU" + origemdalista);
         for(Object e: urls){
             seenURL sl = new seenURL(e.toString());
             seenURLDAO.insertURL(sl);

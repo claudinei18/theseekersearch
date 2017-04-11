@@ -46,7 +46,7 @@ public class Reader {
                     while (!(fpDao.fetchedPageIsEmpty())) {
                         FetchedPages fp = fpDao.retrieveAndDelete();
                         if (fp != null) {
-                            System.out.println("Chamando parser" + fp.getDominio());
+                            System.out.println("READER LEU: " + fp.getDominio());
                             parser.parseFetchedPage(fp);
                         }
                     }

@@ -48,13 +48,39 @@ public class Parser {
 
         for(Element e: es){
             String link = e.attr("abs:href");
-            if( (!link.endsWith(".png"))  &&
-                    (!link.endsWith(".jpeg")) &&
-                    (!link.endsWith(".jpg"))  &&
-                    (!link.endsWith(".css"))  &&
-                    (!link.endsWith(".png"))  &&
-                    (!link.contains(".svg"))  &&
-                    (!link.endsWith(".js")) ){
+            if(     (!link.contains(".svg"))  &&
+                    (!link.endsWith(".asx"))  &&     // Windows video
+                    (!link.endsWith((".bmp")) &&     // bitmap image
+                    (!link.endsWith(".css"))  &&     // Cascading Style Sheet
+                    (!link.endsWith(".doc"))  &&     // Microsoft Word (mostly)
+                    (!link.endsWith(".docx")) &&    // Microsoft Word
+                    (!link.endsWith(".flv"))  &&     // Old Flash video format
+                    (!link.endsWith(".gif"))  &&     // GIF image
+                    (!link.endsWith(".jpeg")) &&    // JPEG image
+                    (!link.endsWith(".jpg"))  &&     // JPEG image
+                    (!link.endsWith(".mid"))  &&     // MIDI file
+                    (!link.endsWith(".mov"))  &&     // Quicktime movie
+                    (!link.endsWith(".mp3"))  &&     // MP3 audio
+                    (!link.endsWith(".ogg"))  &&     // .ogg format media
+                    (!link.endsWith(".pdf"))  &&     // PDF files
+                    (!link.endsWith(".png"))  &&     // image
+                    (!link.endsWith(".ppt"))  &&     // powerpoint
+                    (!link.endsWith(".ra"))   &&      // real media
+                    (!link.endsWith(".ram"))  &&     // real media
+                    (!link.endsWith(".rm"))   &&      // real media
+                    (!link.endsWith(".swf"))  &&     // Flash files
+                    (!link.endsWith(".txt"))  &&     // plain text
+                    (!link.endsWith(".wav"))  &&     // WAV format sound
+                    (!link.endsWith(".wma"))  &&     // Windows media audio
+                    (!link.endsWith(".wmv"))  &&     // Windows media video
+                    (!link.endsWith(".xml"))  &&     // XML files
+                    (!link.endsWith(".zip"))  &&     // ZIP files
+                    (!link.endsWith(".m4a"))  &&     // MP4 audio
+                    (!link.endsWith(".m4v"))  &&     // MP4 video
+                    (!link.endsWith(".mov"))  &&     // Quicktime movie
+                    (!link.endsWith(".mp4"))  &&     // MP4 video or audio
+                    (!link.endsWith(".m4b"))  &&	    // MP4 video or audio
+                    (!link.endsWith(".js")) )){
                 links.add(link);
             }
         }
@@ -77,8 +103,8 @@ public class Parser {
             @Override
             public void run() {
                 try {
-                    System.out.println("GetLinksFromPage: " + fp.getDominio());
-                    um.recebendoUrl(getLinksFromPage(fp.getConteudo()));
+                    System.out.println("PARSER RECEBEU: " + fp.getDominio());
+                    um.recebendoUrl(getLinksFromPage(fp.getConteudo()), fp.getDominio());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -1,7 +1,6 @@
 package com.theseeker.crawler.robots;
 
-import com.theseeker.crawler.entities.DNS;
-import com.theseeker.crawler.entities.OrderedURL;
+import com.theseeker.crawler.entities.*;
 import com.theseeker.util.robots.NoRobotClient;
 import com.theseeker.util.robots.NoRobotException;
 import com.theseeker.util.url.URLCanonicalizer;
@@ -14,6 +13,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 import com.theseeker.crawler.entities.dnsDAO.DNSDao;
+import com.theseeker.crawler.entities.queuedURLDAO.queuedURLDAO;
+import com.theseeker.crawler.entities.RejectedURL;
+import com.theseeker.crawler.entities.rejectedURL.rejectedURLDAO;
 
 import java.io.*;
 import java.net.*;
@@ -34,6 +36,12 @@ public class Robots {
 
     @Autowired
     DNSDao dnsDAO;
+
+    @Autowired
+    queuedURLDAO queuedURLDAO;
+
+    @Autowired
+    rejectedURLDAO rejectedURLDAO;
 
     ExecutorService executorService;
 
@@ -79,7 +87,7 @@ public class Robots {
 
                         String hardCode = null;
                         hardCode = "file:///"+new File(System.getProperty("user.dir") + "/src/main/resources/robotsData/").getAbsoluteFile()+ "/";
-String base = "";
+                        String base = "";
                         try {
                             base = hardCode + getDomainName(dns.getDominio()) + "/";
                         } catch (URISyntaxException e) {
@@ -97,6 +105,13 @@ String base = "";
                         }
                         try {
                             System.out.println( nrc.isUrlAllowed( new URL(base+urlRestante) ) ) ;
+                            if(nrc.isUrlAllowed( new URL(base+urlRestante ))){
+                                queuedURL qurl = new queuedURL(dns.getDominio(), dns.getIp());
+                                queuedURLDAO.insertURL(qurl);
+                            }else{
+                                RejectedURL rurl = new RejectedURL(dns.getDominio(), dns.getIp(), "Robots");
+                                rejectedURLDAO.insertURL(rurl);
+                            }
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }

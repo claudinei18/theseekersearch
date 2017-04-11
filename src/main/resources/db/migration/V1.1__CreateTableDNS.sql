@@ -1,5 +1,5 @@
 CREATE TABLE DNS(
-  dominio         TEXT PRIMARY KEY,
+  dominio         TEXT,
   ip              VARCHAR(30) NOT NULL,
   lasttimeaccess  BIGINT,
   robots          boolean

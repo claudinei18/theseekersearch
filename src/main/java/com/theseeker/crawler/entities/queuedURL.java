@@ -25,9 +25,9 @@ public class queuedURL {
 
     }
 
-    public queuedURL(String dominio) {
+    public queuedURL(String dominio, String ip) {
         this.dominio = dominio;
-        this.ip = "";
+        this.ip = ip;
     }
 
     public BigInteger getId() {
@@ -57,7 +57,7 @@ public class queuedURL {
     @Override
     public String toString() {
         return String.format(
-                "queuedURL[id=%d, domain='%s']",
+                "queuedURL[id=%d, domain='%s', ip='%s']",
                 id, dominio);
     }
 }
