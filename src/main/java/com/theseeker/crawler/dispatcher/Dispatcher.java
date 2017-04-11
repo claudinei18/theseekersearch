@@ -13,6 +13,9 @@ import java.io.BufferedReader;
 
 import com.theseeker.crawler.entities.queuedURLDAO.queuedURLDAO;
 
+import com.theseeker.crawler.entities.seenURL;
+import com.theseeker.crawler.entities.seenURLDAO.seenURLDAO;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
@@ -29,6 +32,9 @@ public class Dispatcher {
 
     @Autowired
     queuedURLDAO queuedURLDAO;
+
+    @Autowired
+    seenURLDAO seenURLDAO;
 
     ExecutorService executorService;
 
@@ -57,7 +63,10 @@ public class Dispatcher {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                            seenURL sl = new seenURL(qurl.getDominio(), qurl.getIp());
+                            seenURLDAO.insertURL(sl);
                         }
+
                     }
                 }
             }

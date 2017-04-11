@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /xml/
+Disallow: /pdf_generate/
+Disallow: /calendar/
+Disallow: /api/
+Disallow: /cal/
+Disallow: /2016/
+Disallow: /2015/
+Disallow: /calendario_peq/

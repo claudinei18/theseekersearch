@@ -1,0 +1,11 @@
+# All robots will spider the domain, Disallow directory /images/
+User-agent: Googlebot
+Disallow: /images/
+Disallow: /order.cgi
+User-agent: *
+Disallow: /proxylist.shtml
+
+#User-agent: *
+#Disallow: /images/
+#Disallow: /order.cgi
+#Disallow: /proxylist.shtml

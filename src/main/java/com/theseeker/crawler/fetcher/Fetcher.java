@@ -43,9 +43,16 @@ public class Fetcher {
     }
 
     public Document getHtmlContent(String dominio, String ip) throws IOException {
-        Document doc = Jsoup.connect(dominio).get();
-        seenURL sl = new seenURL(dominio, ip);
-        seenURLDAO.insertURL(sl);
+        Document doc = null;
+        try{
+            doc = Jsoup.connect(dominio).get();
+            seenURL sl = new seenURL(dominio, ip);
+            seenURLDAO.insertURL(sl);
+        }catch (Exception e) {
+            System.out.println("ERRO: Não conseguiu coletar com o JSOUP.");
+            e.printStackTrace();
+        }
+
         return doc;
     }
 
@@ -66,9 +73,11 @@ public class Fetcher {
 
         //Acessando atraves do LINK
         Document doc = getHtmlContent(dominio, dns.getIp());
-        FetchedPages fp = new FetchedPages(dns.getIp(), dominio, doc.title(), doc.html());
+        if(doc != null){
+            FetchedPages fp = new FetchedPages(dns.getIp(), dominio, doc.title(), doc.html());
 
-        //Chamando o Writer para escrever no banco de dados
-        writer.writerInFetchedPages(fp);
+            //Chamando o Writer para escrever no banco de dados
+            writer.writerInFetchedPages(fp);
+        }
     }
 }

@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /webhostinghelp.html
+Disallow: /links.htm
+Disallow: /links2.htm
+Disallow: /links3.htm
+Disallow: /links4.htm
