@@ -28,6 +28,13 @@ public class DNSDaoImpl implements DNSDao {
         return resultList;
     }
 
+    @Override
+    public List<DNS> getRobots() throws DataAccessException {
+        Query query = em.createQuery("select d from DNS d where d.robots = false");
+        List<DNS> resultList = query.getResultList();
+        return resultList;
+    }
+
 
     @Override
     public DNS getDNS(String dominio) throws DataAccessException {
@@ -68,6 +75,16 @@ public class DNSDaoImpl implements DNSDao {
 
         }
         return result;
+    }
+
+    @Transactional
+    public List<DNS> retrieveAndDelete(){
+        Query query = em.createQuery("select d from DNS d where d.robots = false");
+        List<DNS> resultList = query.getResultList();
+        for(DNS d: resultList){
+
+        }
+        return resultList;
     }
 
     @Transactional

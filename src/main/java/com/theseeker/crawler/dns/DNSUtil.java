@@ -58,7 +58,7 @@ public class DNSUtil {
             @Override
             public void run() {
                 while(true){
-                    List<DNS> listDNS = dnsDAO.getDNS();
+                    List<DNS> listDNS = dnsDAO.getRobots();
                     List<OrderedURL> listOrdered = orderedURLDAO.getList();
 
                     Date now = new Date();

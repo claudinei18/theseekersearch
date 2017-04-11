@@ -16,4 +16,5 @@ public interface DNSDao {
     public void updateTime(DNS dns);
     public void remove(DNS dns);
     public boolean getRobots(String dominio);
+    public List<DNS> getRobots() throws DataAccessException;
 }
