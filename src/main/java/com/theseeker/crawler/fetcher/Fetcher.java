@@ -10,6 +10,7 @@ import com.theseeker.crawler.entities.seenURL;
 import com.theseeker.crawler.entities.seenURLDAO.seenURLDAO;
 import com.theseeker.crawler.writeReader.Writer;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -45,9 +46,19 @@ public class Fetcher {
     public Document getHtmlContent(String dominio, String ip) throws IOException {
         Document doc = null;
         try{
-            doc = Jsoup.connect(dominio).get();
-            seenURL sl = new seenURL(dominio, ip);
-            seenURLDAO.insertURL(sl);
+            doc = Jsoup.connect(dominio)
+                    .userAgent("SeekerRobot1.0")
+                    .header("Accept-Language", "en")
+                    .get();
+
+            Element taglang = doc.select("html").first();
+            System.out.println(taglang.attr("lang"));
+//            if(  taglang.attr("lang").equals("en") ){
+                seenURL sl = new seenURL(dominio, ip);
+                seenURLDAO.insertURL(sl);
+//            }else{
+//                doc = null;
+//            }
         }catch (Exception e) {
             System.out.println("ERRO: Não conseguiu coletar com o JSOUP.");
             e.printStackTrace();

@@ -36,7 +36,7 @@ public class Reader {
     public void init() {
 
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
-                .namingPattern("myspringbean-thread-%d").build();
+                .namingPattern("reader-thread-%d").build();
 
         executorService = Executors.newSingleThreadExecutor(factory);
         executorService.execute(new Runnable() {

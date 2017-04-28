@@ -27,5 +27,6 @@ public class Merger {
             OrderedURL ourl = new OrderedURL(e.toString(), 0);
             orderedURLDAO.insert(ourl);
         }
+//        System.out.println("MERGE CONCLUIU" + origemdalista);
     }
 }

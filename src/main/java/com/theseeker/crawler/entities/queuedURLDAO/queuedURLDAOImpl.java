@@ -43,7 +43,7 @@ public class queuedURLDAOImpl implements queuedURLDAO {
         id = (BigInteger) query.getSingleResult();
         if(id != null){
             qurl = em.find(queuedURL.class, id);
-            System.out.println(qurl.getDominio());
+//            System.out.println(qurl.getDominio());
             em.remove(qurl);
         }
         return qurl;

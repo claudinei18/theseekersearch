@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /assets
+
+Sitemap: https://www.nuuvem.com/sitemap.xml

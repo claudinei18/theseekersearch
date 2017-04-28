@@ -2,6 +2,7 @@ package com.theseeker.crawler.parser;
 
 import com.theseeker.crawler.entities.FetchedPages;
 import com.theseeker.crawler.entities.Pages;
+import com.theseeker.crawler.entities.RejectedURL;
 import com.theseeker.crawler.filter.Filter;
 import com.theseeker.crawler.urlManager.urlManager;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
@@ -20,6 +21,9 @@ import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.theseeker.crawler.entities.RejectedURL;
+import com.theseeker.crawler.entities.rejectedURL.rejectedURLDAO;
+
 /**
  * Created by claudinei on 29/03/17.
  */
@@ -32,6 +36,9 @@ public class Parser {
     @Autowired
     private Filter filter;
 
+    @Autowired
+    rejectedURLDAO rejectedURLDAO;
+
     ExecutorService executorService1;
     ExecutorService executorService2;
 
@@ -40,7 +47,7 @@ public class Parser {
     }
 
 
-    public static List getLinksFromPage(String page) throws IOException {
+    public List getLinksFromPage(String page) throws IOException {
         Document doc = Jsoup.parse(page);
         Elements es = doc.select("a[href]");
         List links = new ArrayList<String>();
@@ -53,10 +60,10 @@ public class Parser {
                     (!link.endsWith((".bmp")) &&     // bitmap image
                     (!link.endsWith(".css"))  &&     // Cascading Style Sheet
                     (!link.endsWith(".doc"))  &&     // Microsoft Word (mostly)
-                    (!link.endsWith(".docx")) &&    // Microsoft Word
+                    (!link.endsWith(".docx")) &&     // Microsoft Word
                     (!link.endsWith(".flv"))  &&     // Old Flash video format
                     (!link.endsWith(".gif"))  &&     // GIF image
-                    (!link.endsWith(".jpeg")) &&    // JPEG image
+                    (!link.endsWith(".jpeg")) &&     // JPEG image
                     (!link.endsWith(".jpg"))  &&     // JPEG image
                     (!link.endsWith(".mid"))  &&     // MIDI file
                     (!link.endsWith(".mov"))  &&     // Quicktime movie
@@ -65,9 +72,9 @@ public class Parser {
                     (!link.endsWith(".pdf"))  &&     // PDF files
                     (!link.endsWith(".png"))  &&     // image
                     (!link.endsWith(".ppt"))  &&     // powerpoint
-                    (!link.endsWith(".ra"))   &&      // real media
+                    (!link.endsWith(".ra"))   &&     // real media
                     (!link.endsWith(".ram"))  &&     // real media
-                    (!link.endsWith(".rm"))   &&      // real media
+                    (!link.endsWith(".rm"))   &&     // real media
                     (!link.endsWith(".swf"))  &&     // Flash files
                     (!link.endsWith(".txt"))  &&     // plain text
                     (!link.endsWith(".wav"))  &&     // WAV format sound
@@ -79,9 +86,12 @@ public class Parser {
                     (!link.endsWith(".m4v"))  &&     // MP4 video
                     (!link.endsWith(".mov"))  &&     // Quicktime movie
                     (!link.endsWith(".mp4"))  &&     // MP4 video or audio
-                    (!link.endsWith(".m4b"))  &&	    // MP4 video or audio
+                    (!link.endsWith(".m4b"))  &&	 // MP4 video or audio
                     (!link.endsWith(".js")) )){
                 links.add(link);
+            }else{
+                RejectedURL rurl = new RejectedURL(link, "", "Robots");
+                rejectedURLDAO.insertURL(rurl);
             }
         }
         return links;
@@ -95,8 +105,18 @@ public class Parser {
 
     public void parseFetchedPage(FetchedPages fp){
 
+        /*try {
+            um.recebendoUrl(getLinksFromPage(fp.getConteudo()), fp.getDominio());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String texto = getTextoDoHtml(fp.getConteudo());
+        Pages page = new Pages(fp.getIp(), fp.getDominio(), fp.getTitulo(), texto);
+        filter.filtrar(page);*/
+
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
-                .namingPattern("myspringbean-thread-%d").build();
+                .namingPattern("callurlmanager-thread-%d").build();
 
         executorService1 =  Executors.newSingleThreadExecutor(factory);
         executorService1.execute(new Runnable() {
@@ -113,7 +133,7 @@ public class Parser {
         });
 
         BasicThreadFactory factory2 = new BasicThreadFactory.Builder()
-                .namingPattern("myspringbean-thread-%d").build();
+                .namingPattern("callfilter-thread-%d").build();
 
         executorService2 =  Executors.newSingleThreadExecutor(factory2);
         executorService2.execute(new Runnable() {

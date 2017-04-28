@@ -1,6 +1,7 @@
 package com.theseeker.crawler.robots;
 
 import com.theseeker.crawler.entities.*;
+import com.theseeker.crawler.fetcher.Fetcher;
 import com.theseeker.util.robots.NoRobotClient;
 import com.theseeker.util.robots.NoRobotException;
 import com.theseeker.util.url.URLCanonicalizer;
@@ -45,7 +46,7 @@ public class Robots {
 
     ExecutorService executorService;
 
-    @PostConstruct
+    /*@PostConstruct
     public void resolveRobots() throws URISyntaxException, IOException, NoRobotException {
 
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
@@ -104,7 +105,7 @@ public class Robots {
                             e.printStackTrace();
                         }
                         try {
-                            System.out.println( nrc.isUrlAllowed( new URL(base+urlRestante) ) ) ;
+//                            System.out.println( nrc.isUrlAllowed( new URL(base+urlRestante) ) ) ;
                             if(nrc.isUrlAllowed( new URL(base+urlRestante ))){
                                 queuedURL qurl = new queuedURL(dns.getDominio(), dns.getIp());
                                 queuedURLDAO.insertURL(qurl);
@@ -121,12 +122,85 @@ public class Robots {
             }
         });
 
+    }*/
 
-
-        String url;
-
-
+    @PostConstruct
+    public void teste(){
+        new Thread(t1).start();
     }
+
+    private Runnable t1 = new Runnable() {
+        public void run() {
+            try{
+                while(true){
+                    List<DNS> listDNS = dnsDAO.getRobots();
+
+                    for(DNS dns: listDNS){
+                        dnsDAO.remove(dns);
+                        dns.setRobots(true);
+                        dnsDAO.setTime(dns);
+
+                        String[] x = dns.getDominio().split("/");
+                        try {
+                            downloadRobots(x[0] + "//" + x[2] + "/robots.txt");
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        String urlRestante = "";
+                        for(int i = 3; i < x.length; i++){
+                            urlRestante += "/" + x[i];
+                        }
+
+
+                        try {
+                            Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/robotsData/" + getDomainName(dns.getDominio()));
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        String hardCode = null;
+                        hardCode = "file:///"+new File(System.getProperty("user.dir") + "/src/main/resources/robotsData/").getAbsoluteFile()+ "/";
+                        String base = "";
+                        try {
+                            base = hardCode + getDomainName(dns.getDominio()) + "/";
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        NoRobotClient nrc = new NoRobotClient("SeekerRobot-1.0");
+                        try {
+                            nrc.parse( new URL(base) );
+                        } catch (NoRobotException e) {
+                            e.printStackTrace();
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+//                            System.out.println( nrc.isUrlAllowed( new URL(base+urlRestante) ) ) ;
+                            if(nrc.isUrlAllowed( new URL(base+urlRestante ))){
+                                queuedURL qurl = new queuedURL(dns.getDominio(), dns.getIp());
+                                queuedURLDAO.insertURL(qurl);
+                            }else{
+                                RejectedURL rurl = new RejectedURL(dns.getDominio(), dns.getIp(), "Robots");
+                                rejectedURLDAO.insertURL(rurl);
+                            }
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+            } catch (Exception e){}
+
+        }
+    };
+
+
 
     public void downloadRobots(String url) throws URISyntaxException, IOException {
         String dominio = getDomainName(url);

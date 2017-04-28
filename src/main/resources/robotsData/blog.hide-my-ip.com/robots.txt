@@ -1,0 +1,76 @@
+#last edit 2015-05-09 
+User-agent: Mediapartners-Google* # support.google.com/adsense/bin/answer.py?hl=en&answer=99376
+User-agent: Mediapartners-Google # Adsense contextual targeting bot
+User-agent: msnbot-media/1.0 # MSN contextual targeting bot
+User-agent: Adsbot-Google # AdwordsPPC tinyurl.com/list-of-Google-Crawlers
+User-agent: AdsBot-Google-Mobile # AdwordsPPC for mobile campaigns
+User-agent: Adidxbot # BingPPC (aka MSNPTC) www.bing.com/webmaster/help/which-crawlers-does-bing-use-8c184ec0
+User-agent: Yahoo!-AdCrawler # YahooPPC tinyurl.com/About-Yahoo-Adcrawler
+User-agent: YaDirectFetcher # Yandex.Direct robot, interpretes robots.txt differently help.yandex.com/webmaster/controlling-robot/robots-txt.xml
+User-agent: Baiduspider-ads #cpc help.baidu.com/question?prod_en=master&class=498&id=1000973
+User-agent: Googlebot # support.google.com/webmasters/bin/answer.py?hl=en&answer=1061943
+User-agent: Googlebot-Mobile
+User-agent: Googlebot-News
+User-agent: Googlebot-Video
+User-agent: Googlebot-Image
+User-agent: gsa-crawler # Google-Appliance tinyurl.com/google-sitesearch-appliance
+User-agent: Bingbot # aka MSNBOT www.bing.com/bingbot.htm
+User-agent: MSNBot # old version of bingbot still used for multimedia and feeds crawls
+User-agent: BingPreview # bing.com/community/site_blogs/b/webmaster/archive/2012/10/26/page-snapshots-in-bing-windows-8-app-to-bring-new-crawl-traffic-to-sites.aspx
+User-agent: Slurp # aka Yahoo! Slurp - now part of Bingbot
+User-agent: Teoma # Ask.com
+User-agent: Baiduspider # Chinese search engine help.baidu.com/question?prod_en=master&class=498&id=1000973
+User-agent: Baiduspider-mobile #mobile
+User-agent: Baiduspider-image #images
+User-agent: Baiduspider-video #video
+User-agent: Baiduspider-news #news
+User-agent: Baiduspider-favo #bookmarks
+User-agent: Baiduspider-cpro #union
+User-agent: YandexBot # Russian search engine
+User-agent: YandexMedia
+User-agent: YandexImages
+User-agent: YandexCatalog
+User-agent: YandexBlogs
+User-agent: YandexNews
+User-agent: YandexPagechecker # microformats are validated using the Microformats validator form;
+User-agent: YandexMetrika # ClickTale clone
+User-agent: YandexMarket
+User-agent: YandexCalendar
+User-agent: naverbot # South Korean search engine
+User-agent: Yeti  # South Korean search engine
+User-agent: seznambot # Czech search engine
+User-agent: rogerbot # www.seomoz.org/dp/rogerbot
+User-agent: MJ12bot # Majestic SEO link index
+User-agent: AhrefsBot # Ahrefs SEO link index
+User-agent: linkdexbot
+User-agent: linkdexbot-Mobile # linkdexbot SEO link index
+User-agent: RavenCrawler #SEOcrawler
+User-agent: Blekkobot #Blekko
+User-agent: xenu's # Link Sleuth
+User-agent: Xenu's Link Sleuth 1.1c
+User-agent: ia_archiver # archive.org
+User-agent: ScoutJet # help.blekko.com/index.php/can-i-submit-my-site-to-be-crawled/
+User-agent: Feedfetcher-Google # Feedburner www.google.com/feedfetcher.html
+User-agent: Facebookexternalhit # www.facebook.com/externalhit_uatext.php
+User-agent: Twitterbot
+User-agent: LinkedInBot
+User-agent: bitlybot
+User-agent: Pinterest
+User-agent: ChangeDetection #changedetection.com/bot.html
+User-agent: ClickTale Bot
+User-agent: ClickTaleBot
+User-agent: ClickTale
+User-agent: SiteCon # www.nccgroup.com/en/our-services/website-performance/website-performance-monitoring/
+User-agent: GomezAgent # gomeznetworks.com/help/gpn/MySettings/Last_Mile_PP_Test_Settings.htm
+User-agent: GomezAgent 1.0
+User-agent: GomezAgent 2.0
+User-agent: GomezAgent 3.0
+User-agent: YottaaMonitor
+User-agent: FunWebProducts
+User-agent: Alexa
+Disallow:
+Allow: /
+
+# tell everyone else to go away
+User-agent: *
+Disallow: /

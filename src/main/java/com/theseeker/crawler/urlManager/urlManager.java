@@ -45,16 +45,19 @@ public class urlManager {
             urlc.setUseCaches( true );
             urlc.setRequestMethod("HEAD");
 
+            urlc.setRequestProperty("Accept-Language", "en");
+
             try{
                 urlc.connect();
                 String contentType = urlc.getContentType();
+
                 if(contentType != null){
                     if (contentType.startsWith("text/html")) {
                         resp = true;
                     }
                 }
             }catch (Exception e){
-                System.out.println("Erro ao conectar e requisitar o contentType da pagina" + dominio);
+                System.out.println("Erro ao conectar e requisitar o contentType da pagina: " + dominio);
                 e.printStackTrace();
             }
         }
@@ -62,7 +65,7 @@ public class urlManager {
     }
 
     public void recebendoUrl(List urls, String origemDaLista) throws IOException {
-        System.out.println("URLMANAGER RECEBEU: " + origemDaLista);
+//        System.out.println("URLMANAGER RECEBEU: " + origemDaLista);
         List htmlUrl = new ArrayList<String>();
         List noHtmlUrl = new ArrayList<String>();
 

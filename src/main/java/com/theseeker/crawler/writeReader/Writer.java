@@ -19,7 +19,7 @@ public class Writer {
     }
 
     public void writerInFetchedPages(FetchedPages fp){
-        System.out.println("WRITER ESCREVENDO: " + fp.getDominio());
+        System.out.println("WRITER ESCREVENDO EM FETCHEDPAGES: " + fp.getDominio());
         fpDao.insertFetPag(fp);
     }
 }

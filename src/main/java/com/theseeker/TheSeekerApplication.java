@@ -35,14 +35,6 @@ public class TheSeekerApplication {
 				InetAddress.getLocalHost().getHostAddress(),
 				env.getProperty("server.port"));
 
-		String hardCode = "file:///"+new File(System.getProperty("user.dir") + "/src/main/resources/robotsData/").getAbsoluteFile()+"/";
-
-		String base = hardCode + "basic/";
-		NoRobotClient nrc = new NoRobotClient("Scabies-1.0");
-		nrc.parse( new URL(base) );
-		System.out.println( nrc.isUrlAllowed( new URL(base+"index.html") ) ) ;
-		System.out.println( nrc.isUrlAllowed( new URL(base+"view-cvs/") ) );
-
 
 	}
 }

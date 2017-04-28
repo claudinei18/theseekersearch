@@ -1,0 +1,37 @@
+# robots.txt for http://www.statcan.gc.ca/
+# Syntax checker http://tool.motoricerca.info/robots-checker.phtml
+
+User-agent: gsa-crawler
+Disallow: /
+
+User-agent: HTTrack
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SiteSucker
+User-agent: SiteSucker/2.3.3
+Disallow: /
+
+User-agent: Microsoft URL Control
+Disallow: /
+
+User-agent: *
+Allow: /estat/licence-eng.htm
+Allow: /estat/licence-fra.htm
+Disallow: /esta
+#
+Disallow: /error-erreur/
+#
+Disallow: /pub/12-591-x/2006001/
+Disallow: /pub/12-591-x/12-591-x2006001-eng.htm
+Disallow: /pub/12-591-x/12-591-x2006001-fra.htm
+#
+Disallow: /daily-quotidien/080306/be080306a-eng.htm
+Disallow: /daily-quotidien/080306/be080306a-fra.htm
+#
+Disallow: /stcsr/
+Disallow: /stcsrd/
+#
+Disallow: /misc/

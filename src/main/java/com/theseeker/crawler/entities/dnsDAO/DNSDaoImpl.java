@@ -89,13 +89,13 @@ public class DNSDaoImpl implements DNSDao {
 
     @Transactional
     public void updateTime(DNS dns){
-        System.out.println(dns.getDominio());
+//        System.out.println(dns.getDominio());
         em.merge(dns);
     }
 
     @Transactional
     public void insertDNS(DNS dns){
-        System.out.println(dns.toString());
+//        System.out.println(dns.toString());
         em.persist(dns);
     }
 }

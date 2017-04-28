@@ -42,6 +42,7 @@ public class OrderedURLDAOImpl implements OrderedURLDAO {
         Query query = em.createQuery("select d from OrderedURL d");
         List<OrderedURL> resultList = query.getResultList();
         for(OrderedURL o: resultList){
+//            System.out.println("ORDERED ITEM: " + o.getUrl());
             em.remove(o);
         }
         return resultList;
