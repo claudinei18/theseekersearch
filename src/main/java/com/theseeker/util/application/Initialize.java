@@ -49,7 +49,6 @@ public class Initialize {
                 try{
                     orderedURLDAO.insert(ourl);
                 }catch (Exception e){
-//                    System.out.println("url: " + ourl.getUrl());
                     e.printStackTrace();
                 }
 

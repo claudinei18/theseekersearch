@@ -195,10 +195,10 @@ public class Dispatcher {
         }
     };
 
-    @PreDestroy
+/*    @PreDestroy
     public void beandestroy() {
         if (executorService != null) {
             executorService.shutdownNow();
         }
-    }
+    }*/
 }
