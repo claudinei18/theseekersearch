@@ -53,12 +53,12 @@ public class Fetcher {
 
             Element taglang = doc.select("html").first();
             System.out.println(taglang.attr("lang"));
-//            if(  taglang.attr("lang").equals("en") ){
+            if( taglang.attr("lang").startsWith("en") || taglang.attr("lang").equals("") ){
                 seenURL sl = new seenURL(dominio, ip);
                 seenURLDAO.insertURL(sl);
-//            }else{
-//                doc = null;
-//            }
+            }else{
+                doc = null;
+            }
         }catch (Exception e) {
             System.out.println("ERRO: Não conseguiu coletar com o JSOUP.");
             e.printStackTrace();

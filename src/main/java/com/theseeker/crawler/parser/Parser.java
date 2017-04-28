@@ -105,6 +105,18 @@ public class Parser {
 
     public void parseFetchedPage(FetchedPages fp){
 
+        try {
+            System.out.println("PARSER RECEBEU: " + fp.getDominio());
+            um.recebendoUrl(getLinksFromPage(fp.getConteudo()), fp.getDominio());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String texto = getTextoDoHtml(fp.getConteudo());
+        Pages page = new Pages(fp.getIp(), fp.getDominio(), fp.getTitulo(), texto);
+        System.out.println("Filtrando: " + page);
+        filter.filtrar(page);
+
         /*try {
             um.recebendoUrl(getLinksFromPage(fp.getConteudo()), fp.getDominio());
         } catch (IOException e) {
@@ -115,7 +127,7 @@ public class Parser {
         Pages page = new Pages(fp.getIp(), fp.getDominio(), fp.getTitulo(), texto);
         filter.filtrar(page);*/
 
-        BasicThreadFactory factory = new BasicThreadFactory.Builder()
+        /*BasicThreadFactory factory = new BasicThreadFactory.Builder()
                 .namingPattern("callurlmanager-thread-%d").build();
 
         executorService1 =  Executors.newSingleThreadExecutor(factory);
@@ -144,7 +156,7 @@ public class Parser {
                 System.out.println("Filtrando: " + page);
                 filter.filtrar(page);
             }
-        });
+        });*/
 
     }
 }

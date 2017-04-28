@@ -24,9 +24,6 @@ public class Filter {
 
     public void filtrar(Pages page){
         pagesDAO.insertPage(page);
-
     }
-
-
 
 }
