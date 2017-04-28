@@ -1,0 +1,197 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>We are CNN</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="css/jobs.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="js/parallax.min.js"></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	
+	  ga('create', 'UA-75152182-1', 'auto');
+	  ga('send', 'pageview');
+	  /*
+.___________. __    __   _______     _______   ______   .______        ______  _______     __       _______.                                                 
+|           ||  |  |  | |   ____|   |   ____| /  __  \  |   _  \      /      ||   ____|   |  |     /       |                                                 
+`---|  |----`|  |__|  | |  |__      |  |__   |  |  |  | |  |_)  |    |  ,----'|  |__      |  |    |   (----`                                                 
+    |  |     |   __   | |   __|     |   __|  |  |  |  | |      /     |  |     |   __|     |  |     \   \                                                     
+    |  |     |  |  |  | |  |____    |  |     |  `--'  | |  |\  \----.|  `----.|  |____    |  | .----)   |                                                    
+    |__|     |__|  |__| |_______|   |__|      \______/  | _| `._____| \______||_______|   |__| |_______/                                                     
+     _______.___________..______        ______   .__   __.   _______    ____    __    ____  __  .___________. __    __     ____    ____  ______    __    __  
+    /       |           ||   _  \      /  __  \  |  \ |  |  /  _____|   \   \  /  \  /   / |  | |           ||  |  |  |    \   \  /   / /  __  \  |  |  |  | 
+   |   (----`---|  |----`|  |_)  |    |  |  |  | |   \|  | |  |  __      \   \/    \/   /  |  | `---|  |----`|  |__|  |     \   \/   / |  |  |  | |  |  |  | 
+    \   \       |  |     |      /     |  |  |  | |  . `  | |  | |_ |      \            /   |  |     |  |     |   __   |      \_    _/  |  |  |  | |  |  |  | 
+.----)   |      |  |     |  |\  \----.|  `--'  | |  |\   | |  |__| |       \    /\    /    |  |     |  |     |  |  |  |        |  |    |  `--'  | |  `--'  | 
+|_______/       |__|     | _| `._____| \______/  |__| \__|  \______|        \__/  \__/     |__|     |__|     |__|  |__|        |__|     \______/   \______/  
+____    ____  ______    __    __      _______   ______    __    __  .__   __.  _______      __    __       _______.                                          
+\   \  /   / /  __  \  |  |  |  |    |   ____| /  __  \  |  |  |  | |  \ |  | |       \    |  |  |  |     /       |                                          
+ \   \/   / |  |  |  | |  |  |  |    |  |__   |  |  |  | |  |  |  | |   \|  | |  .--.  |   |  |  |  |    |   (----`                                          
+  \_    _/  |  |  |  | |  |  |  |    |   __|  |  |  |  | |  |  |  | |  . `  | |  |  |  |   |  |  |  |     \   \                                              
+    |  |    |  `--'  | |  `--'  |    |  |     |  `--'  | |  `--'  | |  |\   | |  '--'  |   |  `--'  | .----)   |    __ __ __                                 
+    |__|     \______/   \______/     |__|      \______/   \______/  |__| \__| |_______/     \______/  |_______/    (__|__|__)                                
+.__   __.   ______   ____    __    ____           __    ______    __  .__   __.     __    __       _______.                                                  
+|  \ |  |  /  __  \  \   \  /  \  /   /          |  |  /  __  \  |  | |  \ |  |    |  |  |  |     /       |                                                  
+|   \|  | |  |  |  |  \   \/    \/   /           |  | |  |  |  | |  | |   \|  |    |  |  |  |    |   (----`                                                  
+|  . `  | |  |  |  |   \            /      .--.  |  | |  |  |  | |  | |  . `  |    |  |  |  |     \   \                                                      
+|  |\   | |  `--'  |    \    /\    /       |  `--'  | |  `--'  | |  | |  |\   |    |  `--'  | .----)   |    __ __ __                                         
+|__| \__|  \______/      \__/  \__/         \______/   \______/  |__| |__| \__|     \______/  |_______/    (__|__|__)                                        
+  ______ .__   __. .__   __.     _______   __    _______  __  .___________.    ___       __          ___     ___    __     __                                
+ /      ||  \ |  | |  \ |  |    |       \ |  |  /  _____||  | |           |   /   \     |  |        |__ \   / _ \  /_ |   / /                                
+|  ,----'|   \|  | |   \|  |    |  .--.  ||  | |  |  __  |  | `---|  |----`  /  ^  \    |  |           ) | | | | |  | |  / /_                                
+|  |     |  . `  | |  . `  |    |  |  |  ||  | |  | |_ | |  |     |  |      /  /_\  \   |  |          / /  | | | |  | | | '_ \                               
+|  `----.|  |\   | |  |\   |    |  '--'  ||  | |  |__| | |  |     |  |     /  _____  \  |  `----.    / /_  | |_| |  | | | (_) |                              
+ \______||__| \__| |__| \__|    |_______/ |__|  \______| |__|     |__|    /__/     \__\ |_______|   |____|  \___/   |_|  \___/                               
+                                                                                                                                                             
+*/
+	</script>
+</head>
+
+<body>
+	<div>	
+		<header>
+			<div>
+				<h1>We are CNN</h1>
+			</div>
+		</header>
+		<section>
+			<div class='full red'>
+				<h1>This is our story</h1>
+					<p>We are the now and the next. The power behind the people building the future.</p>
+					<p>We are born from the spirit of innovation.</p>
+					<p>We are created from the idea that people around the world want more, need more, deserve more.</p>
+					<p>We are the home of the global digital revolution.</p>
+					<p>We are CNN.</p>
+	
+			</div>
+			
+			<div class="half">
+				<div class="gray-box even-box">
+					<div>
+						<img src="images/icon1.png"/>
+						<h2>We are Designers</h2>
+						<p>We are app, web, motion, social, marketing, and animation designers. We see what others don’t, then we bring it to life. We help tell stories with images. Our work is seen in every single part of CNN Worldwide.</p>
+	
+					</div>
+					<div>
+						<img src="images/icon2.png"/>
+						<h2>We are Engineers</h2>
+						<p>We are the builders driving the digital universe. We are the team providing the power for every website, application and infrastructure that we create and maintain.</p>
+					</div>
+				</div>
+				<div class="black-box even-box">
+					<div>
+						<img src="images/icon4.png"/>
+						<h2>We are Programmers</h2>
+						<p>We are the newsroom ninjas skilled in many crafts. This is the home for the tech talent that wants to own a stake in the industry uprising. This is not business as usual.</p>
+					</div>
+					<div>
+						<img src="images/icon3.png"/>
+						<h2>We are Storytellers</h2>
+						<p>Forget what you know, this is a new video experience. Mobile, social, global - there is no platform untouched and no boundary unbroken. We ideate. We innovate. We create.</p>
+						
+					</div>
+					
+				</div>
+			</div>
+			
+			<div class="half-noCol">
+				<div class="red half-red">
+					<img src="images/icon5.png" class="icon-img desk-only"/>
+					<h1>We are Journalists</h1>
+					<p>We tell the stories people want to hear and listen to the stories people want to tell. It isn’t just the heart of what we do, it’s the heart and soul of who we are. We are journalists and we are here to do a job, but this is not work. This is our common bond. It is our purpose.</p>
+				</div>
+				<div class="pic-box story-telling pic-right"></div>
+			</div>	
+				
+			<div class="half-noCol">
+				<div class="pic-box pic-journalists pic-left">
+					
+				</div>
+				<div class='gray half-gray'>
+					<a href="http://bit.ly/CNNCareersInstagram" class='social-icon instagram'>Instagram</a>
+					<a href="http://bit.ly/CNNCareersFacebook" class='social-icon facebook'>Facebook</a>
+					<a href="http://bit.ly/CNNCareersTwitter" class='social-icon twitter'>Twitter </a>
+				</div>
+			</div>		
+			
+	
+			
+			<div class="full red">
+				<div class='big-text'>
+					<p>We are CNN.</p>
+					<p>Are you?</p>
+				</div>
+			</div>
+			
+	
+		
+			
+			<div class="full openings">
+				<h1>Who We Need</h1>
+				<p>
+					Please <a href="http://bit.ly/1lc6J9c">go here</a> for a complete listing of open positions at CNN Worldwide…
+				</p>
+				<p>
+					<select id="selfile">
+						<option value="openingsStatic">All</option>
+						<option value="comm">Communications</option>
+						<option value="operations">Operations</option>
+						<option value="cnnMoney">Global Verticals</option>
+						<option value="editorial">Editorial</option>
+						<option value="global">International</option>
+						<option value="product">Product &amp; Design</option>
+						<option value="tech">Technology</option>
+						<option value="video">Video</option>
+						<option value="audience">Audience Development</option>
+					</select>
+				</p>
+				<div class="three-col" id="read-openings">
+				</div>
+	<!-- 			<a href="#">See All Openings</a> -->
+			</div>
+			<div class="light-gray">
+				<h1>Perks & Benefits</h1>
+				<div>
+					<img src="images/icona1.png"/>
+					<h2>Best Health Insurance</h2>
+					<p>For you and your family.</p>
+				</div>
+				<div>
+					<img src="images/icona2.png"/>
+					<h2>Paid Time Off</h2>
+					<p>Please go visit your mother. Or an island.</p>
+				</div>
+				<div>
+					<img src="images/icona3.png"/>
+					<h2>401K Plan</h2>
+					<p>Save for your future. We’ll help.</p>
+				</div>
+				<div>
+					<img src="images/icona4.png"/>
+					<h2>Employee Discounts</h2>
+					<p>Deals to be had at hundreds of retailers.</p>
+				</div>
+			</div>
+	
+		</section>
+		
+		<footer>
+			<section>
+				<a href="http://www.cnn.com/">CNN</a>
+				<a href="http://www.cnn.com/specials/profiles">Team</a>
+				<a href="http://cnnpressroom.blogs.cnn.com/">Press</a>
+				<a href="http://turner.com/">Turner</a>
+			</section>
+			<p>Turner Broadcasting System, Inc. and its subsidiaries are Equal Opportunity Employers.</p>
+		</footer>
+	</div>
+	
+	<script src="js/jobs_s3.js"></script>
+</body>
+</html>
