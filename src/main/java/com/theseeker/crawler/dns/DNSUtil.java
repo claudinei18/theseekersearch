@@ -4,6 +4,7 @@ import com.sun.org.apache.xml.internal.security.c14n.Canonicalizer;
 import com.theseeker.crawler.entities.OrderedURL;
 import com.theseeker.crawler.entities.orderedURLsDAO.OrderedURLDAO;
 import com.theseeker.crawler.entities.queuedURL;
+import com.theseeker.crawler.entities.seenURL;
 import com.theseeker.crawler.fetcher.Fetcher;
 import com.theseeker.util.url.URLCanonicalizer;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
@@ -50,6 +51,46 @@ public class DNSUtil {
 
     @PostConstruct
     public void refreshCache(){
+        new Thread(t1).start();
+    }
+
+    private Runnable t1 = new Runnable() {
+        public void run() {
+            try{
+                while(true){
+                    List<DNS> listDNS = dnsDAO.getRobots();
+                    List<OrderedURL> listOrdered = orderedURLDAO.getList();
+
+                    Date now = new Date();
+                    long nowLong = now.getTime();
+
+                    for(OrderedURL ourl: listOrdered){
+                        String url = ourl.getUrl();
+                        InetAddress ip = getIp(ourl.getUrl());
+                        DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(url), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(url)));
+                        dnsDAO.remove(dns);
+                        dnsDAO.setTime(dns);
+                    }
+
+                    for(DNS dns: listDNS){
+                        if(nowLong - dns.getTime() >= 300){
+                            String dominio = dns.getDominio();
+
+                            InetAddress ip = getIp(dominio);
+
+                            DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(dominio)));
+                            dnsDAO.remove(newDns);
+                            dnsDAO.setTime(newDns);
+                        }
+                    }
+                }
+            } catch (Exception e){}
+
+        }
+    };
+
+    /*@PostConstruct
+    public void refreshCache(){
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
                 .namingPattern("dnsthread-%d").build();
 
@@ -86,6 +127,6 @@ public class DNSUtil {
                 }
             }
         });
-    }
+    }*/
 
 }
