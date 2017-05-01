@@ -61,6 +61,7 @@ public class Reader {
                     }
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
         }

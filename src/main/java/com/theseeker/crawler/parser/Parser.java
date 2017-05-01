@@ -116,7 +116,7 @@ public class Parser {
     public void parseFetchedPage(FetchedPages fp){
 
         try {
-            System.out.println("PARSER RECEBEU: " + fp.getDominio());
+//            System.out.println("PARSER RECEBEU: " + fp.getDominio());
             um.recebendoUrl(getLinksFromPage(fp.getConteudo()), fp.getDominio());
         } catch (IOException e) {
             System.out.println("Não conseguiu chamar o URL MANAGER");
@@ -125,7 +125,7 @@ public class Parser {
 
         String texto = getTextoDoHtml(fp.getConteudo());
         Pages page = new Pages(fp.getIp(), fp.getDominio(), fp.getTitulo(), texto);
-        System.out.println("Filtrando: " + page);
+//        System.out.println("Filtrando: " + page);
         filter.filtrar(page);
 
         /*try {

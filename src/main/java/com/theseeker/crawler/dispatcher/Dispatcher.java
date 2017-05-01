@@ -178,7 +178,7 @@ public class Dispatcher {
                     while (!(queuedURLDAO.queuedURLIsEmpty())) {
                         queuedURL qurl = queuedURLDAO.retrieveAndDelete();
                         if (qurl != null) {
-                            System.out.println("DISPATCHER PROCESSANDO: " + qurl.getDominio());
+//                            System.out.println("DISPATCHER PROCESSANDO: " + qurl.getDominio());
                             try {
                                 fetcher.start(qurl.getDominio());
                             } catch (IOException e) {

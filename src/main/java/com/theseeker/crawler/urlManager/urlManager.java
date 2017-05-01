@@ -96,7 +96,7 @@ public class urlManager {
     }
 
     public void recebendoUrl(List urls, String origemDaLista) throws IOException {
-        System.out.println("URLMANAGER RECEBEU: " + origemDaLista);
+//        System.out.println("URLMANAGER RECEBEU: " + origemDaLista);
         List htmlUrl = new ArrayList<String>();
         List noHtmlUrl = new ArrayList<String>();
 

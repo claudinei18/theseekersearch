@@ -51,7 +51,9 @@ public class DNSDaoImpl implements DNSDao {
 
     @Transactional
     public void setTime(DNS dns){
-        em.persist(dns);
+        if(getDNS(dns.getDominio()) == null){
+            em.persist(dns);
+        }
     }
 
     @Transactional

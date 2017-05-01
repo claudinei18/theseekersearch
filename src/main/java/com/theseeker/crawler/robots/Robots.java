@@ -138,7 +138,7 @@ public class Robots {
                     for(DNS dns: listDNS){
                         dnsDAO.remove(dns);
                         dns.setRobots(true);
-                        dnsDAO.setTime(dns);
+
 
                         String[] x = dns.getDominio().split("/");
                         try {
@@ -193,13 +193,23 @@ public class Robots {
                             e.printStackTrace();
                         }
 
+                        String[] aux = dns.getDominio().split("//");
+                        String xx = aux[0] + "//" + getDomainName(dns.getDominio());
+
+                        dns.setDominio(xx); //Setando url para o dominio
+                        try{
+                            dnsDAO.setTime(dns);
+                            System.out.println(dns.getDominio());
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
                     }
                 }
-            } catch (Exception e){}
+            } catch (Exception e){ e.printStackTrace(); }
 
         }
     };
-
 
 
     public void downloadRobots(String url) throws URISyntaxException, IOException {

@@ -70,12 +70,7 @@ public class DNSUtil {
                         String url = ourl.getUrl();
                         InetAddress ip = getIp(ourl.getUrl());
 
-                        String[] aux = url.split("//");
-                        String x = aux[0] + "//" + getDomain(url);
-                        System.out.println("75" + x);
-
-                        x = url;
-                        DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(x), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(url)));
+                        DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(url), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(url)));
                         dnsDAO.remove(dns);
                         dnsDAO.setTime(dns);
                     }
@@ -85,13 +80,7 @@ public class DNSUtil {
                             String dominio = dns.getDominio();
                             InetAddress ip = getIp(dominio);
 
-                            String[] aux = dominio.split("//");
-                            String x = aux[0] + "//" + getDomain(dominio);
-                            System.out.println("88" + x);
-
-                            x = dominio;
-
-                            DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(x), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(dominio)));
+                            DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(dominio)));
                             dnsDAO.remove(newDns);
                             dnsDAO.setTime(newDns);
                         }
