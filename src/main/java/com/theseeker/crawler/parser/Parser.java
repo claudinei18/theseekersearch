@@ -55,7 +55,11 @@ public class Parser {
 
         for(Element e: es){
             String link = e.attr("abs:href");
-            if(     (!link.contains(".svg"))  &&
+            if( link.startsWith("/wiki/") ){
+                link = "https://en.wikipedia.org" + link;
+            }
+            if(     (!link.isEmpty() )        &&
+                    (!link.contains(".svg"))  &&
                     (!link.endsWith(".asx"))  &&     // Windows video
                     (!link.endsWith((".bmp")) &&     // bitmap image
                     (!link.endsWith(".css"))  &&     // Cascading Style Sheet
@@ -90,8 +94,14 @@ public class Parser {
                     (!link.endsWith(".js")) )){
                 links.add(link);
             }else{
-                RejectedURL rurl = new RejectedURL(link, "", "Robots");
-                rejectedURLDAO.insertURL(rurl);
+                try{
+                    if( !link.isEmpty() ){
+                        RejectedURL rurl = new RejectedURL(link, "", "Robots");
+                        rejectedURLDAO.insertURL(rurl);
+                    }
+                } catch (Exception ee){
+                    ee.printStackTrace();
+                }
             }
         }
         return links;
@@ -109,6 +119,7 @@ public class Parser {
             System.out.println("PARSER RECEBEU: " + fp.getDominio());
             um.recebendoUrl(getLinksFromPage(fp.getConteudo()), fp.getDominio());
         } catch (IOException e) {
+            System.out.println("Não conseguiu chamar o URL MANAGER");
             e.printStackTrace();
         }
 

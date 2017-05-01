@@ -47,7 +47,7 @@ public class Fetcher {
         Document doc = null;
         try{
             doc = Jsoup.connect(dominio)
-                    .userAgent("SeekerRobot1.0")
+                    .userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.90 Safari/537.36")
                     .header("Accept-Language", "en")
                     .get();
 
@@ -60,7 +60,7 @@ public class Fetcher {
                 doc = null;
             }
         }catch (Exception e) {
-            System.out.println("ERRO: Não conseguiu coletar com o JSOUP.");
+            System.out.println("ERRO: Não conseguiu coletar com o JSOUP. " + dominio);
             e.printStackTrace();
         }
 

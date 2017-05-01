@@ -1,7 +1,13 @@
 package com.theseeker.crawler.urlManager;
 
+import com.theseeker.crawler.entities.RejectedURL;
+import com.theseeker.crawler.entities.rejectedURL.rejectedURLDAO;
 import com.theseeker.crawler.merger.Merger;
 import com.theseeker.util.url.URLCanonicalizer;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,22 +29,42 @@ public class urlManager {
     @Autowired
     Merger m;
 
-    public urlManager(){
+    int countLinksOff= 0;
+
+    public urlManager() {
 
     }
 
-    public boolean isHtml(String dominio) throws IOException {
+    public boolean isHtml(String dominio) {
         boolean resp = false;
 
         dominio = URLCanonicalizer.getCanonicalURL(dominio);
         URL url = null;
-        try{
+        try {
             url = new URL(dominio);
-        }catch (Exception e){
+        } catch (Exception e) {
+            System.out.println(dominio);
+            e.printStackTrace();
         }
 
-        if(url != null) {
-            HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
+        if (url != null) {
+            try {
+                Connection.Response res = Jsoup.connect(dominio).timeout(1000).execute();
+                String contentType = res.contentType();
+
+                Document doc = Jsoup.parse(res.toString());
+                Element taglang = doc.select("html").first();
+
+                if (contentType != null) {
+                    if (contentType.startsWith("text/html") &&
+                            (taglang.attr("lang").startsWith("en") || taglang.attr("lang").equals("")) ) {
+                        resp = true;
+                    }else{
+
+                    }
+                }
+
+            /*HttpURLConnection urlc = (HttpURLConnection)url.openConnection();
             urlc.setAllowUserInteraction( false );
             urlc.setDoInput( true );
             urlc.setDoOutput( false );
@@ -59,7 +85,12 @@ public class urlManager {
             }catch (Exception e){
                 System.out.println("Erro ao conectar e requisitar o contentType da pagina: " + dominio);
                 e.printStackTrace();
+            }*/
+            } catch (Exception e) {
+                System.out.println("Erro ao requisitar content-type " + dominio);
+                countLinksOff++;
             }
+
         }
         return resp;
     }
@@ -69,12 +100,19 @@ public class urlManager {
         List htmlUrl = new ArrayList<String>();
         List noHtmlUrl = new ArrayList<String>();
 
+        /*for(Object e: urls){
+            System.out.println(e.toString());
+        }*/
+
         for (Object element : urls) {
-            if(element != null){
-                if( isHtml( element.toString() )){
+            if (element != null) {/*
+                if(countLinksOff > 50){
+                    break;
+                }*/
+                if (isHtml(element.toString())) {
                     htmlUrl.add(element);
 
-                }else{
+                } else {
                     noHtmlUrl.add(element);
                 }
             }

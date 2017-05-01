@@ -32,32 +32,36 @@ public class Reader {
 
     }
 
-
     @PostConstruct
-    public void startReader(){
+    public void initExecutor(){
+        executorService = Executors.newFixedThreadPool(10);
+        startReader();
+    }
+
+
+    public void startReader() {
         new Thread(t1).start();
     }
 
     private Runnable t1 = new Runnable() {
         public void run() {
-            try{
+            try {
                 while (true) {
                     while (!(fpDao.fetchedPageIsEmpty())) {
                         FetchedPages fp = fpDao.retrieveAndDelete();
                         if (fp != null) {
-                            System.out.println("READER LEU: " + fp.getDominio());
-                            parser.parseFetchedPage(fp);
+                            executorService.submit(new Runnable() {
+                                public void run() {
+                                    // some code to run in parallel
+                                    System.out.println("READER LEU: " + fp.getDominio());
+                                    parser.parseFetchedPage(fp);
+                                }
+                            });
                         }
-                    }
-                    try {
-                        synchronized (this) {
-                            this.wait(2000);
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
-            } catch (Exception e){}
+            } catch (Exception e) {
+            }
 
         }
     };

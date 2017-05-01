@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -67,18 +69,29 @@ public class DNSUtil {
                     for(OrderedURL ourl: listOrdered){
                         String url = ourl.getUrl();
                         InetAddress ip = getIp(ourl.getUrl());
-                        DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(url), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(url)));
+
+                        String[] aux = url.split("//");
+                        String x = aux[0] + "//" + getDomain(url);
+                        System.out.println("75" + x);
+
+                        x = url;
+                        DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(x), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(url)));
                         dnsDAO.remove(dns);
                         dnsDAO.setTime(dns);
                     }
 
                     for(DNS dns: listDNS){
-                        if(nowLong - dns.getTime() >= 300){
+                        if(nowLong - dns.getTime() >= 3000000){
                             String dominio = dns.getDominio();
-
                             InetAddress ip = getIp(dominio);
 
-                            DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(dominio)));
+                            String[] aux = dominio.split("//");
+                            String x = aux[0] + "//" + getDomain(dominio);
+                            System.out.println("88" + x);
+
+                            x = dominio;
+
+                            DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(x), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(dominio)));
                             dnsDAO.remove(newDns);
                             dnsDAO.setTime(newDns);
                         }
@@ -88,6 +101,16 @@ public class DNSUtil {
 
         }
     };
+
+    public String getDomain(String url){
+        URI uri = null;
+        try {
+            uri = new URI(url);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return uri.getHost();
+    }
 
     /*@PostConstruct
     public void refreshCache(){
