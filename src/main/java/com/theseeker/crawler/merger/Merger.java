@@ -22,7 +22,7 @@ public class Merger {
     }
 
     public void execute(List urls, String origemdalista){
-        System.out.println("MERGE RECEBEU" + origemdalista);
+        System.out.println("MERGE RECEBEU " + origemdalista);
         for(Object e: urls){
             OrderedURL ourl = new OrderedURL(e.toString(), 0);
             orderedURLDAO.insert(ourl);

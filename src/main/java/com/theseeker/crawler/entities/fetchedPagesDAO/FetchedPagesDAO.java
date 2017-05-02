@@ -3,6 +3,8 @@ package com.theseeker.crawler.entities.fetchedPagesDAO;
 import com.theseeker.crawler.entities.FetchedPages;
 import org.springframework.dao.DataAccessException;
 
+import java.util.List;
+
 /**
  * Created by claudinei on 28/03/17.
  */

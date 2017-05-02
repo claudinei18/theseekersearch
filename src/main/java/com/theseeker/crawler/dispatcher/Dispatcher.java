@@ -175,6 +175,7 @@ public class Dispatcher {
         public void run() {
             try{
                 while (true) {
+                    System.out.println("dispatcher");
                     while (!(queuedURLDAO.queuedURLIsEmpty())) {
                         queuedURL qurl = queuedURLDAO.retrieveAndDelete();
                         if (qurl != null) {
@@ -190,7 +191,9 @@ public class Dispatcher {
 
                     }
                 }
-            } catch (Exception e){}
+            } catch (Exception e){
+                e.printStackTrace();
+            }
 
         }
     };

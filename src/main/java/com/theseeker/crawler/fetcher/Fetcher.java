@@ -50,22 +50,24 @@ public class Fetcher {
 
         try{
             doc = Jsoup.connect(dominio)
-                    .userAgent("TheSeeker2.1")
+                    .userAgent("TheSeeker2.2")
                     .header("Accept-Language", "en")
+                    .timeout(3000)
                     .get();
 
 
             Element taglang = doc.select("html").first();
-            System.out.println(taglang.attr("lang"));
+
             if( taglang.attr("lang").startsWith("en") || taglang.attr("lang").equals("") ){
+                System.out.println(taglang.attr("lang"));
                 seenURL sl = new seenURL(dominio, ip);
                 seenURLDAO.insertURL(sl);
             }else{
                 doc = null;
             }
         }catch (Exception e) {
-            System.out.println("ERRO: Não conseguiu coletar com o JSOUP. " + dominio);
-            e.printStackTrace();
+            /*System.out.println("ERRO: Não conseguiu coletar com o JSOUP. " + dominio);
+            e.printStackTrace();*/
         }
 
         return doc;
@@ -88,8 +90,6 @@ public class Fetcher {
 
         DNS dns = dnsDao.getDNS(main);
 
-
-
         //Acessar através do IP
 
         //Acessando atraves do LINK
@@ -98,9 +98,8 @@ public class Fetcher {
             FetchedPages fp = new FetchedPages(dns.getIp(), dominio, doc.title(), doc.html());
             //Chamando o Writer para escrever no banco de dados
             writer.writerInFetchedPages(fp);
-        }else{
-
         }
+
     }
 
     public String getDomainName(String url) throws URISyntaxException {

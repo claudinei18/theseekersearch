@@ -4,6 +4,7 @@ import com.theseeker.crawler.entities.FetchedPages;
 import com.theseeker.crawler.entities.fetchedPagesDAO.FetchedPagesDAO;
 import com.theseeker.crawler.parser.Parser;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
+import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -33,8 +35,8 @@ public class Reader {
     }
 
     @PostConstruct
-    public void initExecutor(){
-        executorService = Executors.newFixedThreadPool(10);
+    public void initExecutor() {
+        executorService = Executors.newFixedThreadPool(1);
         startReader();
     }
 
@@ -47,6 +49,7 @@ public class Reader {
         public void run() {
             try {
                 while (true) {
+                    System.out.println("reader");
                     while (!(fpDao.fetchedPageIsEmpty())) {
                         FetchedPages fp = fpDao.retrieveAndDelete();
                         if (fp != null) {
@@ -57,6 +60,7 @@ public class Reader {
                                     parser.parseFetchedPage(fp);
                                 }
                             });
+
                         }
                     }
                 }

@@ -96,7 +96,7 @@ public class Parser {
             }else{
                 try{
                     if( !link.isEmpty() ){
-                        RejectedURL rurl = new RejectedURL(link, "", "Robots");
+                        RejectedURL rurl = new RejectedURL(link, "", "Parser");
                         rejectedURLDAO.insertURL(rurl);
                     }
                 } catch (Exception ee){

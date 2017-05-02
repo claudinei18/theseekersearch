@@ -31,6 +31,7 @@ public class DNSDaoImpl implements DNSDao {
     @Override
     public List<DNS> getRobots() throws DataAccessException {
         Query query = em.createQuery("select d from DNS d where d.robots = false");
+        query.setMaxResults(30);
         List<DNS> resultList = query.getResultList();
         return resultList;
     }

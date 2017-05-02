@@ -109,12 +109,14 @@ public class urlManager {
                 if(countLinksOff > 50){
                     break;
                 }*/
-                if (isHtml(element.toString())) {
+                /*if (isHtml(element.toString())) {
                     htmlUrl.add(element);
 
                 } else {
                     noHtmlUrl.add(element);
-                }
+                }*/
+
+                htmlUrl.add(element);
             }
         }
 

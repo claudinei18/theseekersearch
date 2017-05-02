@@ -60,6 +60,7 @@ public class DNSUtil {
         public void run() {
             try{
                 while(true){
+                    System.out.println("start-dnsutil");
                     List<DNS> listDNS = dnsDAO.getRobots();
                     List<OrderedURL> listOrdered = orderedURLDAO.getList();
 
@@ -85,6 +86,8 @@ public class DNSUtil {
                             dnsDAO.setTime(newDns);
                         }
                     }
+                    System.out.println("fim-dnsutil");
+                    Thread.sleep(30000);
                 }
             } catch (Exception e){}
 

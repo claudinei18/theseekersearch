@@ -1,6 +1,7 @@
 package com.theseeker.crawler.entities.fetchedPagesDAO;
 
 import com.theseeker.crawler.entities.FetchedPages;
+import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by claudinei on 28/03/17.

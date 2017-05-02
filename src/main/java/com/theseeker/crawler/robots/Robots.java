@@ -125,7 +125,7 @@ public class Robots {
     }*/
 
     @PostConstruct
-    public void teste(){
+    public void startRobots(){
         new Thread(t1).start();
     }
 
@@ -133,6 +133,7 @@ public class Robots {
         public void run() {
             try{
                 while(true){
+                    System.out.println("start-robots");
                     List<DNS> listDNS = dnsDAO.getRobots();
 
                     for(DNS dns: listDNS){
@@ -199,12 +200,15 @@ public class Robots {
                         dns.setDominio(xx); //Setando url para o dominio
                         try{
                             dnsDAO.setTime(dns);
-                            System.out.println(dns.getDominio());
                         }catch (Exception e){
                             e.printStackTrace();
                         }
 
                     }
+
+                    System.out.println("end-robots");
+
+                    Thread.sleep(30000);
                 }
             } catch (Exception e){ e.printStackTrace(); }
 
@@ -236,8 +240,6 @@ public class Robots {
                 } catch (IOException e) {
 
                 }
-
-
 
                 writer.close();
             } catch (IOException e) {
