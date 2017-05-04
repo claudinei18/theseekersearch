@@ -1,5 +1,6 @@
 package com.theseeker.crawler.entities.rejectedURL;
 
+import com.theseeker.crawler.entities.OrderedURL;
 import com.theseeker.crawler.entities.RejectedURL;
 import com.theseeker.crawler.entities.queuedURL;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,15 @@ public class rejectedURLDAOImpl implements rejectedURLDAO {
 
     @Transactional
     public void insertURL(RejectedURL rurl){
-        em.persist(rurl);
+        if(! exists(rurl)){
+            em.persist(rurl);
+        }
+    }
+
+    public boolean exists(RejectedURL rurl){
+        List<Object> o = em.createQuery("SELECT t FROM RejectedURL t where t.dominio = :dominio")
+                .setParameter("dominio", rurl.getDominio()).getResultList();
+
+        return (! o.isEmpty());
     }
 }

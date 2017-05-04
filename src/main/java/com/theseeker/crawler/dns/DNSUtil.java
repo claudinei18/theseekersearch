@@ -76,6 +76,7 @@ public class DNSUtil {
     private Runnable t2 = new Runnable() {
         public void run() {
             while (true) {
+                System.out.println("get do ordered");
                 List<OrderedURL> listOrdered = orderedURLDAO.getList();
 
                 Date now = new Date();
@@ -107,6 +108,8 @@ public class DNSUtil {
 
                 }
 
+                System.out.println("fim do ordered");
+
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -120,6 +123,7 @@ public class DNSUtil {
     private Runnable t1 = new Runnable() {
         public void run() {
             while (true) {
+                System.out.println("get do dns");
                 List<DNS> listDNS = dnsDAO.getRobots();
                 /*System.out.println("get do ordered");
                 List<OrderedURL> listOrdered = orderedURLDAO.getList();*/
@@ -152,20 +156,24 @@ public class DNSUtil {
                             String dom = getDomain(urlCanonica);
                             if (dom != null) {
                                 InetAddress ip = getIp(dominio);
-                                DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom));
+                                if(ip != null){
+                                    DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom));
 
 
-                                try {
-                                    dnsDAO.remove(dns);
-                                    dnsDAO.insertDNS(newDns);
-                                } catch (Exception e) {
+                                    try {
+                                        dnsDAO.remove(dns);
+                                        dnsDAO.insertDNS(newDns);
+                                    } catch (Exception e) {
 
+                                    }
                                 }
+
                             }
                         }
                     }
                 }
 
+                System.out.println("fim do dns");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {

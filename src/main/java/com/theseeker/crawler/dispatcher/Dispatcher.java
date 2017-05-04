@@ -167,6 +167,11 @@ public class Dispatcher {
     }*/
 
     @PostConstruct
+    public void initExecutor(){
+        executorService = Executors.newFixedThreadPool(10);
+        startDispatcher();
+    }
+
     public void startDispatcher() {
         new Thread(t1).start();
     }
@@ -177,15 +182,21 @@ public class Dispatcher {
                 while (!(queuedURLDAO.queuedURLIsEmpty())) {
                     queuedURL qurl = queuedURLDAO.retrieveAndDelete();
                     if (qurl != null) {
+                        executorService.submit(new Runnable() {
+                            public void run() {
+                                // some code to run in parallel
 //                            System.out.println("DISPATCHER PROCESSANDO: " + qurl.getDominio());
-                        try {
-                            fetcher.start(qurl);
-                            seenURL sl = new seenURL(qurl.getDominio(), qurl.getIp());
-                            seenURLDAO.insertURL(sl);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            //INSERIR EM REJECTED
-                        }
+                                try {
+                                    fetcher.start(qurl);
+                                    seenURL sl = new seenURL(qurl.getDominio(), qurl.getIp());
+                                    seenURLDAO.insertURL(sl);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    //INSERIR EM REJECTED
+                                }
+                            }
+                        });
+
                     }
 
                 }
