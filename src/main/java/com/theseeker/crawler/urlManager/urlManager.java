@@ -43,8 +43,8 @@ public class urlManager {
         try {
             url = new URL(dominio);
         } catch (Exception e) {
-            System.out.println(dominio);
-            e.printStackTrace();
+            /*System.out.println(dominio);
+            e.printStackTrace();*/
         }
 
         if (url != null) {
@@ -96,7 +96,7 @@ public class urlManager {
     }
 
     public void recebendoUrl(List urls, String origemDaLista) throws IOException {
-        System.out.println("URLMANAGER RECEBEU: " + origemDaLista);
+//        System.out.println("URLMANAGER RECEBEU: " + origemDaLista);
         List htmlUrl = new ArrayList<String>();
         List noHtmlUrl = new ArrayList<String>();
 
@@ -109,12 +109,14 @@ public class urlManager {
                 if(countLinksOff > 50){
                     break;
                 }*/
-                if (isHtml(element.toString())) {
+                /*if (isHtml(element.toString())) {
                     htmlUrl.add(element);
 
                 } else {
                     noHtmlUrl.add(element);
-                }
+                }*/
+
+                htmlUrl.add(element);
             }
         }
 

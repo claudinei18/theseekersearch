@@ -53,7 +53,7 @@ public class Reader {
                             executorService.submit(new Runnable() {
                                 public void run() {
                                     // some code to run in parallel
-                                    System.out.println("READER LEU: " + fp.getDominio());
+//                                    System.out.println("READER LEU: " + fp.getDominio());
                                     parser.parseFetchedPage(fp);
                                 }
                             });

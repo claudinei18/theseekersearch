@@ -1,4 +1,0 @@
-User-Agent: *
-Disallow: /copyright.php
-Disallow: /privacy.php*
-Allow: /

@@ -40,6 +40,7 @@ public class OrderedURLDAOImpl implements OrderedURLDAO {
     @Transactional
     public List<OrderedURL> getList(){
         Query query = em.createQuery("select d from OrderedURL d");
+        query.setMaxResults(100);
         List<OrderedURL> resultList = query.getResultList();
         for(OrderedURL o: resultList){
 //            System.out.println("ORDERED ITEM: " + o.getUrl());

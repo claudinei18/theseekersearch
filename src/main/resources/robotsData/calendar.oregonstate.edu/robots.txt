@@ -1,7 +1,0 @@
-# This robots.txt file has been created to prevent the user-agent
-# ia_archiver (otherwise known as the WayBack Machine)
-# from getting into the recursive scripts and old content.
-User-agent: ia_archiver
-Disallow: /cgi-bin/
-Disallow: /tools/
-Disallow: /old/

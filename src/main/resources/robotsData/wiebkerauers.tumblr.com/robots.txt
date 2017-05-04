@@ -1,7 +1,0 @@
-Sitemap: http://wiebkerauers.tumblr.com/sitemap.xml
-
-User-agent: *
-Disallow: /private
-Disallow: /random
-Disallow: /day
-Crawl-delay: 1

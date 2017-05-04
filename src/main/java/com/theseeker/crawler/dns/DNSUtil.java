@@ -1,6 +1,7 @@
 package com.theseeker.crawler.dns;
 
 import com.sun.org.apache.xml.internal.security.c14n.Canonicalizer;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.theseeker.crawler.entities.OrderedURL;
 import com.theseeker.crawler.entities.orderedURLsDAO.OrderedURLDAO;
 import com.theseeker.crawler.entities.queuedURL;
@@ -24,6 +25,7 @@ import java.util.concurrent.Executors;
 
 import com.theseeker.crawler.entities.dnsDAO.DNSDao;
 import com.theseeker.crawler.entities.DNS;
+
 import java.lang.reflect.Field;
 
 /**
@@ -41,9 +43,19 @@ public class DNSUtil {
 
     public static InetAddress getIp(String dominio) {
         try {
-            InetAddress ip = InetAddress.getByName(new URL(dominio).getHost());
-            return ip;
+            URL url = new URL(dominio);
+            if (url != null) {
+                String host = url.getHost();
+                if (host != null) {
+                    try{
+                        InetAddress ip = InetAddress.getByName(host);
+                        return ip;
+                    }catch (Exception e){
 
+                    }
+                }
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,64 +64,132 @@ public class DNSUtil {
     }
 
     @PostConstruct
-    public void refreshCache(){
+    public void refreshCache() {
         new Thread(t1).start();
     }
 
-    private Runnable t1 = new Runnable() {
+    @PostConstruct
+    public void refreshCache2() {
+        new Thread(t2).start();
+    }
+
+    private Runnable t2 = new Runnable() {
         public void run() {
-            try{
-                while(true){
-                    List<DNS> listDNS = dnsDAO.getRobots();
-                    List<OrderedURL> listOrdered = orderedURLDAO.getList();
+            while (true) {
+                List<OrderedURL> listOrdered = orderedURLDAO.getList();
 
-                    Date now = new Date();
-                    long nowLong = now.getTime();
+                Date now = new Date();
+                long nowLong = now.getTime();
 
-                    for(OrderedURL ourl: listOrdered){
-                        String url = ourl.getUrl();
-                        InetAddress ip = getIp(ourl.getUrl());
+                for (OrderedURL ourl : listOrdered) {
+                    String url = ourl.getUrl();
 
-                        String[] aux = url.split("//");
-                        String x = aux[0] + "//" + getDomain(url);
-                        System.out.println("75" + x);
+                    /*String[] aux = url.split("//");
+                    String x = aux[0] + "//" + getDomain(url);
+                    System.out.println("75" + x);*/
 
-                        x = url;
-                        DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(x), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(url)));
-                        dnsDAO.remove(dns);
-                        dnsDAO.setTime(dns);
-                    }
 
-                    for(DNS dns: listDNS){
-                        if(nowLong - dns.getTime() >= 3000000){
-                            String dominio = dns.getDominio();
-                            InetAddress ip = getIp(dominio);
+                    String urlCanonica = URLCanonicalizer.getCanonicalURL(url);
+                    if (urlCanonica != null) {
+                        String dom = getDomain(urlCanonica);
+                        if (dom != null) {
+                            InetAddress ip = getIp(ourl.getUrl());
+                            if (ip != null) {
+                                DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(url), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom));
+                                try {
+                                    dnsDAO.insertDNS(dns);
+                                } catch (Exception e) {
 
-                            String[] aux = dominio.split("//");
-                            String x = aux[0] + "//" + getDomain(dominio);
-                            System.out.println("88" + x);
-
-                            x = dominio;
-
-                            DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(x), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(URLCanonicalizer.getCanonicalURL(dominio)));
-                            dnsDAO.remove(newDns);
-                            dnsDAO.setTime(newDns);
+                                }
+                            }
                         }
                     }
+
                 }
-            } catch (Exception e){}
+
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
         }
     };
 
-    public String getDomain(String url){
+    private Runnable t1 = new Runnable() {
+        public void run() {
+            while (true) {
+                List<DNS> listDNS = dnsDAO.getRobots();
+                /*System.out.println("get do ordered");
+                List<OrderedURL> listOrdered = orderedURLDAO.getList();*/
+
+                Date now = new Date();
+                long nowLong = now.getTime();
+
+                /*for (OrderedURL ourl : listOrdered) {
+                    String url = ourl.getUrl();
+                    InetAddress ip = getIp(ourl.getUrl());
+
+                    *//*String[] aux = url.split("//");
+                    String x = aux[0] + "//" + getDomain(url);
+                    System.out.println("75" + x);*//*
+
+                    String dom = getDomain(URLCanonicalizer.getCanonicalURL(url));
+
+                    DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(url), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom));
+
+                    dnsDAO.insertDNS(dns);
+                }*/
+
+
+                for (DNS dns : listDNS) {
+                    if (nowLong - dns.getTime() >= 3000000) {
+                        String dominio = dns.getDominio();
+
+                        String urlCanonica = URLCanonicalizer.getCanonicalURL(dominio);
+                        if (urlCanonica != null) {
+                            String dom = getDomain(urlCanonica);
+                            if (dom != null) {
+                                InetAddress ip = getIp(dominio);
+                                DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom));
+
+
+                                try {
+                                    dnsDAO.remove(dns);
+                                    dnsDAO.insertDNS(newDns);
+                                } catch (Exception e) {
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    };
+
+    public String getDomain(String url) {
         URI uri = null;
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
+            System.out.println(url);
             e.printStackTrace();
+            return null;
         }
-        return uri.getHost();
+        if (uri == null) {
+            return null;
+        } else {
+            return uri.getHost();
+        }
     }
 
     /*@PostConstruct

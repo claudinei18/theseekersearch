@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /wp-admin/
-Sitemap: http://tenso.blog.br/sitemap.xml.gz
-Sitemap: http://tenso.blog.br/sitemap.xml

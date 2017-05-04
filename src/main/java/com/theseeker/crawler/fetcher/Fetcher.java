@@ -6,6 +6,7 @@ import com.theseeker.crawler.entities.DNS;
 import com.theseeker.crawler.entities.FetchedPages;
 import com.theseeker.crawler.entities.dnsDAO.DNSDao;
 import com.theseeker.crawler.entities.fetchedPagesDAO.FetchedPagesDAO;
+import com.theseeker.crawler.entities.queuedURL;
 import com.theseeker.crawler.entities.seenURL;
 import com.theseeker.crawler.entities.seenURLDAO.seenURLDAO;
 import com.theseeker.crawler.writeReader.Writer;
@@ -47,12 +48,13 @@ public class Fetcher {
         Document doc = null;
         try{
             doc = Jsoup.connect(dominio)
-                    .userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.90 Safari/537.36")
+                    .userAgent("TheSeeker1.0")
                     .header("Accept-Language", "en")
+                    .timeout(3000)
                     .get();
 
             Element taglang = doc.select("html").first();
-            System.out.println(taglang.attr("lang"));
+//            System.out.println(taglang.attr("lang"));
             if( taglang.attr("lang").startsWith("en") || taglang.attr("lang").equals("") ){
                 seenURL sl = new seenURL(dominio, ip);
                 seenURLDAO.insertURL(sl);
@@ -60,8 +62,8 @@ public class Fetcher {
                 doc = null;
             }
         }catch (Exception e) {
-            System.out.println("ERRO: Não conseguiu coletar com o JSOUP. " + dominio);
-            e.printStackTrace();
+            /*System.out.println("ERRO: Não conseguiu coletar com o JSOUP. " + dominio);
+            e.printStackTrace();*/
         }
 
         return doc;
@@ -75,17 +77,15 @@ public class Fetcher {
         }
     }
 
-    public void start(String dominio) throws IOException {
-        System.out.println("FETCHER PROCESSANDO: " + dominio);
-        //Procuro se existe no banco de dns
-        DNS dns = dnsDao.getDNS(dominio);
+    public void start(queuedURL qurl) throws IOException {
+//        System.out.println("FETCHER PROCESSANDO: " + qurl.getDominio());
 
         //Acessar através do IP
 
         //Acessando atraves do LINK
-        Document doc = getHtmlContent(dominio, dns.getIp());
+        Document doc = getHtmlContent(qurl.getDominio(), qurl.getIp());
         if(doc != null){
-            FetchedPages fp = new FetchedPages(dns.getIp(), dominio, doc.title(), doc.html());
+            FetchedPages fp = new FetchedPages(qurl.getIp(), qurl.getDominio(), doc.title(), doc.html());
 
             //Chamando o Writer para escrever no banco de dados
             writer.writerInFetchedPages(fp);

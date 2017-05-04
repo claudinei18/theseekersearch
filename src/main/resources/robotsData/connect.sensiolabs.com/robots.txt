@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://connect.sensiolabs.com/sitemap.xml
-Disallow: /api/*
-Disallow: /api/images
-Disallow: /api/alternates
-Disallow: /profile/*.png

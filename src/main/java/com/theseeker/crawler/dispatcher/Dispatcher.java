@@ -167,30 +167,34 @@ public class Dispatcher {
     }*/
 
     @PostConstruct
-    public void startDispatcher(){
+    public void startDispatcher() {
         new Thread(t1).start();
     }
 
     private Runnable t1 = new Runnable() {
         public void run() {
-            try{
-                while (true) {
-                    while (!(queuedURLDAO.queuedURLIsEmpty())) {
-                        queuedURL qurl = queuedURLDAO.retrieveAndDelete();
-                        if (qurl != null) {
-                            System.out.println("DISPATCHER PROCESSANDO: " + qurl.getDominio());
-                            try {
-                                fetcher.start(qurl.getDominio());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            while (true) {
+                while (!(queuedURLDAO.queuedURLIsEmpty())) {
+                    queuedURL qurl = queuedURLDAO.retrieveAndDelete();
+                    if (qurl != null) {
+//                            System.out.println("DISPATCHER PROCESSANDO: " + qurl.getDominio());
+                        try {
+                            fetcher.start(qurl);
                             seenURL sl = new seenURL(qurl.getDominio(), qurl.getIp());
                             seenURLDAO.insertURL(sl);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            //INSERIR EM REJECTED
                         }
-
                     }
+
                 }
-            } catch (Exception e){}
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
         }
     };
