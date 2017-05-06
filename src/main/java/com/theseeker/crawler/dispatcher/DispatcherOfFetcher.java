@@ -1,7 +1,8 @@
 package com.theseeker.crawler.dispatcher;
 
-import com.theseeker.crawler.entities.FetchedPages;
+import com.theseeker.crawler.entities.RejectedURL;
 import com.theseeker.crawler.entities.queuedURL;
+import com.theseeker.crawler.entities.rejectedURL.rejectedURLDAO;
 import com.theseeker.crawler.fetcher.Fetcher;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,16 @@ import java.util.concurrent.*;
  * Created by claudinei on 28/03/17
  */
 @Component
-public class Dispatcher {
+public class DispatcherOfFetcher {
 
     @Autowired
     ApplicationContext ctx;
 
     @Autowired
     queuedURLDAO queuedURLDAO;
+
+    @Autowired
+    rejectedURLDAO rejectedURLDAO;
 
     @Autowired
     seenURLDAO seenURLDAO;
@@ -48,7 +52,7 @@ public class Dispatcher {
     ExecutorService executorService;
 
 
-    public Dispatcher() {
+    public DispatcherOfFetcher() {
 
     }
 
@@ -168,7 +172,7 @@ public class Dispatcher {
 
     @PostConstruct
     public void initExecutor(){
-        executorService = Executors.newFixedThreadPool(10);
+        executorService = Executors.newFixedThreadPool(100);
         startDispatcher();
     }
 
@@ -191,8 +195,9 @@ public class Dispatcher {
                                     seenURL sl = new seenURL(qurl.getDominio(), qurl.getIp());
                                     seenURLDAO.insertURL(sl);
                                 } catch (IOException e) {
+                                    RejectedURL rurl = new RejectedURL(qurl.getDominio(), "", "Dispatcher");
+                                    rejectedURLDAO.insertURL(rurl);
                                     e.printStackTrace();
-                                    //INSERIR EM REJECTED
                                 }
                             }
                         });

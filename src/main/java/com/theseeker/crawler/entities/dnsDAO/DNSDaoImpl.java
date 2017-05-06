@@ -31,12 +31,71 @@ public class DNSDaoImpl implements DNSDao {
         return resultList;
     }
 
+    public int getMaiorPriority(){
+        int priority = 0;
+        Query query = em.createQuery("SELECT MAX(d.priority) FROM DNS d");
+
+        Object o = query.getSingleResult();
+
+        if( o != null ){
+            priority = (int) o;
+        }
+
+        return priority;
+    }
+
     @Override
     public List<DNS> getRobots() throws DataAccessException {
+        Query query = em.createQuery("select d from DNS d where d.robots = false and d.priority = :priority")
+                .setParameter("priority", getMaiorPriority());
+        query.setMaxResults(100);
+
+        List<DNS> resultList = query.getResultList();
+
+        int size = resultList.size();
+        if(size < 100){
+            query = em.createQuery("select d from DNS d where d.robots = false");
+            query.setMaxResults(100 - size);
+
+            List<DNS> resultLit2 = query.getResultList();
+            for(int i = 0; i < resultLit2.size(); i++){
+                resultList.add(resultLit2.get(i));
+            }
+
+        }
+
+        return resultList;
+    }
+
+    @Override
+    public List<DNS> getWithoutRobots(){
         Query query = em.createQuery("select d from DNS d where d.robots = false");
         query.setMaxResults(100);
 
         List<DNS> resultList = query.getResultList();
+
+        return resultList;
+    }
+
+    public List<DNS> getDNSPages(){
+        Query query = em.createQuery("select d from DNS d where d.robots = true and d.priority = :priority")
+                .setParameter("priority", getMaiorPriority());
+        query.setMaxResults(100);
+
+        List<DNS> resultList = query.getResultList();
+
+        int size = resultList.size();
+        if(size < 100){
+            query = em.createQuery("select d from DNS d where d.robots = true");
+            query.setMaxResults(100 - size);
+
+            List<DNS> resultLit2 = query.getResultList();
+            for(int i = 0; i < resultLit2.size(); i++){
+                resultList.add(resultLit2.get(i));
+            }
+
+        }
+
         return resultList;
     }
 

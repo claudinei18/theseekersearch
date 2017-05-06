@@ -43,9 +43,8 @@ public class Initialize {
         while ( ( read = brQueuedURL.readLine() ) != null ) {
             seenURL sl = new seenURL(URLCanonicalizer.getCanonicalURL(read));
             queuedURL qurl = new queuedURL(URLCanonicalizer.getCanonicalURL(read), "");
-
-            if(!(seenURLDAO.exists(sl)) && !(queuedURLDAO.exists(qurl))){
-                OrderedURL ourl = new OrderedURL(read, 0);
+            if(!(seenURLDAO.exists(sl.getDominio())) && !(queuedURLDAO.exists(qurl))){
+                OrderedURL ourl = new OrderedURL(read, 11);
                 try{
                     orderedURLDAO.insert(ourl);
                 }catch (Exception e){

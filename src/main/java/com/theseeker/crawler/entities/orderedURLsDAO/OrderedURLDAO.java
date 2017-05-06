@@ -12,5 +12,7 @@ import java.util.List;
 public interface OrderedURLDAO {
     public void insert(OrderedURL ourl);
     public List<OrderedURL> getList();
+    public void remove(OrderedURL ourl);
+    public List<OrderedURL> getListToRobots();
 
 }

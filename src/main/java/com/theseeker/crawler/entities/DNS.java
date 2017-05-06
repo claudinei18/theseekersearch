@@ -22,16 +22,20 @@ public class DNS {
     @Column(name="robots")
     private boolean robots;
 
+    @Column(name="priority")
+    private int priority;
+
 
     public DNS(){
 
     }
 
-    public DNS(String dominio, String ip, long time, boolean robots) {
+    public DNS(String dominio, String ip, long time, boolean robots, int priority) {
         this.dominio = dominio;
         this.ip = ip;
         this.time = time;
         this.robots = robots;
+        this.priority = priority;
     }
 
     public String getDominio() {
@@ -58,12 +62,20 @@ public class DNS {
         this.time = time;
     }
 
-    public boolean isRobots() {
+    public boolean getRobots() {
         return robots;
     }
 
     public void setRobots(boolean robots) {
         this.robots = robots;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override

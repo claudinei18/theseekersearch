@@ -1,6 +1,7 @@
 package com.theseeker.crawler.entities.fetchedPagesDAO;
 
 import com.theseeker.crawler.entities.FetchedPages;
+import com.theseeker.crawler.entities.OrderedURL;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by claudinei on 28/03/17.
@@ -68,9 +70,19 @@ public class FetchedPagesDAOImpl implements FetchedPagesDAO {
         return fp;
     }
 
+    public boolean exists(FetchedPages fp){
+        List<Object> o = em.createQuery("SELECT t FROM FetchedPages t where t.dominio = :dominio")
+                .setParameter("dominio", fp.getDominio()).getResultList();
+
+        return (! o.isEmpty());
+    }
+
     @Transactional
     public void insertFetPag(FetchedPages fp){
-        em.persist(fp);
+
+        if(!(exists(fp))) {
+            em.persist(fp);
+        }
     }
 
     @Override

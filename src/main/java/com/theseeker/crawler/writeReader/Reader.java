@@ -34,7 +34,7 @@ public class Reader {
 
     @PostConstruct
     public void initExecutor(){
-        executorService = Executors.newFixedThreadPool(10);
+        executorService = Executors.newFixedThreadPool(100);
         startReader();
     }
 

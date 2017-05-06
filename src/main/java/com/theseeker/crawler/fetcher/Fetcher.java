@@ -1,6 +1,8 @@
 package com.theseeker.crawler.fetcher;
 
 
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
+import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
 import com.theseeker.crawler.dns.DNSUtil;
 import com.theseeker.crawler.entities.DNS;
 import com.theseeker.crawler.entities.FetchedPages;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 
@@ -84,6 +87,19 @@ public class Fetcher {
 
         //Acessando atraves do LINK
         Document doc = getHtmlContent(qurl.getDominio(), qurl.getIp());
+
+        NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
+                NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
+                "b845dcb3-1e77-4eb1-bf43-3cd7d71f9067",
+                "Pd7kWrDmARew"
+        );
+
+        EntitiesOptions entities = new EntitiesOptions.Builder().limit(10000).build();
+        Features features = new Features.Builder().entities(entities).build();
+        AnalyzeOptions parameters = new AnalyzeOptions.Builder().url(qurl.getDominio()).features(features).build();
+        AnalysisResults results = service.analyze(parameters).execute();
+        List<EntitiesResult> a = results.getEntities();
+
         if(doc != null){
             FetchedPages fp = new FetchedPages(qurl.getIp(), qurl.getDominio(), doc.title(), doc.html());
 

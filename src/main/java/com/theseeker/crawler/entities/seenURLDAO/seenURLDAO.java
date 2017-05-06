@@ -7,5 +7,5 @@ import com.theseeker.crawler.entities.seenURL;
  */
 public interface seenURLDAO {
     public void insertURL(seenURL sl);
-    public boolean exists(seenURL sl);
+    public boolean exists(String sl);
 }

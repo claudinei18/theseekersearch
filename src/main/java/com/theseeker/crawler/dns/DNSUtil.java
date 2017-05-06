@@ -76,7 +76,7 @@ public class DNSUtil {
     private Runnable t2 = new Runnable() {
         public void run() {
             while (true) {
-                System.out.println("get do ordered");
+//                System.out.println("get do ordered");
                 List<OrderedURL> listOrdered = orderedURLDAO.getList();
 
                 Date now = new Date();
@@ -96,11 +96,11 @@ public class DNSUtil {
                         if (dom != null) {
                             InetAddress ip = getIp(ourl.getUrl());
                             if (ip != null) {
-                                DNS dns = new DNS(URLCanonicalizer.getCanonicalURL(url), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom));
+                                DNS dns = new DNS(dom, ip.getHostAddress().toString(), nowLong, true, ourl.getPriority());
                                 try {
                                     dnsDAO.insertDNS(dns);
                                 } catch (Exception e) {
-
+                                    e.printStackTrace();
                                 }
                             }
                         }
@@ -108,7 +108,7 @@ public class DNSUtil {
 
                 }
 
-                System.out.println("fim do ordered");
+//                System.out.println("fim do ordered");
 
                 try {
                     Thread.sleep(3000);
@@ -123,7 +123,7 @@ public class DNSUtil {
     private Runnable t1 = new Runnable() {
         public void run() {
             while (true) {
-                System.out.println("get do dns");
+//                System.out.println("get do dns");
                 List<DNS> listDNS = dnsDAO.getRobots();
                 /*System.out.println("get do ordered");
                 List<OrderedURL> listOrdered = orderedURLDAO.getList();*/
@@ -157,8 +157,7 @@ public class DNSUtil {
                             if (dom != null) {
                                 InetAddress ip = getIp(dominio);
                                 if(ip != null){
-                                    DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom));
-
+                                    DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom), dns.getPriority());
 
                                     try {
                                         dnsDAO.remove(dns);
@@ -173,7 +172,7 @@ public class DNSUtil {
                     }
                 }
 
-                System.out.println("fim do dns");
+                //System.out.println("fim do dns");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -189,7 +188,7 @@ public class DNSUtil {
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
-            System.out.println(url);
+//            System.out.println(url);
             e.printStackTrace();
             return null;
         }

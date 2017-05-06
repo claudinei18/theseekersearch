@@ -63,6 +63,13 @@ public class Parser {
                     ((link.contains("wikipedia") && !link.contains("en.wikipedia")))){
                 RejectedURL rurl = new RejectedURL(link, "", "Parser");
                 rejectedURLDAO.insertURL(rurl);
+            }else if( (link.startsWith("https://en.wikipedia.org/wiki/User")) ||
+                      (link.startsWith("https://meta.wikimedia.org/")) ||
+                      (link.endsWith("language")) ||
+                      (link.startsWith("https://wikimediafoundation.org/")) ||
+                      (link.startsWith("https://en.wikipedia.org/wiki/Talk:")) ){
+                RejectedURL rurl = new RejectedURL(link, "", "Parser");
+                rejectedURLDAO.insertURL(rurl);
             }
             else if(     (!link.isEmpty() )        &&
                     (!link.contains(".svg"))  &&
