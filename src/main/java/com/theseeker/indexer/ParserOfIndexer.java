@@ -10,6 +10,9 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -47,88 +50,161 @@ public class ParserOfIndexer {
     public void start(Pages page) {
 
 
-
-
         List<EntitiesResult> list = getListEntitiesResult(page.getConteudo());
         if (list != null) {
+            boolean contemTermo = false;
+            try {
+                for (EntitiesResult e : list) {
+                    String type = e.getType();
+                    if (type.equals("Person") ||
+                            type.equals("Location")) {
 
-            for (EntitiesResult e : list) {
-                String type = e.getType();
-                if (type.equals("Person") ||
-                        type.equals("Location")) {
+                        BufferedWriter bw = null;
+                        FileWriter fw = null;
 
+                        String name = e.getText();
+                        String nameSHA = getFileName(name);
+                        String fileName = System.getProperty("user.dir") + "/database/termos/" + nameSHA;
+
+                        FileLock lock = null;
+                        FileChannel channel = null;
+                        try {
+
+                            String conteudo = "";
+                            // if file doesnt exists, then create it
+                            Path path = Paths.get(fileName);
+
+                            if (Files.notExists(path)) {
+
+                                File file = new File(fileName);
+
+                                // Get a file channel for the file
+                                channel = new RandomAccessFile(file, "rw").getChannel();
+
+                                // Use the file channel to create a lock on the file.
+                                // This method blocks until it can retrieve the lock.
+                                lock = channel.lock();
+
+                                file.createNewFile();
+
+                                String termo = e.getText();
+                                conteudo += "termo: " + termo + "\n";
+                                if(e.getDisambiguation() != null){
+                                    if(e.getDisambiguation().getDbpediaResource() != null){
+                                        conteudo += "texto: " + e.getDisambiguation().getDbpediaResource() + "\n";
+                                    }else{
+                                        conteudo += "texto do site do watson" + "\n";
+                                    }
+                                }
+                                conteudo += "tipo: " + e.getType() + "\n";
+                                conteudo += "url: " + page.getDominio() + "\n";
+                                conteudo += "relevancia: " + e.getRelevance().toString() + "\n";
+
+                                // true = append file
+                                fw = new FileWriter(file.getAbsoluteFile());
+                                bw = new BufferedWriter(fw);
+
+                                bw.write(conteudo);
+                                bw.newLine();
+
+
+                            } else {
+                                conteudo += "url: " + page.getDominio() + "\n";
+                                conteudo += "relevancia: " + e.getRelevance().toString() + "\n\n";
+
+                                // true = append file
+                                fw = new FileWriter(path.toFile(), true);
+                                bw = new BufferedWriter(fw);
+
+                                bw.write(conteudo);
+                                bw.newLine();
+                            }
+                            contemTermo = true;
+
+                        } catch (IOException e2) {
+                            e2.printStackTrace();
+                        } finally {
+                            try {
+                                if (bw != null)
+                                    bw.close();
+
+                                if (fw != null)
+                                    fw.close();
+
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+
+                            // Release the lock - if it is not null!
+                            if (lock != null) {
+                                try {
+                                    lock.release();
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                            }
+
+                            // Close the file
+                            try {
+                                if(channel != null)
+                                    channel.close();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+
+                /*System.out.println(b.getText());
+                System.out.println(b.getCount());
+                System.out.println(b.getRelevance());
+                System.out.println(b.getType());
+                System.out.println(b.getDisambiguation().getDbpediaResource());
+                System.out.println(b.getDisambiguation().getSubtype());*/
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (contemTermo) {
+                String name = page.getDominio();
+                String nameSHA = getFileName(name);
+                String fileName = System.getProperty("user.dir") + "/database/paginas/" + nameSHA;
+
+                /*FileLock lock = null;
+                FileChannel channel = null;
+
+                try {
+                    // Get a file channel for the file
+                    channel = new RandomAccessFile(file, "rw").getChannel();
+
+                    // Use the file channel to create a lock on the file.
+                    // This method blocks until it can retrieve the lock.
+                    lock = channel.lock();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
+
+                Path path = Paths.get(fileName);
+
+                if (Files.notExists(path)) {
                     BufferedWriter bw = null;
                     FileWriter fw = null;
-
-                    String name = e.getText();
-                    String nameSHA = getFileName(name);
-                    String fileName = System.getProperty("user.dir") + "/database/termos/" + nameSHA;
-
-                    FileLock lock = null;
-                    FileChannel channel = null;
                     try {
-
                         File file = new File(fileName);
 
-                        // Get a file channel for the file
-                        channel = new RandomAccessFile(file, "rw").getChannel();
+                        fw = new FileWriter(file.getAbsoluteFile());
+                        bw = new BufferedWriter(fw);
 
-                        // Use the file channel to create a lock on the file.
-                        // This method blocks until it can retrieve the lock.
-                        lock = channel.lock();
+                        String conteudo = "";
+                        conteudo += page.getDominio() + "\n";
+                        conteudo += page.getConteudo();
 
-                        /*
-                           use channel.lock OR channel.tryLock();
-                        */
-
-                        /*// Try acquiring the lock without blocking. This method returns
-                        // null or throws an exception if the file is already locked.
-                        try {
-                            lock = channel.tryLock();
-                        } catch (OverlappingFileLockException e2) {
-                            // File is already locked in this thread or virtual machine
-//                            e2.printStackTrace();
-                        }*/
+                        bw.write(conteudo);
+                        bw.newLine();
 
 
-                        String conteudo = "aa";
-                        // if file doesnt exists, then create it
-                        if (!file.exists()) {
-                            file.createNewFile();
-
-                            conteudo += "notExists" + "\n";
-                            String termo = e.getText();
-                            conteudo += termo + "\n";
-                            conteudo += e.getDisambiguation().getDbpediaResource() + "\n";
-                            conteudo += e.getType() + "\n";
-                            conteudo += "texto do site do watson" + "\n\n";
-                            conteudo += page.getDominio() + "\n";
-                            conteudo += e.getRelevance().toString() + "\n\n";
-
-                            // true = append file
-                            fw = new FileWriter(file.getAbsoluteFile());
-                            bw = new BufferedWriter(fw);
-
-                            bw.write(conteudo);
-                            bw.newLine();
-
-
-                        } else {
-                            conteudo += "Exists " + e.getText() + "\n";
-                            conteudo += page.getDominio() + "\n";
-                            conteudo += e.getRelevance().toString() + "\n\n";
-
-                            // true = append file
-                            fw = new FileWriter(file.getAbsoluteFile(), true);
-                            bw = new BufferedWriter(fw);
-
-                            bw.write(conteudo);
-                            bw.newLine();
-                        }
-
-
-                    } catch (IOException e2) {
-                        e2.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     } finally {
                         try {
                             if (bw != null)
@@ -137,35 +213,17 @@ public class ParserOfIndexer {
                             if (fw != null)
                                 fw.close();
 
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
+//                            lock.release();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
-                        // Release the lock - if it is not null!
-                        if( lock != null ) {
-                            try {
-                                lock.release();
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
 
-                        // Close the file
-                        try {
-                            channel.close();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
                     }
                 }
 
-                /*System.out.println(b.getText());
-                System.out.println(b.getCount());
-                System.out.println(b.getRelevance());
-                System.out.println(b.getType());
-                System.out.println(b.getDisambiguation().getDbpediaResource());
-                System.out.println(b.getDisambiguation().getSubtype());*/
             }
+
         }
     }
 

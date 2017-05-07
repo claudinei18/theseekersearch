@@ -61,12 +61,16 @@ public class OrderedURLDAOImpl implements OrderedURLDAO {
         List<OrderedURL> resultList = query.getResultList();
 
         int size = resultList.size();
-        System.out.println(size);
+//        System.out.println(size);
         if(size < 100){
-            query = em.createQuery("select d from OrderedURL d");
+            query = em.createQuery("select d from OrderedURL d where d.priority != :priority")
+                    .setParameter("priority", maiorPriority);
             query.setMaxResults(100 - size);
 
+
             List<OrderedURL> resultLit2 = query.getResultList();
+//            System.out.println(resultLit2.size());
+
             for(int i = 0; i < resultLit2.size(); i++){
                 resultList.add(resultLit2.get(i));
             }
@@ -90,7 +94,8 @@ public class OrderedURLDAOImpl implements OrderedURLDAO {
         int size = resultList.size();
         System.out.println(size);
         if(size < 100){
-            query = em.createQuery("select d from OrderedURL d");
+            query = em.createQuery("select d from OrderedURL d where d.priority != :priority")
+                    .setParameter("priority", maiorPriority);
             query.setMaxResults(100 - size);
 
             List<OrderedURL> resultLit2 = query.getResultList();

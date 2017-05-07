@@ -35,7 +35,7 @@ public class DispatcherOfParser {
 
     @PostConstruct
     public void initExecutor() {
-        executorService = Executors.newFixedThreadPool(10);
+        executorService = Executors.newFixedThreadPool(100);
         startIndexer();
     }
 
@@ -58,7 +58,7 @@ public class DispatcherOfParser {
 
                 }
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

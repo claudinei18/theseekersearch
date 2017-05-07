@@ -43,7 +43,7 @@ public class TheSeekerApplication {
 				"Pd7kWrDmARew"
 		);
 
-		EntitiesOptions entities = new EntitiesOptions.Builder().limit(10000).build();
+		/*EntitiesOptions entities = new EntitiesOptions.Builder().limit(10000).build();
 		Features features = new Features.Builder().entities(entities).build();
 		AnalyzeOptions parameters = new AnalyzeOptions.Builder().url("www.cnn.com").features(features).build();
 		AnalysisResults results = service.analyze(parameters).execute();
@@ -58,7 +58,7 @@ public class TheSeekerApplication {
 			System.out.println(b.getType());
 			System.out.println(b.getDisambiguation().getDbpediaResource());
 			System.out.println(b.getDisambiguation().getSubtype());
-		}
+		}*/
 
 	}
 }

@@ -154,12 +154,10 @@ public class Robots {
                     try {
                         String[] x = dns.getDominio().split("/");
 
-                        downloadRobots(x[0] + "//" + x[2] + "/robots.txt");
-
-
                         dnsDAO.remove(dns);
-
-                        dns.setRobots(true);
+                        if(downloadRobots(x[0] + "//" + x[2] + "/robots.txt")){
+                            dns.setRobots(true);
+                        }
                         dnsDAO.insertDNS(dns);
 
                     } catch (Exception e) {
@@ -183,17 +181,28 @@ public class Robots {
             while (true) {
 //                List<DNS> listDNS = dnsDAO.getDNSPages();
                 List<OrderedURL> list = orderedURLDAO.getListToRobots();
-                System.out.println("pegou " + list.size());
+//                System.out.println("pegou " + list.size());
 
                 for (OrderedURL ourl : list) {
+//                    System.out.println(ourl.getUrl());
                     try {
                         String url = ourl.getUrl();
                         String dominio = null;
 
                         dominio = getDomainName(url);
 
+
                         if (dominio != null) {
-                            if (dnsDAO.getRobots(dominio)) {
+
+                            if(dnsDAO.getRobots(dominio) == false){
+                                downloadRobots(ourl.getUrl());
+                                Date d = new Date();
+                                DNS dns = new DNS(dominio, "123", d.getTime() , true, ourl.getPriority());
+                                dnsDAO.insertDNS(dns);
+                            }
+
+//                            if (dnsDAO.getRobots(dominio)) {
+
                                 String[] x = ourl.getUrl().split("/");
 
                                 if (x.length > 1) {
@@ -220,7 +229,7 @@ public class Robots {
                                         RejectedURL rurl = new RejectedURL(ourl.getUrl(), "123", "Robots");
                                         rejectedURLDAO.insertURL(rurl);
                                     }
-                                }
+//                                }
                             }
                         }
                     } catch (Exception e) {
@@ -279,7 +288,7 @@ public class Robots {
 
 
                 }
-                System.out.println("finalizou");
+//                System.out.println("finalizou");
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
@@ -422,7 +431,9 @@ public class Robots {
     };*/
 
 
-    public void downloadRobots(String url) throws URISyntaxException, IOException {
+    public boolean downloadRobots(String url) throws URISyntaxException, IOException {
+        boolean resp = false;
+
         String dominio = getDomainName(url);
         String hardCode = "file:///" + new File(System.getProperty("user.dir") + "/src/main/resources/robotsData/").getAbsoluteFile() + "/";
 
@@ -443,6 +454,7 @@ public class Robots {
                     while ((line = in.readLine()) != null) {
                         writer.println(line);
                     }
+                    resp =true;
                 } catch (IOException e) {
 
                 }
@@ -453,6 +465,7 @@ public class Robots {
 
             }
         }
+        return resp;
     }
 
     public String getDomainName(String url) {
