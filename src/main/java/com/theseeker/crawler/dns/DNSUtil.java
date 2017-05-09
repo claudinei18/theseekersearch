@@ -7,6 +7,8 @@ import com.theseeker.crawler.entities.orderedURLsDAO.OrderedURLDAO;
 import com.theseeker.crawler.entities.queuedURL;
 import com.theseeker.crawler.entities.seenURL;
 import com.theseeker.crawler.fetcher.Fetcher;
+import com.theseeker.util.entities.Log;
+import com.theseeker.util.entities.LogDAO.LogDAO;
 import com.theseeker.util.url.URLCanonicalizer;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,9 @@ public class DNSUtil {
 
     @Autowired
     OrderedURLDAO orderedURLDAO;
+
+    @Autowired
+    LogDAO logDAO;
 
     public static InetAddress getIp(String dominio) {
         try {
@@ -98,7 +103,15 @@ public class DNSUtil {
                             if (ip != null) {
                                 DNS dns = new DNS(dom, ip.getHostAddress().toString(), nowLong, true, ourl.getPriority());
                                 try {
-                                    dnsDAO.insertDNS(dns);
+                                    long antes = System.currentTimeMillis();
+                                    boolean resp = dnsDAO.insertDNS(dns);
+                                    long depois = System.currentTimeMillis();
+                                    long diff = depois - antes;
+                                    if(resp){
+                                        Log log = new Log("DNS", "insert", new Date(), diff, dom);
+                                        logDAO.insert(log);
+                                    }
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -123,13 +136,14 @@ public class DNSUtil {
     private Runnable t1 = new Runnable() {
         public void run() {
             while (true) {
-//                System.out.println("get do dns");
+                System.out.println("get do dns");
                 List<DNS> listDNS = dnsDAO.getRobots();
                 /*System.out.println("get do ordered");
                 List<OrderedURL> listOrdered = orderedURLDAO.getList();*/
 
                 Date now = new Date();
-                long nowLong = now.getTime();
+//                long nowLong = now.getTime();
+                long nowLong = System.currentTimeMillis();
 
                 /*for (OrderedURL ourl : listOrdered) {
                     String url = ourl.getUrl();
@@ -148,7 +162,9 @@ public class DNSUtil {
 
 
                 for (DNS dns : listDNS) {
-                    if (nowLong - dns.getTime() >= 3000000) {
+
+                    if (nowLong - dns.getTime() >= 30000) {
+
                         String dominio = dns.getDominio();
 
                         String urlCanonica = URLCanonicalizer.getCanonicalURL(dominio);
@@ -157,13 +173,18 @@ public class DNSUtil {
                             if (dom != null) {
                                 InetAddress ip = getIp(dominio);
                                 if(ip != null){
-                                    DNS newDns = new DNS(URLCanonicalizer.getCanonicalURL(dominio), ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom), dns.getPriority());
-
+                                    DNS newDns = new DNS(dom, ip.getHostAddress().toString(), nowLong, dnsDAO.getRobots(dom), dns.getPriority());
                                     try {
                                         dnsDAO.remove(dns);
-                                        dnsDAO.insertDNS(newDns);
-                                    } catch (Exception e) {
+                                        long antes = System.currentTimeMillis();
+                                        boolean resp = dnsDAO.insertDNS(newDns);
+                                        long depois = System.currentTimeMillis();
+                                        long diff = depois - antes;
 
+                                        Log log = new Log("DNS", "update", new Date(), diff, dom);
+                                        logDAO.insert(log);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
                                 }
 
@@ -185,6 +206,31 @@ public class DNSUtil {
 
     public String getDomain(String url) {
         URI uri = null;
+        String[] aux = url.split("://");
+
+        String domain;
+        try {
+            uri = new URI(url);
+            domain = uri.getHost();
+        } catch (URISyntaxException e) {
+/*            System.out.println(url);
+            e.printStackTrace();*/
+            return null;
+        }
+        if (uri == null) {
+            return null;
+        } else {
+            if(domain == null){
+                return url;
+            }else{
+                return domain.startsWith("www.") ? aux[0] + "://" + domain.substring(4) : aux[0] + "://" + domain;
+            }
+        }
+    }
+
+
+    /*public String getDomain(String url) {
+        URI uri = null;
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
@@ -195,9 +241,10 @@ public class DNSUtil {
         if (uri == null) {
             return null;
         } else {
+            System.out.println(uri.getHost());
             return uri.getHost();
         }
-    }
+    }*/
 
     /*@PostConstruct
     public void refreshCache(){

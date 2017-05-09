@@ -47,7 +47,7 @@ public class Fetcher {
 
     }
 
-    public Document getHtmlContent(String dominio, String ip) throws IOException {
+    public Document getHtmlContent(String dominio, String ip){
         Document doc = null;
         try{
             doc = Jsoup.connect(dominio)
@@ -80,12 +80,13 @@ public class Fetcher {
         }
     }
 
-    public void start(queuedURL qurl) throws IOException {
+    public void start(queuedURL qurl) {
 //        System.out.println("FETCHER PROCESSANDO: " + qurl.getDominio());
 
         //Acessar através do IP
 
         //Acessando atraves do LINK
+
         Document doc = getHtmlContent(qurl.getDominio(), qurl.getIp());
 
         NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(

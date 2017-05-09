@@ -171,7 +171,7 @@ public class DispatcherOfFetcher {
     }*/
 
     @PostConstruct
-    public void initExecutor(){
+    public void initExecutor() {
         executorService = Executors.newFixedThreadPool(100);
         startDispatcher();
     }
@@ -190,15 +190,14 @@ public class DispatcherOfFetcher {
                             public void run() {
                                 // some code to run in parallel
 //                            System.out.println("DISPATCHER PROCESSANDO: " + qurl.getDominio());
-                                try {
-                                    fetcher.start(qurl);
-                                    seenURL sl = new seenURL(qurl.getDominio(), qurl.getIp());
-                                    seenURLDAO.insertURL(sl);
-                                } catch (IOException e) {
-                                    RejectedURL rurl = new RejectedURL(qurl.getDominio(), "", "Dispatcher");
-                                    rejectedURLDAO.insertURL(rurl);
-                                    e.printStackTrace();
-                                }
+                                fetcher.start(qurl);
+
+                                seenURL sl = new seenURL(qurl.getDominio(), qurl.getIp());
+                                seenURLDAO.insertURL(sl);
+
+                                RejectedURL rurl = new RejectedURL(qurl.getDominio(), "", "Dispatcher");
+                                rejectedURLDAO.insertURL(rurl);
+
                             }
                         });
 

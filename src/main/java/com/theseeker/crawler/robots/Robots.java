@@ -470,6 +470,8 @@ public class Robots {
 
     public String getDomainName(String url) {
         URI uri = null;
+        String[] aux = url.split("://");
+
         String domain;
         try {
             uri = new URI(url);
@@ -485,7 +487,7 @@ public class Robots {
             if(domain == null){
                 return url;
             }else{
-                return domain.startsWith("www.") ? domain.substring(4) : domain;
+                return domain.startsWith("www.") ? aux[0] + "://" + domain.substring(4) : aux[0] + "://" + domain;
             }
         }
     }

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface DNSDao {
     public DNS getDNS(String dominio) throws DataAccessException;
-    public void insertDNS(DNS dns);
+    public boolean insertDNS(DNS dns);
     public void remove(DNS dns);
     public boolean getRobots(String dominio);
     public List<DNS> getRobots() throws DataAccessException;

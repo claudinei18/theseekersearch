@@ -3,6 +3,12 @@ package com.theseeker.indexer;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
 import com.theseeker.crawler.entities.Pages;
+import com.theseeker.crawler.entities.RejectedURL;
+import com.theseeker.crawler.entities.rejectedURL.rejectedURLDAO;
+import com.theseeker.util.compress.Compress;
+import com.theseeker.util.entities.Log;
+import com.theseeker.util.entities.LogDAO.LogDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +30,12 @@ import java.util.List;
 
 @Component
 public class ParserOfIndexer {
+
+    @Autowired
+    rejectedURLDAO rejectedURLDAO;
+
+    @Autowired
+    LogDAO logDAO;
 
     public ParserOfIndexer() {
 
@@ -49,10 +62,10 @@ public class ParserOfIndexer {
 
     public void start(Pages page) {
 
+        boolean contemTermo = false;
 
         List<EntitiesResult> list = getListEntitiesResult(page.getConteudo());
         if (list != null) {
-            boolean contemTermo = false;
             try {
                 for (EntitiesResult e : list) {
                     String type = e.getType();
@@ -74,6 +87,41 @@ public class ParserOfIndexer {
                             // if file doesnt exists, then create it
                             Path path = Paths.get(fileName);
 
+                            /*if (Files.notExists(path)) {
+                                File file = new File(fileName);
+                                file.createNewFile();
+
+                                String termo = e.getText();
+                                conteudo += termo + "\n";
+                                if(e.getDisambiguation() != null){
+                                    if(e.getDisambiguation().getDbpediaResource() != null){
+                                        conteudo += e.getDisambiguation().getDbpediaResource() + "\n";
+                                    }else{
+                                        conteudo += "http://null" + "\n";
+                                    }
+                                }else{
+                                    conteudo += "http://null" + "\n";
+                                }
+                                conteudo += e.getType() + "\n";
+                                conteudo += page.getDominio() + "\n";
+                                conteudo += e.getRelevance().toString() + "\n";
+
+                                insertInVocabulario(termo);
+
+                            }else{
+                                conteudo += page.getDominio() + "\n";
+                                conteudo += e.getRelevance().toString() + "\n\n";
+                            }
+
+                            contemTermo = true;
+
+                            // true = append file
+                            fw = new FileWriter(path.toFile(), true);
+                            bw = new BufferedWriter(fw);
+
+                            bw.write(conteudo);
+                            bw.newLine();*/
+
                             if (Files.notExists(path)) {
 
                                 File file = new File(fileName);
@@ -88,17 +136,19 @@ public class ParserOfIndexer {
                                 file.createNewFile();
 
                                 String termo = e.getText();
-                                conteudo += "termo: " + termo + "\n";
+                                conteudo += termo + "\n";
                                 if(e.getDisambiguation() != null){
                                     if(e.getDisambiguation().getDbpediaResource() != null){
-                                        conteudo += "texto: " + e.getDisambiguation().getDbpediaResource() + "\n";
+                                        conteudo += e.getDisambiguation().getDbpediaResource() + "\n";
                                     }else{
-                                        conteudo += "texto do site do watson" + "\n";
+                                        conteudo += "http://null" + "\n";
                                     }
+                                }else{
+                                    conteudo += "http://null" + "\n";
                                 }
-                                conteudo += "tipo: " + e.getType() + "\n";
-                                conteudo += "url: " + page.getDominio() + "\n";
-                                conteudo += "relevancia: " + e.getRelevance().toString() + "\n";
+                                conteudo += e.getType() + "\n";
+                                conteudo += page.getDominio() + "\n";
+                                conteudo += e.getRelevance().toString() + "\n";
 
                                 // true = append file
                                 fw = new FileWriter(file.getAbsoluteFile());
@@ -107,10 +157,92 @@ public class ParserOfIndexer {
                                 bw.write(conteudo);
                                 bw.newLine();
 
+                                try {
+                                    if (bw != null)
+                                        bw.close();
+
+                                    if (fw != null)
+                                        fw.close();
+
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+
+                                // Release the lock - if it is not null!
+                                if (lock != null) {
+                                    try {
+                                        lock.release();
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+
+                                // Close the file
+                                try {
+                                    if(channel != null)
+                                        channel.close();
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+
+
+
+                                BufferedWriter bw2 = null;
+                                FileWriter fw2 = null;
+
+                                FileLock lock2 = null;
+                                FileChannel channel2 = null;
+
+                                String fileNameVocab =  System.getProperty("user.dir") + "/database/vocabulario.txt";
+                                File fileVocab = new File(fileNameVocab);
+
+                                // Get a file channel for the file
+                                channel2 = new RandomAccessFile(fileVocab, "rw").getChannel();
+
+                                // Use the file channel to create a lock on the file.
+                                // This method blocks until it can retrieve the lock.
+                                lock2 = channel2.lock();
+
+
+                                // true = append file
+                                fw2 = new FileWriter(fileVocab.getAbsoluteFile(), true);
+                                bw2 = new BufferedWriter(fw2);
+
+                                bw2.write(termo);
+                                bw2.newLine();
+
+                                try {
+                                    if (bw2 != null)
+                                        bw2.close();
+
+                                    if (fw2 != null)
+                                        fw2.close();
+
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+
+                                // Release the lock - if it is not null!
+                                if (lock2 != null) {
+                                    try {
+                                        lock2.release();
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+
+                                // Close the file
+                                try {
+                                    if(channel2 != null)
+                                        channel2.close();
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+
 
                             } else {
-                                conteudo += "url: " + page.getDominio() + "\n";
-                                conteudo += "relevancia: " + e.getRelevance().toString() + "\n\n";
+                                conteudo += page.getDominio() + "\n";
+                                conteudo += e.getRelevance().toString() + "\n\n";
 
                                 // true = append file
                                 fw = new FileWriter(path.toFile(), true);
@@ -123,7 +255,8 @@ public class ParserOfIndexer {
 
                         } catch (IOException e2) {
                             e2.printStackTrace();
-                        } finally {
+                        }
+                        /*finally {
                             try {
                                 if (bw != null)
                                     bw.close();
@@ -151,7 +284,7 @@ public class ParserOfIndexer {
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }
-                        }
+                        }*/
                     }
 
                 /*System.out.println(b.getText());
@@ -165,10 +298,11 @@ public class ParserOfIndexer {
                 e.printStackTrace();
             }
 
-            if (contemTermo) {
-                String name = page.getDominio();
-                String nameSHA = getFileName(name);
-                String fileName = System.getProperty("user.dir") + "/database/paginas/" + nameSHA;
+        }
+        if (contemTermo) {
+            String name = page.getDominio();
+            String nameSHA = getFileName(name);
+            String fileName = System.getProperty("user.dir") + "/database/paginas/" + nameSHA;
 
                 /*FileLock lock = null;
                 FileChannel channel = null;
@@ -184,46 +318,59 @@ public class ParserOfIndexer {
                     e.printStackTrace();
                 }*/
 
-                Path path = Paths.get(fileName);
+            Path path = Paths.get(fileName);
 
-                if (Files.notExists(path)) {
-                    BufferedWriter bw = null;
-                    FileWriter fw = null;
+            if (Files.notExists(path)) {
+
+                long antes = System.currentTimeMillis();
+
+                Compress.zip(page.getConteudo(), fileName+".zip");
+
+                long depois = System.currentTimeMillis();
+                long diff = depois - antes;
+
+                Log log = new Log("ParserOfIndexer", "compress", new Date(), diff, page.getDominio());
+                logDAO.insert(log);
+
+
+                BufferedWriter bw = null;
+                FileWriter fw = null;
+                try {
+                    File file = new File(fileName);
+
+                    fw = new FileWriter(file.getAbsoluteFile());
+                    bw = new BufferedWriter(fw);
+
+                    String conteudo = "";
+                    conteudo += page.getDominio() + "\n";
+                    conteudo += page.getConteudo();
+
+                    bw.write(conteudo);
+                    bw.newLine();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
                     try {
-                        File file = new File(fileName);
+                        if (bw != null)
+                            bw.close();
 
-                        fw = new FileWriter(file.getAbsoluteFile());
-                        bw = new BufferedWriter(fw);
-
-                        String conteudo = "";
-                        conteudo += page.getDominio() + "\n";
-                        conteudo += page.getConteudo();
-
-                        bw.write(conteudo);
-                        bw.newLine();
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            if (bw != null)
-                                bw.close();
-
-                            if (fw != null)
-                                fw.close();
+                        if (fw != null)
+                            fw.close();
 
 //                            lock.release();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }
 
+
+                }
             }
 
+        }else{
+            RejectedURL rurl = new RejectedURL(page.getDominio(), "", "Indexer");
+            rejectedURLDAO.insertURL(rurl);
         }
     }
 
@@ -240,7 +387,7 @@ public class ParserOfIndexer {
             sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
         }
 
-        return sb.toString() + ".txt";
+        return sb.toString();
     }
 
     public boolean writeToFile(String name, String conteudo) {
@@ -264,5 +411,46 @@ public class ParserOfIndexer {
             return false;
         }
         return true;
+    }
+
+    public synchronized void insertInVocabulario(String termo){
+        BufferedWriter bw2 = null;
+        FileWriter fw2 = null;
+
+        String fileNameVocab =  System.getProperty("user.dir") + "/database/vocabulario.txt";
+        File fileVocab = new File(fileNameVocab);
+
+
+        // true = append file
+        try {
+            fw2 = new FileWriter(fileVocab.getAbsoluteFile(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        bw2 = new BufferedWriter(fw2);
+
+        try {
+            bw2.write(termo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            bw2.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (bw2 != null)
+                bw2.close();
+
+            if (fw2 != null)
+                fw2.close();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

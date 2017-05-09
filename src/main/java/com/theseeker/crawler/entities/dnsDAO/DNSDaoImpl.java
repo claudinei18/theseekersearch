@@ -46,7 +46,7 @@ public class DNSDaoImpl implements DNSDao {
 
     @Override
     public List<DNS> getRobots() throws DataAccessException {
-        Query query = em.createQuery("select d from DNS d where d.robots = false and d.priority = :priority")
+        Query query = em.createQuery("select d from DNS d where d.priority = :priority")
                 .setParameter("priority", getMaiorPriority());
         query.setMaxResults(100);
 
@@ -54,7 +54,7 @@ public class DNSDaoImpl implements DNSDao {
 
         int size = resultList.size();
         if(size < 100){
-            query = em.createQuery("select d from DNS d where d.robots = false");
+            query = em.createQuery("select d from DNS d");
             query.setMaxResults(100 - size);
 
             List<DNS> resultLit2 = query.getResultList();
@@ -168,11 +168,14 @@ public class DNSDaoImpl implements DNSDao {
     }
 
     @Transactional
-    public void insertDNS(DNS dns){
+    public boolean insertDNS(DNS dns){
 //        System.out.println(dns.toString());
+        boolean resp = false;
         if(!exists(dns)){
+            resp = true;
             em.persist(dns);
         }
+        return resp;
     }
 
     public boolean exists(DNS dns){
