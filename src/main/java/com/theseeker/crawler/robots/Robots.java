@@ -190,6 +190,10 @@ public class Robots {
                         String dominio = null;
 
                         dominio = getDomainName(url);
+                        String[] aux = dominio.split("://");
+                        if(aux.length > 1){
+                            dominio = aux[1];
+                        }
 
 
                         if (dominio != null) {
