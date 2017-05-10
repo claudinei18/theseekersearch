@@ -48,14 +48,49 @@ public class ConsultIndex {
 
     @PostConstruct
     public void teste(){
+        teste2("Zac Efron");
+        teste2("Barack Obama");
+        teste2("Donald Trump");
+        teste2("Kaley Cuoco");
+        teste2("Katy Perry");
+        teste2("Lady Gaga");
+        teste2("Osama Bin Laden");
+        teste2("Ellen DeGeneres");
+        teste2("Isaac Newton");
+        teste2("Albert Einstein");
+
+        teste2("Paris");
+        teste2("New York");
+        teste2("Brazil");
+        teste2("Oz");
+        teste2("Barcelona");
+        teste2("Tokyo");
+        teste2("Brasilia");
+        teste2("Canada");
+        teste2("Sao Paulo");
+        teste2("Brooklyn");
+
+        teste2("Colosseum");
+        teste2("Hogwarts");
+        teste2("Eifel Tower");
+        teste2("Central Park");
+        teste2("Belo Horizonte");
+        teste2("Contagem");
+        teste2("Betim");
+        teste2("Campinas");
+        teste2("Half Blood Camp");
+        teste2("Christ the Redeemer");
+    }
+
+    public void teste2(String termo){
         System.out.println("CONSULTANDO");
 
         long antes = System.currentTimeMillis();
-        String resp = consultar("Karachi");
+        String resp = consultar(termo);
         long depois = System.currentTimeMillis();
         long diff = depois - antes;
 
-        Log log = new Log("ConsultIndex", "consult", new Date(), diff, "teste");
+        Log log = new Log("ConsultIndex", "consult", new Date(), diff, termo);
         logDAO.insert(log);
 
     }

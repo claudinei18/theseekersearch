@@ -5,6 +5,9 @@ import com.theseeker.crawler.entities.Pages;
 import com.theseeker.crawler.entities.RejectedURL;
 import com.theseeker.crawler.filter.Filter;
 import com.theseeker.crawler.urlManager.urlManager;
+import com.theseeker.util.compress.Compress;
+import com.theseeker.util.entities.Log;
+import com.theseeker.util.entities.LogDAO.LogDAO;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,6 +42,9 @@ public class Parser {
 
     @Autowired
     rejectedURLDAO rejectedURLDAO;
+
+    @Autowired
+    LogDAO logDAO;
 
     ExecutorService executorService1;
     ExecutorService executorService2;
@@ -130,13 +137,29 @@ public class Parser {
 
         try {
 //            System.out.println("PARSER RECEBEU: " + fp.getDominio());
-            um.recebendoUrl(getLinksFromPage(fp.getConteudo()), fp.getDominio());
+
+
+            long antes = System.currentTimeMillis();
+            List urlsList = getLinksFromPage(fp.getConteudo());
+            long depois = System.currentTimeMillis();
+            long diff = depois - antes;
+            Log log = new Log("Parser", "extractUrls", new Date(), diff, fp.getDominio());
+            logDAO.insert(log);
+
+            um.recebendoUrl(urlsList, fp.getDominio());
         } catch (IOException e) {
             System.out.println("Não conseguiu chamar o URL MANAGER");
             e.printStackTrace();
         }
 
+        long antes = System.currentTimeMillis();
         String texto = getTextoDoHtml(fp.getConteudo());
+
+        long depois = System.currentTimeMillis();
+        long diff = depois - antes;
+        Log log = new Log("Parser", "extractTexto", new Date(), diff, fp.getDominio());
+        logDAO.insert(log);
+
         Pages page = new Pages(fp.getIp(), fp.getDominio(), fp.getTitulo(), texto);
 //        System.out.println("Filtrando: " + page);
         filter.filtrar(page);

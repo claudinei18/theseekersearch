@@ -101,7 +101,7 @@ public class DNSUtil {
                         if (dom != null) {
                             InetAddress ip = getIp(ourl.getUrl());
                             if (ip != null) {
-                                DNS dns = new DNS(dom, ip.getHostAddress().toString(), nowLong, true, ourl.getPriority());
+                                DNS dns = new DNS(dom, ip.getHostAddress().toString(), nowLong, false, ourl.getPriority());
                                 try {
                                     long antes = System.currentTimeMillis();
                                     boolean resp = dnsDAO.insertDNS(dns);

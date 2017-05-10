@@ -48,14 +48,12 @@ public class DispatcherOfParser {
             while (true) {
                 List<Pages> list = pagesDAO.getPagesToIndexer();
                 for (Pages p : list) {
-
                     executorService.submit(new Runnable() {
                         public void run() {
                             // some code to run in parallel
                             parser.start(p);
                         }
                     });
-
                 }
                 try {
                     Thread.sleep(3000);

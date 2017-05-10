@@ -12,6 +12,8 @@ import com.theseeker.crawler.entities.queuedURL;
 import com.theseeker.crawler.entities.seenURL;
 import com.theseeker.crawler.entities.seenURLDAO.seenURLDAO;
 import com.theseeker.crawler.writeReader.Writer;
+import com.theseeker.util.entities.Log;
+import com.theseeker.util.entities.LogDAO.LogDAO;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Date;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -39,6 +42,9 @@ public class Fetcher {
 
     @Autowired
     private Writer writer;
+
+    @Autowired
+    LogDAO logDAO;
 
     @Autowired
     private seenURLDAO seenURLDAO;
@@ -87,7 +93,14 @@ public class Fetcher {
 
         //Acessando atraves do LINK
 
+
+        long antes = System.currentTimeMillis();
         Document doc = getHtmlContent(qurl.getDominio(), qurl.getIp());
+        long depois = System.currentTimeMillis();
+        long diff = depois - antes;
+
+        Log log = new Log("Fetcher", "fetch", new Date(), diff, qurl.getDominio());
+        logDAO.insert(log);
 
         NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
                 NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
