@@ -2,9 +2,11 @@ package com.theseeker.indexer;
 
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
+import com.theseeker.crawler.entities.OrderedURL;
 import com.theseeker.crawler.entities.Pages;
 import com.theseeker.crawler.entities.RejectedURL;
 import com.theseeker.crawler.entities.Vocabulario;
+import com.theseeker.crawler.entities.orderedURLsDAO.OrderedURLDAO;
 import com.theseeker.crawler.entities.rejectedURL.rejectedURLDAO;
 import com.theseeker.crawler.entities.vocabularioDAO.VocabularioDAO;
 import com.theseeker.util.compress.Compress;
@@ -38,6 +40,9 @@ public class ParserOfIndexer {
 
     @Autowired
     LogDAO logDAO;
+
+    @Autowired
+    OrderedURLDAO orderedURLDAO;
 
     @Autowired
     VocabularioDAO vocabularioDAO;
@@ -87,12 +92,15 @@ public class ParserOfIndexer {
                 for (EntitiesResult e : list) {
                     String type = e.getType();
                     if (type.equals("Person") ||
-                            type.equals("Location")) {
+                            type.equals("Location") ||
+                            type.equals("GeographicFeature")) {
 
                         BufferedWriter bw = null;
                         FileWriter fw = null;
 
                         String name = e.getText();
+                        name = name.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+
                         String nameSHA = getFileName(name);
                         String fileName = System.getProperty("user.dir") + "/database/termos/" + nameSHA;
 
@@ -118,6 +126,8 @@ public class ParserOfIndexer {
                                 file.createNewFile();
 
                                 String termo = e.getText();
+
+                                termo = termo.replaceAll("[^a-zA-Z ]", "").toLowerCase();
                                 conteudo += termo + "\n";
 
                                 Vocabulario v = new Vocabulario(termo);
@@ -127,6 +137,9 @@ public class ParserOfIndexer {
 
                                 if (e.getDisambiguation() != null) {
                                     if (e.getDisambiguation().getDbpediaResource() != null) {
+                                        OrderedURL ourl = new OrderedURL(e.getDisambiguation().getDbpediaResource(), 12);
+                                        orderedURLDAO.insert(ourl);
+
                                         conteudo += e.getDisambiguation().getDbpediaResource() + "\n";
                                     } else {
                                         conteudo += "http://null" + "\n";
@@ -136,6 +149,7 @@ public class ParserOfIndexer {
                                 }
                                 conteudo += e.getType() + "\n";
                                 conteudo += page.getDominio() + "\n";
+                                conteudo += e.getCount() + "\n";
                                 conteudo += e.getRelevance().toString() + "\n";
 
                                 // true = append file
@@ -176,6 +190,7 @@ public class ParserOfIndexer {
 
                             } else {
                                 conteudo += page.getDominio() + "\n";
+                                conteudo += e.getCount() + "\n";
                                 conteudo += e.getRelevance().toString() + "\n\n";
 
                                 // true = append file

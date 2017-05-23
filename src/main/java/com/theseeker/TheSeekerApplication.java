@@ -5,6 +5,8 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
 import com.theseeker.util.robots.NoRobotClient;
 import com.theseeker.util.robots.NoRobotException;
 import org.apache.log4j.PropertyConfigurator;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -58,6 +61,19 @@ public class TheSeekerApplication {
 			System.out.println(b.getType());
 			System.out.println(b.getDisambiguation().getDbpediaResource());
 			System.out.println(b.getDisambiguation().getSubtype());
+		}*/
+
+		/*try {
+			Document doc = Jsoup.connect("http://dbpedia.org/resource/Barack_Obama")
+                    .userAgent("TheSeeker1.0")
+                    .header("Accept-Language", "en")
+                    .timeout(3000)
+                    .get();
+			doc = Jsoup.parse(doc.html());
+			String x = doc.body().text();
+			System.out.println(x);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}*/
 
 	}
