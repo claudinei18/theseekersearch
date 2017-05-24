@@ -27,6 +27,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by claudinei on 05/05/17.
@@ -52,11 +53,31 @@ public class ParserOfIndexer {
     }
 
     public List<EntitiesResult> getListEntitiesResult(String conteudo) {
+
+        String[] users = new String[10];
+        String[] passwords = new String[10];
+
+        users[0] = "b845dcb3-1e77-4eb1-bf43-3cd7d71f9067"; passwords[0] = "Pd7kWrDmARew";
+        users[1] = "c7128096-8eb9-43b4-befd-e3ed0512154d"; passwords[1] = "AkEk2td2xrEr";
+        users[2] = "39b805f7-8eb6-4cf9-a0e6-d162b5a83488"; passwords[2] = "d8k4qsM6IjXw";
+        users[3] = "96dd8163-300e-4a43-b9cb-c8e9243ab75c"; passwords[3] = "oJocLSybmwev";
+        users[4] = "de39d299-c482-4b37-8a09-dea6f400b27e"; passwords[4] = "8odrkvLdLw6Z";
+        users[5] = "b349d713-1cbc-43e8-b3f0-d7050b90482a"; passwords[5] = "mJyuVCgigzc7";
+        users[6] = "fd3d21dd-ceaf-454f-b89a-46e4f1441411"; passwords[6] = "ZL8pFUtOmpud";
+        users[7] = "b7b33426-6ab6-430b-8707-2091294e0230"; passwords[7] = "B3wnAfP7ufN8";
+        users[8] = "54bde7f8-3fd5-443d-aa08-9139c5e14376"; passwords[8] = "MLKNZHP2fE1x";
+        users[9] = "6381871b-a3c2-4215-838b-2f5acd30d213"; passwords[9] = "Q8ApkKfusEgm";
+
+
+        Random generator = new Random();
+        int j = 9 - generator.nextInt(9);
+
         NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
                 NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
-                "b845dcb3-1e77-4eb1-bf43-3cd7d71f9067",
-                "Pd7kWrDmARew"
+                users[j],
+                passwords[j]
         );
+
 
         try {
             EntitiesOptions entities = new EntitiesOptions.Builder().limit(10000).build();
@@ -74,180 +95,12 @@ public class ParserOfIndexer {
 
         boolean contemTermo = false;
 
+        if(page.getDominio().startsWith("http://dbpedia.org/resource/")){
 
-        long antes = System.currentTimeMillis();
-        List<EntitiesResult> list = getListEntitiesResult(page.getConteudo());
-        long depois = System.currentTimeMillis();
-        long diff = depois - antes;
-
-        Log log = new Log("ParserOfIndex", "watson", new Date(), diff, page.getDominio());
-        logDAO.insert(log);
-
-        String termosDaPagina = "";
-
-        if (list != null) {
-            try {
-                termosDaPagina += page.getDominio() + "\n";
-                antes = System.currentTimeMillis();
-                for (EntitiesResult e : list) {
-                    String type = e.getType();
-                    if (type.equals("Person") ||
-                            type.equals("Location") ||
-                            type.equals("GeographicFeature")) {
-
-                        BufferedWriter bw = null;
-                        FileWriter fw = null;
-
-                        String name = e.getText();
-                        name = name.replaceAll("[^a-zA-Z ]", "").toLowerCase();
-
-                        String nameSHA = getFileName(name);
-                        String fileName = System.getProperty("user.dir") + "/database/termos/" + nameSHA;
-
-                        FileLock lock = null;
-                        FileChannel channel = null;
-                        try {
-
-                            String conteudo = "";
-                            // if file doesnt exists, then create it
-                            Path path = Paths.get(fileName);
-
-                            if (Files.notExists(path)) {
-
-                                File file = new File(fileName);
-
-                                // Get a file channel for the file
-                                channel = new RandomAccessFile(file, "rw").getChannel();
-
-                                // Use the file channel to create a lock on the file.
-                                // This method blocks until it can retrieve the lock.
-                                lock = channel.lock();
-
-                                file.createNewFile();
-
-                                String termo = e.getText();
-
-                                termo = termo.replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                                conteudo += termo + "\n";
-
-                                Vocabulario v = new Vocabulario(termo);
-                                vocabularioDAO.insert(v);
-
-                                termosDaPagina += termo + "\n";
-
-                                if (e.getDisambiguation() != null) {
-                                    if (e.getDisambiguation().getDbpediaResource() != null) {
-                                        OrderedURL ourl = new OrderedURL(e.getDisambiguation().getDbpediaResource(), 12);
-                                        orderedURLDAO.insert(ourl);
-
-                                        conteudo += e.getDisambiguation().getDbpediaResource() + "\n";
-                                    } else {
-                                        conteudo += "http://null" + "\n";
-                                    }
-                                } else {
-                                    conteudo += "http://null" + "\n";
-                                }
-                                conteudo += e.getType() + "\n";
-                                conteudo += page.getDominio() + "\n";
-                                conteudo += e.getCount() + "\n";
-                                conteudo += e.getRelevance().toString() + "\n";
-
-                                // true = append file
-                                fw = new FileWriter(file.getAbsoluteFile());
-                                bw = new BufferedWriter(fw);
-
-                                bw.write(conteudo);
-                                bw.newLine();
-
-                                try {
-                                    if (bw != null)
-                                        bw.close();
-
-                                    if (fw != null)
-                                        fw.close();
-
-                                } catch (IOException ex) {
-                                    ex.printStackTrace();
-                                }
-
-                                // Release the lock - if it is not null!
-                                if (lock != null) {
-                                    try {
-                                        lock.release();
-                                    } catch (IOException e1) {
-                                        e1.printStackTrace();
-                                    }
-                                }
-
-                                // Close the file
-                                try {
-                                    if (channel != null)
-                                        channel.close();
-                                } catch (IOException e1) {
-                                    e1.printStackTrace();
-                                }
-
-
-                            } else {
-                                conteudo += page.getDominio() + "\n";
-                                conteudo += e.getCount() + "\n";
-                                conteudo += e.getRelevance().toString() + "\n\n";
-
-                                // true = append file
-                                fw = new FileWriter(path.toFile(), true);
-                                bw = new BufferedWriter(fw);
-
-                                bw.write(conteudo);
-                                bw.newLine();
-
-                                try {
-                                    if (bw != null)
-                                        bw.close();
-
-                                    if (fw != null)
-                                        fw.close();
-
-                                } catch (IOException ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                            contemTermo = true;
-
-                        } catch (IOException e2) {
-                            e2.printStackTrace();
-                        }
-
-                    }
-                }
-                depois = System.currentTimeMillis();
-                diff = depois - antes;
-
-                log = new Log("ParserOfIndex", "watson(" + list.size() + ")", new Date(), diff, page.getDominio());
-                logDAO.insert(log);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-        if (contemTermo) {
             String name = page.getDominio();
             String nameSHA = getFileName(name);
             String fileName = System.getProperty("user.dir") + "/database/paginas/" + nameSHA;
 
-                /*FileLock lock = null;
-                FileChannel channel = null;
-
-                try {
-                    // Get a file channel for the file
-                    channel = new RandomAccessFile(file, "rw").getChannel();
-
-                    // Use the file channel to create a lock on the file.
-                    // This method blocks until it can retrieve the lock.
-                    lock = channel.lock();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
 
             Path path = Paths.get(fileName);
 
@@ -264,18 +117,12 @@ public class ParserOfIndexer {
                     String conteudo = "";
                     Date date = new Date();
                     conteudo += date.toString() + "\n";
+                    conteudo += page.getConteudo().length() + "\n";
                     conteudo += page.getDominio() + "\n";
                     conteudo += page.getConteudo() + "\n";
 
-                    antes = System.currentTimeMillis();
 
                     Compress.zip(conteudo, fileName + ".zip");
-
-                    depois = System.currentTimeMillis();
-                    diff = depois - antes;
-
-                    log = new Log("ParserOfIndexer", "compress", new Date(), diff, page.getDominio());
-                    logDAO.insert(log);
 
                     bw.write(conteudo);
                     bw.newLine();
@@ -299,71 +146,286 @@ public class ParserOfIndexer {
 
                 }
             }
+        }else{
+            long antes = System.currentTimeMillis();
+            List<EntitiesResult> list = getListEntitiesResult(page.getConteudo());
+            long depois = System.currentTimeMillis();
+            long diff = depois - antes;
 
-        } else {
-            RejectedURL rurl = new RejectedURL(page.getDominio(), "", "Indexer");
-            rejectedURLDAO.insertURL(rurl);
-        }
+            Log log = new Log("ParserOfIndex", "watson", new Date(), diff, page.getDominio());
+            logDAO.insert(log);
 
-        if(list.size() > 0 && contemTermo){
-            try {
-                BufferedWriter bw3 = null;
-                FileWriter fw3 = null;
+            String termosDaPagina = "";
 
-                FileLock lock3 = null;
-                FileChannel channel3 = null;
-
-                String name = page.getDominio();
-                String nameSHA = getFileName(name);
-                String fileTermosPorPagina = System.getProperty("user.dir") + "/database/termosPorPagina/" +  nameSHA + ".txt";
-                File fileVocab = new File(fileTermosPorPagina);
-
-                // Get a file channel for the file
-                channel3 = new RandomAccessFile(fileVocab, "rw").getChannel();
-
-                // Use the file channel to create a lock on the file.
-                // This method blocks until it can retrieve the lock.
-                lock3 = channel3.lock();
-
-
-                // true = append file
-                fw3 = new FileWriter(fileVocab.getAbsoluteFile(), true);
-                bw3 = new BufferedWriter(fw3);
-
-                bw3.write(termosDaPagina);
-                bw3.newLine();
-
+            if (list != null) {
                 try {
-                    if (bw3 != null)
-                        bw3.close();
+                    termosDaPagina += page.getDominio() + "\n";
+                    antes = System.currentTimeMillis();
+                    for (EntitiesResult e : list) {
+                        String type = e.getType();
+                        if (type.equals("Person") ||
+                                type.equals("Location") ||
+                                type.equals("GeographicFeature")) {
 
-                    if (fw3 != null)
-                        fw3.close();
+                            BufferedWriter bw = null;
+                            FileWriter fw = null;
 
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                            String name = e.getText();
+                            name = name.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+
+                            String nameSHA = getFileName(name);
+                            String fileName = System.getProperty("user.dir") + "/database/termos/" + nameSHA;
+
+                            FileLock lock = null;
+                            FileChannel channel = null;
+                            try {
+
+                                String conteudo = "";
+                                // if file doesnt exists, then create it
+                                Path path = Paths.get(fileName);
+
+                                if (Files.notExists(path)) {
+
+                                    File file = new File(fileName);
+
+                                    // Get a file channel for the file
+                                    channel = new RandomAccessFile(file, "rw").getChannel();
+
+                                    // Use the file channel to create a lock on the file.
+                                    // This method blocks until it can retrieve the lock.
+                                    lock = channel.lock();
+
+                                    file.createNewFile();
+
+                                    String termo = e.getText();
+
+                                    termo = termo.replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                                    conteudo += termo + "\n";
+
+                                    Vocabulario v = new Vocabulario(termo);
+                                    vocabularioDAO.insert(v);
+
+                                    termosDaPagina += termo + "\n";
+
+                                    if (e.getDisambiguation() != null) {
+                                        if (e.getDisambiguation().getDbpediaResource() != null) {
+                                            OrderedURL ourl = new OrderedURL(e.getDisambiguation().getDbpediaResource(), 12);
+                                            orderedURLDAO.insert(ourl);
+
+                                            conteudo += e.getDisambiguation().getDbpediaResource() + "\n";
+                                        } else {
+                                            conteudo += "http://null" + "\n";
+                                        }
+                                    } else {
+                                        conteudo += "http://null" + "\n";
+                                    }
+                                    conteudo += e.getType() + "\n";
+                                    conteudo += page.getDominio() + "\n";
+                                    conteudo += e.getCount() + "\n";
+                                    conteudo += e.getRelevance().toString() + "\n";
+
+                                    // true = append file
+                                    fw = new FileWriter(file.getAbsoluteFile());
+                                    bw = new BufferedWriter(fw);
+
+                                    bw.write(conteudo);
+                                    bw.newLine();
+
+                                    try {
+                                        if (bw != null)
+                                            bw.close();
+
+                                        if (fw != null)
+                                            fw.close();
+
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+
+                                    // Release the lock - if it is not null!
+                                    if (lock != null) {
+                                        try {
+                                            lock.release();
+                                        } catch (IOException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                    }
+
+                                    // Close the file
+                                    try {
+                                        if (channel != null)
+                                            channel.close();
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+
+
+                                } else {
+                                    conteudo += page.getDominio() + "\n";
+                                    conteudo += e.getCount() + "\n";
+                                    conteudo += e.getRelevance().toString() + "\n\n";
+
+                                    // true = append file
+                                    fw = new FileWriter(path.toFile(), true);
+                                    bw = new BufferedWriter(fw);
+
+                                    bw.write(conteudo);
+                                    bw.newLine();
+
+                                    try {
+                                        if (bw != null)
+                                            bw.close();
+
+                                        if (fw != null)
+                                            fw.close();
+
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                                contemTermo = true;
+
+                            } catch (IOException e2) {
+                                e2.printStackTrace();
+                            }
+
+                        }
+                    }
+                    depois = System.currentTimeMillis();
+                    diff = depois - antes;
+
+                    log = new Log("ParserOfIndex", "watson(" + list.size() + ")", new Date(), diff, page.getDominio());
+                    logDAO.insert(log);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                // Release the lock - if it is not null!
-                if (lock3 != null) {
+            }
+            if (contemTermo) {
+                String name = page.getDominio();
+                String nameSHA = getFileName(name);
+                String fileName = System.getProperty("user.dir") + "/database/paginas/" + nameSHA;
+
+                Path path = Paths.get(fileName);
+
+                if (Files.notExists(path)) {
+
+                    BufferedWriter bw = null;
+                    FileWriter fw = null;
                     try {
-                        lock3.release();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                        File file = new File(fileName);
+
+                        fw = new FileWriter(file.getAbsoluteFile());
+                        bw = new BufferedWriter(fw);
+
+                        String conteudo = "";
+                        Date date = new Date();
+                        conteudo += date.toString() + "\n";
+                        conteudo += page.getConteudo().length() + "\n";
+                        conteudo += page.getDominio() + "\n";
+                        conteudo += page.getConteudo() + "\n";
+
+                        antes = System.currentTimeMillis();
+
+                        Compress.zip(conteudo, fileName + ".zip");
+
+                        depois = System.currentTimeMillis();
+                        diff = depois - antes;
+
+                        log = new Log("ParserOfIndexer", "compress", new Date(), diff, page.getDominio());
+                        logDAO.insert(log);
+
+                        bw.write(conteudo);
+                        bw.newLine();
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (bw != null)
+                                bw.close();
+
+                            if (fw != null)
+                                fw.close();
+
+//                            lock.release();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
                 }
 
-                // Close the file
+            } else {
+                RejectedURL rurl = new RejectedURL(page.getDominio(), "", "Indexer");
+                rejectedURLDAO.insertURL(rurl);
+            }
+
+            if(list.size() > 0 && contemTermo){
                 try {
-                    if (channel3 != null)
-                        channel3.close();
-                } catch (IOException e1) {
+                    BufferedWriter bw3 = null;
+                    FileWriter fw3 = null;
+
+                    FileLock lock3 = null;
+                    FileChannel channel3 = null;
+
+                    String name = page.getDominio();
+                    String nameSHA = getFileName(name);
+                    String fileTermosPorPagina = System.getProperty("user.dir") + "/database/termosPorPagina/" +  nameSHA + ".txt";
+                    File fileVocab = new File(fileTermosPorPagina);
+
+                    // Get a file channel for the file
+                    channel3 = new RandomAccessFile(fileVocab, "rw").getChannel();
+
+                    // Use the file channel to create a lock on the file.
+                    // This method blocks until it can retrieve the lock.
+                    lock3 = channel3.lock();
+
+
+                    // true = append file
+                    fw3 = new FileWriter(fileVocab.getAbsoluteFile(), true);
+                    bw3 = new BufferedWriter(fw3);
+
+                    bw3.write(termosDaPagina);
+                    bw3.newLine();
+
+                    try {
+                        if (bw3 != null)
+                            bw3.close();
+
+                        if (fw3 != null)
+                            fw3.close();
+
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    // Release the lock - if it is not null!
+                    if (lock3 != null) {
+                        try {
+                            lock3.release();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+
+                    // Close the file
+                    try {
+                        if (channel3 != null)
+                            channel3.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                } catch (Exception e1) {
                     e1.printStackTrace();
                 }
-            } catch (Exception e1) {
-                e1.printStackTrace();
             }
         }
+
+
 
     }
 

@@ -1,12 +1,3 @@
-package com.theseeker.indexer;
-
-import com.theseeker.crawler.entities.OrderedURL;
-import com.theseeker.crawler.entities.queuedURL;
-import com.theseeker.crawler.entities.seenURL;
-import com.theseeker.util.url.URLCanonicalizer;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.math.BigDecimal;
@@ -16,16 +7,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.List;
 
 /**
  * Created by claudinei on 22/05/17.
  */
-@Component
-public class BM25 {
+public class bm25 {
 
-    public HashMap<String, Double> BM25(String termo) {
+    public static HashMap<String, Double> BM25(String termo) {
         HashMap<String, Double> resp = new HashMap<String, Double>();
 
         String termWithoutTrash = termo.replaceAll("[^a-zA-Z ]", "").toLowerCase();
@@ -98,30 +88,6 @@ public class BM25 {
         return resp;
     }
 
-    public String consult(String termo) {
-        HashMap<String, Double> hash = BM25(termo);
-        for (Map.Entry<String, Double> entry : hash.entrySet()) {
-            System.out.printf("Key : %s and Value: %s %n", getFileName(entry.getKey()), entry.getValue());
-        }
-        return hash.toString();
-    }
-
-    public String getDbPedia(String termo){
-        String fileName = getFileName(termo);
-        String resp = "";
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/database/paginas/" + fileName));
-            String line = null;
-            line = br.readLine();
-            line = br.readLine();
-            line = br.readLine();
-            line = br.readLine();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return resp;
-    }
-
     public static String getFileName(String input) {
         MessageDigest mDigest = null;
         try {
@@ -136,5 +102,29 @@ public class BM25 {
         }
 
         return sb.toString();
+    }
+
+    public static String getDbPedia(String termo){
+        String fileName = getFileName(termo);
+        String resp = "";
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(System.getProperty("user.dir") + "/database/paginas/" + fileName));
+            String line = null;
+            line = br.readLine();
+            line = br.readLine();
+            line = br.readLine();
+            line = br.readLine();
+            resp = line;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resp;
+    }
+
+    public static void main(String[] args){
+        HashMap<String, Double> hash = BM25("gordon cummins");
+        for(Map.Entry<String, Double> entry : hash.entrySet()){
+            System.out.printf("Key : %s and Value: %s %n", getFileName(entry.getKey()), entry.getValue());
+        }
     }
 }

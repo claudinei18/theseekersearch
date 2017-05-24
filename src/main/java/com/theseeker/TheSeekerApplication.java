@@ -2,11 +2,13 @@ package com.theseeker;
 
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.*;
+import com.theseeker.crawler.entities.seenURL;
 import com.theseeker.util.robots.NoRobotClient;
 import com.theseeker.util.robots.NoRobotException;
 import org.apache.log4j.PropertyConfigurator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -74,6 +76,21 @@ public class TheSeekerApplication {
 			System.out.println(x);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}*/
+
+		/*try{
+			Document doc = Jsoup.connect("http://dbpedia.org/resource/Kevin_Hart_(actor)")
+					.userAgent("TheSeeker1.0")
+					.header("Accept-Language", "en")
+					.timeout(3000)
+					.get();
+
+			Element p = doc.select("p").first();
+			String text = p.text(); //some bold text
+			System.out.println(text);
+		}catch (Exception e) {
+            *//*System.out.println("ERRO: Não conseguiu coletar com o JSOUP. " + dominio);
+            e.printStackTrace();*//*
 		}*/
 
 	}

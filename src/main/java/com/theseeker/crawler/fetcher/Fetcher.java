@@ -62,6 +62,13 @@ public class Fetcher {
                     .timeout(3000)
                     .get();
 
+            if(dominio.startsWith("http://dbpedia.org")){
+                Element p = doc.select("p").first();
+                String text = p.text(); //some bold text
+                String html = "<html><head><title>First parse</title></head>"
+                        + "<body>" + text + "</body></html>";
+                doc = Jsoup.parse(html);
+            }
             Element taglang = doc.select("html").first();
 //            System.out.println(taglang.attr("lang"));
             if( taglang.attr("lang").startsWith("en") || taglang.attr("lang").equals("") ){
