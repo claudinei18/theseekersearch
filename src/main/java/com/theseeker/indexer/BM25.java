@@ -101,7 +101,7 @@ public class BM25 {
         return resp;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void teste(){
         IDF("pradeep teregowda");
     }
