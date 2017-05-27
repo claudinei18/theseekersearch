@@ -42,6 +42,8 @@ public class TheSeekerApplication {
 				InetAddress.getLocalHost().getHostAddress(),
 				env.getProperty("server.port"));
 
+		System.out.println("teste");
+
 		NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
 				NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
 				"b845dcb3-1e77-4eb1-bf43-3cd7d71f9067",

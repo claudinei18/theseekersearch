@@ -39,7 +39,9 @@ public class bm25 {
             while ((read = brQueuedURL.readLine()) != null) {
                 if(read.startsWith("http://dbpedia.org")){
                     String dbPediaContent = getDbPedia(read);
-                    System.out.println(dbPediaContent);
+                    if(dbPediaContent != null){
+                        System.out.println(dbPediaContent);
+                    }
                 }
                 else if (!read.startsWith("http://dbpedia.org") &&
                         !read.startsWith("http://null") &&
@@ -83,7 +85,8 @@ public class bm25 {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            return null;
         }
         return resp;
     }
@@ -116,15 +119,24 @@ public class bm25 {
             line = br.readLine();
             resp = line;
         }catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
+            return null;
         }
         return resp;
     }
 
-    public static void main(String[] args){
-        HashMap<String, Double> hash = BM25("gordon cummins");
-        for(Map.Entry<String, Double> entry : hash.entrySet()){
-            System.out.printf("Key : %s and Value: %s %n", getFileName(entry.getKey()), entry.getValue());
+    public static void teste(String termo){
+        System.out.println(termo);
+        HashMap<String, Double> hash = BM25(termo);
+        if(hash != null){
+            for(Map.Entry<String, Double> entry : hash.entrySet()){
+                System.out.printf("Key : %s and Value: %s %n", entry.getKey(), entry.getValue());
+            }
         }
     }
+
+    public static void main(String[] args){
+        teste("barack");
+        teste("obama");
+        teste("barack obama");    }
 }

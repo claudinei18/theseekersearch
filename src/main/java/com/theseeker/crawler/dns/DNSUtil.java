@@ -68,12 +68,12 @@ public class DNSUtil {
         return null;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void refreshCache() {
         new Thread(t1).start();
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void refreshCache2() {
         new Thread(t2).start();
     }

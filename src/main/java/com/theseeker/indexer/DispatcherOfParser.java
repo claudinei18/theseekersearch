@@ -33,7 +33,7 @@ public class DispatcherOfParser {
 
     }
 
-    @PostConstruct
+    /*@PostConstruct
     public void initExecutor() {
         executorService = Executors.newFixedThreadPool(100);
         startIndexer();
@@ -63,6 +63,21 @@ public class DispatcherOfParser {
             }
 
         }
-    };
+    };*/
 
+    @PostConstruct
+    public void startIndexer(){
+        while(true){
+            List<Pages> list = pagesDAO.getPagesToIndexer();
+            for (Pages p : list) {
+                System.out.println("Comecou");
+                parser.start(p);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

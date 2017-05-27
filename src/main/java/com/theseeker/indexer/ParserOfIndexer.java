@@ -57,8 +57,9 @@ public class ParserOfIndexer {
         String[] users = new String[10];
         String[] passwords = new String[10];
 
-        users[0] = "b845dcb3-1e77-4eb1-bf43-3cd7d71f9067"; passwords[0] = "Pd7kWrDmARew";
-        users[1] = "c7128096-8eb9-43b4-befd-e3ed0512154d"; passwords[1] = "AkEk2td2xrEr";
+        users[0] = "b845dcb3-1e77-4eb1-bf43-3cd7d71f9067"; passwords[0] = "Pd7kWrDmARew"; // do cleber
+//        users[0] = "583b2e88-c80d-4ec0-93c1-98239f805146\""; passwords[0] = "RuytRliRvoFN"; //online
+        /*users[1] = "c7128096-8eb9-43b4-befd-e3ed0512154d"; passwords[1] = "AkEk2td2xrEr";
         users[2] = "39b805f7-8eb6-4cf9-a0e6-d162b5a83488"; passwords[2] = "d8k4qsM6IjXw";
         users[3] = "96dd8163-300e-4a43-b9cb-c8e9243ab75c"; passwords[3] = "oJocLSybmwev";
         users[4] = "de39d299-c482-4b37-8a09-dea6f400b27e"; passwords[4] = "8odrkvLdLw6Z";
@@ -66,16 +67,16 @@ public class ParserOfIndexer {
         users[6] = "fd3d21dd-ceaf-454f-b89a-46e4f1441411"; passwords[6] = "ZL8pFUtOmpud";
         users[7] = "b7b33426-6ab6-430b-8707-2091294e0230"; passwords[7] = "B3wnAfP7ufN8";
         users[8] = "54bde7f8-3fd5-443d-aa08-9139c5e14376"; passwords[8] = "MLKNZHP2fE1x";
-        users[9] = "6381871b-a3c2-4215-838b-2f5acd30d213"; passwords[9] = "Q8ApkKfusEgm";
+        users[9] = "6381871b-a3c2-4215-838b-2f5acd30d213"; passwords[9] = "Q8ApkKfusEgm";*/
 
 
-        Random generator = new Random();
-        int j = 9 - generator.nextInt(9);
+        /*Random generator = new Random();
+        int j = 9 - generator.nextInt(9);*/
 
         NaturalLanguageUnderstanding service = new NaturalLanguageUnderstanding(
                 NaturalLanguageUnderstanding.VERSION_DATE_2017_02_27,
-                users[j],
-                passwords[j]
+                users[0],
+                passwords[0]
         );
 
 
@@ -148,7 +149,9 @@ public class ParserOfIndexer {
             }
         }else{
             long antes = System.currentTimeMillis();
+
             List<EntitiesResult> list = getListEntitiesResult(page.getConteudo());
+
             long depois = System.currentTimeMillis();
             long diff = depois - antes;
 

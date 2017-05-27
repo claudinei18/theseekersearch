@@ -39,13 +39,16 @@ public class Initialize {
     public void initialize() throws IOException {
         brQueuedURL = new BufferedReader( new FileReader(System.getProperty("user.dir") + "/database/seeds.txt") );
         String read = null;
+        System.out.println("ENTROU1");
 
         while ( ( read = brQueuedURL.readLine() ) != null ) {
             seenURL sl = new seenURL(URLCanonicalizer.getCanonicalURL(read));
             queuedURL qurl = new queuedURL(URLCanonicalizer.getCanonicalURL(read), "");
+            System.out.println("ENTROU2");
             if(!(seenURLDAO.exists(sl.getDominio())) && !(queuedURLDAO.exists(qurl))){
                 OrderedURL ourl = new OrderedURL(read, 11);
                 try{
+                    System.out.println("Inseriu ordered");
                     orderedURLDAO.insert(ourl);
                 }catch (Exception e){
                     e.printStackTrace();
