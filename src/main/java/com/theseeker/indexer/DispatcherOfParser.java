@@ -29,17 +29,39 @@ public class DispatcherOfParser {
 
     ExecutorService executorService;
 
-    public DispatcherOfParser(){
+    public DispatcherOfParser() {
 
     }
 
     @PostConstruct
     public void initExecutor() {
-        executorService = Executors.newFixedThreadPool(100);
+//        executorService = Executors.newFixedThreadPool(100);
         startIndexer();
     }
 
     public void startIndexer() {
+        new Thread(t1).start();
+    }
+
+    private Runnable t1 = new Runnable() {
+        public void run() {
+            while (true) {
+                List<Pages> list = pagesDAO.getPagesToIndexer();
+                for (Pages p : list) {
+                    // some code to run in parallel
+                    parser.start(p);
+                }
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    };
+
+    /*public void startIndexer() {
         new Thread(t1).start();
     }
 
@@ -63,6 +85,21 @@ public class DispatcherOfParser {
             }
 
         }
-    };
+    };*/
+
+    /*@PostConstruct
+    public void startIndexer(){
+        while(true){
+            List<Pages> list = pagesDAO.getPagesToIndexer();
+            for (Pages p : list) {
+                parser.start(p);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }*/
 
 }

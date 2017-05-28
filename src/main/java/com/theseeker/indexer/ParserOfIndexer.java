@@ -264,6 +264,7 @@ public class ParserOfIndexer {
                     String conteudo = "";
                     Date date = new Date();
                     conteudo += date.toString() + "\n";
+                    conteudo += page.getConteudo().length() + "\n";
                     conteudo += page.getDominio() + "\n";
                     conteudo += page.getConteudo() + "\n";
 
@@ -305,63 +306,65 @@ public class ParserOfIndexer {
             rejectedURLDAO.insertURL(rurl);
         }
 
-        if(list.size() > 0 && contemTermo){
-            try {
-                BufferedWriter bw3 = null;
-                FileWriter fw3 = null;
-
-                FileLock lock3 = null;
-                FileChannel channel3 = null;
-
-                String name = page.getDominio();
-                String nameSHA = getFileName(name);
-                String fileTermosPorPagina = System.getProperty("user.dir") + "/database/termosPorPagina/" +  nameSHA + ".txt";
-                File fileVocab = new File(fileTermosPorPagina);
-
-                // Get a file channel for the file
-                channel3 = new RandomAccessFile(fileVocab, "rw").getChannel();
-
-                // Use the file channel to create a lock on the file.
-                // This method blocks until it can retrieve the lock.
-                lock3 = channel3.lock();
-
-
-                // true = append file
-                fw3 = new FileWriter(fileVocab.getAbsoluteFile(), true);
-                bw3 = new BufferedWriter(fw3);
-
-                bw3.write(termosDaPagina);
-                bw3.newLine();
-
+        if(list != null){
+            if(list.size() > 0 && contemTermo){
                 try {
-                    if (bw3 != null)
-                        bw3.close();
+                    BufferedWriter bw3 = null;
+                    FileWriter fw3 = null;
 
-                    if (fw3 != null)
-                        fw3.close();
+                    FileLock lock3 = null;
+                    FileChannel channel3 = null;
 
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                    String name = page.getDominio();
+                    String nameSHA = getFileName(name);
+                    String fileTermosPorPagina = System.getProperty("user.dir") + "/database/termosPorPagina/" +  nameSHA + ".txt";
+                    File fileVocab = new File(fileTermosPorPagina);
 
-                // Release the lock - if it is not null!
-                if (lock3 != null) {
+                    // Get a file channel for the file
+                    channel3 = new RandomAccessFile(fileVocab, "rw").getChannel();
+
+                    // Use the file channel to create a lock on the file.
+                    // This method blocks until it can retrieve the lock.
+                    lock3 = channel3.lock();
+
+
+                    // true = append file
+                    fw3 = new FileWriter(fileVocab.getAbsoluteFile(), true);
+                    bw3 = new BufferedWriter(fw3);
+
+                    bw3.write(termosDaPagina);
+                    bw3.newLine();
+
                     try {
-                        lock3.release();
+                        if (bw3 != null)
+                            bw3.close();
+
+                        if (fw3 != null)
+                            fw3.close();
+
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    // Release the lock - if it is not null!
+                    if (lock3 != null) {
+                        try {
+                            lock3.release();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+
+                    // Close the file
+                    try {
+                        if (channel3 != null)
+                            channel3.close();
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                }
-
-                // Close the file
-                try {
-                    if (channel3 != null)
-                        channel3.close();
-                } catch (IOException e1) {
+                } catch (Exception e1) {
                     e1.printStackTrace();
                 }
-            } catch (Exception e1) {
-                e1.printStackTrace();
             }
         }
 
