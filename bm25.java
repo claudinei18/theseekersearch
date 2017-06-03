@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.*;
 
 /**
  * Created by claudinei on 22/05/17.
@@ -86,7 +90,7 @@ public class bm25 {
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            resp.put(termo, 0.0);
         }
         return resp;
     }
@@ -127,19 +131,81 @@ public class bm25 {
 
     public static void teste(String termo){
         System.out.println(termo);
+        System.out.println(getFileName(termo));
         HashMap<String, Double> hash = BM25(termo);
-        if(hash != null){
+        Map<String, Double> treeMap = new TreeMap<String, Double>(hash);
+//        printMap(treeMap, termo);
+        treeMap = sortByValue(treeMap);
+        printMap(treeMap, termo);
+
+        /*if(hash != null){
             for(Map.Entry<String, Double> entry : hash.entrySet()){
                 System.out.printf("Key : %s and Value: %s %n", entry.getKey(), entry.getValue());
+                System.out.println(getFileName(entry.getKey()));
             }
-        }
+        }*/
     }
 
     public static void main(String[] args){
-        teste("barack");
-        teste("obama");
-        teste("barack obama");
-        teste("robert the bruce");
-        teste("oxford");
+        teste("atlanta");
+        /*
+        teste("barack obama sr");
+        teste("china");
+        teste("arnold schwarzenegger");
+        teste("bahamas");
+        teste("washington");*/
     }
+
+    public static void printMap(Map<String,Double> map, String termo) {
+        System.out.println("PRINTMAP " + termo);
+        Set s = map.entrySet();
+        Iterator it = s.iterator();
+        while ( it.hasNext() ) {
+            Map.Entry entry = (Map.Entry) it.next();
+            String key = (String) entry.getKey();
+            Double value = (Double) entry.getValue();
+            System.out.println(key + " => " + value);
+        }//while
+        System.out.println("========================");
+    }//printMap
+
+    /*private static <K, V> Map<K, V> sortByValue(Map<K, V> map) {
+        List<Entry<K, V>> list = new LinkedList<>(map.entrySet());
+        Collections.sort(list, new Comparator<Object>() {
+            @SuppressWarnings("unchecked")
+            public int compare(Object o1, Object o2) {
+                return ((Comparable<V>) ((Map.Entry<K, V>) (o1)).getValue()).compareTo(((Map.Entry<K, V>) (o2)).getValue());
+            }
+        });
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Iterator<Entry<K, V>> it = list.iterator(); it.hasNext();) {
+            Map.Entry<K, V> entry = (Map.Entry<K, V>) it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
+    }*/
+
+    public static <K, V extends Comparable<? super V>> Map<K, V>
+    sortByValue( Map<K, V> map )
+    {
+        List<Map.Entry<K, V>> list =
+                new LinkedList<Map.Entry<K, V>>( map.entrySet() );
+        Collections.sort( list, new Comparator<Map.Entry<K, V>>()
+        {
+            public int compare( Map.Entry<K, V> o1, Map.Entry<K, V> o2 )
+            {
+                return (o1.getValue()).compareTo( o2.getValue() );
+            }
+        } );
+
+        Map<K, V> result = new LinkedHashMap<K, V>();
+        for (Map.Entry<K, V> entry : list)
+        {
+            result.put( entry.getKey(), entry.getValue() );
+        }
+        return result;
+    }
+
 }

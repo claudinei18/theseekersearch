@@ -12,6 +12,7 @@ import com.theseeker.crawler.entities.queuedURL;
 import com.theseeker.crawler.entities.seenURL;
 import com.theseeker.crawler.entities.seenURLDAO.seenURLDAO;
 import com.theseeker.crawler.writeReader.Writer;
+import com.theseeker.util.compress.Compress;
 import com.theseeker.util.entities.Log;
 import com.theseeker.util.entities.LogDAO.LogDAO;
 import org.jsoup.nodes.Document;
@@ -20,8 +21,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
@@ -62,13 +71,90 @@ public class Fetcher {
                     .timeout(3000)
                     .get();
 
-            Element taglang = doc.select("html").first();
-//            System.out.println(taglang.attr("lang"));
-            if( taglang.attr("lang").startsWith("en") || taglang.attr("lang").equals("") ){
-                seenURL sl = new seenURL(dominio, ip);
-                seenURLDAO.insertURL(sl);
-            }else{
+            if(dominio.startsWith("http://dbpedia.org")){
+                Element p = doc.select("p").first();
+                String text = p.text(); //some bold text
+
                 doc = null;
+
+                String name = dominio;
+                String nameSHA = getFileName(name);
+                String fileName = System.getProperty("user.dir") + "/database/paginas/" + nameSHA;
+
+                /*FileLock lock = null;
+                FileChannel channel = null;
+
+                try {
+                    // Get a file channel for the file
+                    channel = new RandomAccessFile(file, "rw").getChannel();
+
+                    // Use the file channel to create a lock on the file.
+                    // This method blocks until it can retrieve the lock.
+                    lock = channel.lock();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
+
+                Path path = Paths.get(fileName);
+
+                if (Files.notExists(path)) {
+
+                    BufferedWriter bw = null;
+                    FileWriter fw = null;
+                    try {
+                        File file = new File(fileName);
+
+                        fw = new FileWriter(file.getAbsoluteFile());
+                        bw = new BufferedWriter(fw);
+
+                        String conteudo = "";
+                        Date date = new Date();
+                        conteudo += date.toString() + "\n";
+                        conteudo += text.length() + "\n";
+                        conteudo += dominio + "\n";
+                        conteudo += text + "\n";
+
+                        long antes = System.currentTimeMillis();
+
+                        Compress.zip(conteudo, fileName + ".zip");
+
+                        long depois = System.currentTimeMillis();
+                        long diff = depois - antes;
+
+                        Log log = new Log("Fetcher", "compress", new Date(), diff, dominio);
+                        logDAO.insert(log);
+
+                        bw.write(conteudo);
+                        bw.newLine();
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (bw != null)
+                                bw.close();
+
+                            if (fw != null)
+                                fw.close();
+
+//                            lock.release();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }
+            }else{
+                Element taglang = doc.select("html").first();
+//            System.out.println(taglang.attr("lang"));
+                if( taglang.attr("lang").startsWith("en") || taglang.attr("lang").equals("") ){
+                    seenURL sl = new seenURL(dominio, ip);
+                    seenURLDAO.insertURL(sl);
+                }else{
+                    doc = null;
+                }
             }
         }catch (Exception e) {
             /*System.out.println("ERRO: Não conseguiu coletar com o JSOUP. " + dominio);
@@ -108,5 +194,21 @@ public class Fetcher {
             //Chamando o Writer para escrever no banco de dados
             writer.writerInFetchedPages(fp);
         }
+    }
+
+    public static String getFileName(String input) {
+        MessageDigest mDigest = null;
+        try {
+            mDigest = MessageDigest.getInstance("SHA1");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        byte[] result = mDigest.digest(input.getBytes());
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < result.length; i++) {
+            sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        return sb.toString();
     }
 }

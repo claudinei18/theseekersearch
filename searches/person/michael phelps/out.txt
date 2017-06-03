@@ -1,0 +1,118 @@
+michael
+17b9e1c64588c7fa6419b4d29dc1f4426279ba01
+PRINTMAP michael
+https://en.wikipedia.org/wiki/Bernadette_Rostenkowski => 9.925279815308922
+https://en.wikipedia.org/wiki/Amy_Farrah_Fowler => 9.925285169458778
+https://en.wikipedia.org/wiki/Stuart_Bloom => 9.925285993294239
+https://en.wikipedia.org/wiki/List_of_The_Big_Bang_Theory_characters#Emily_Sweeney => 9.925302476732572
+http://en.wikipedia.org/wiki/Ariana_Grande => 9.934750675861064
+https://en.wikipedia.org/wiki/Janis_Joplin#Early_life:_1943.E2.80.9361 => 9.936953053739431
+https://en.wikipedia.org/wiki/Barack_Obama_presidential_campaign,_2008 => 9.950498901517122
+http://en.wikipedia.org/wiki/Jose_Canseco => 9.97049130967342
+https://en.wikipedia.org/wiki/Red_states_and_blue_states => 9.975364942639072
+https://en.wikipedia.org/wiki/Israeli_Declaration_of_Independence => 9.999498684106884
+http://www.ranker.com/review/matt-damon/1543338?ref=name_1929237 => 10.029825232276393
+http://www.ranker.com/review/matt-damon/1543338?ref=name_1769469 => 10.02997390477076
+http://www.ranker.com/review/matt-damon/1543338?ref=name_894906 => 10.02997390477076
+http://en.wikipedia.org/wiki/Maxwell_(musician) => 10.033618929421902
+https://en.wikipedia.org/w/index.php?title=Mayim_Bialik&oldid=782667401 => 10.055865788215371
+https://en.wikipedia.org/wiki/Mayim_Bialik => 10.059137602223446
+https://en.wikipedia.org/wiki/Blind_Willie_Johnson => 10.082191435921812
+http://www.mirror.co.uk/news/uk-news/manchester-arena-bombing-victim-eilidh-10496146#comments-section => 10.092258042540069
+https://en.wikipedia.org/wiki/William_Few => 10.100610338160363
+http://www.biographyonline.net/people/america/famous-americans.html?replytocom=5299#respond => 10.139208483283284
+http://www.biographyonline.net/people/america/famous-americans.html?replytocom=6043#respond => 10.139888287800982
+http://www.ranker.com/review/seth-rogen/2007111?ref=name_115786 => 10.147852581637459
+http://www.ranker.com/review/seth-rogen/2007111?ref=name_1046365 => 10.147933107291916
+http://www.ranker.com/review/michael-caine/142249?ref=name_894906 => 10.168524058897692
+http://en.wikipedia.org/wiki/Matt_Robinson_(actor) => 10.193422227854153
+https://twitter.com/AbertayUni => 10.195874073880718
+http://www.ranker.com/review/cinderella/735985?ref=name_685594 => 10.214159412234517
+http://www.ranker.com/review/peter-pan/1787328?ref=name_685594 => 10.27284923276417
+http://www.ranker.com/review/michael-keaton/1574747?ref=name_1769469 => 10.27840265430163
+http://www.ranker.com/review/michael-keaton/1574747?ref=name_1852083 => 10.27840265430163
+http://www.ranker.com/review/alice-in-wonderland/432505?ref=name_685594 => 10.303021091890626
+http://www.ranker.com/list/young-nick-offerman-pictures/cari-fortier?ref=collections&pos=27&ltype=l&l=2004781&g=2&collectionId=701 => 10.32397366762593
+https://en.wikipedia.org/wiki/Jack_Ketch => 10.328572338035492
+http://en.wikipedia.org/wiki/Dr._Nick => 10.331784174597667
+http://www.ranker.com/review/james-mcavoy/1262870?ref=name_1871396 => 10.337209801746297
+http://www.ranker.com/list/list-of-all-tragedy-movies/reference?ref=text_rank&pos=4&a=0&ltype=n&l=883188 => 10.34339960444633
+http://www.ranker.com/list/gay-celebrities-who-came-out-in-the-2000s/celebrity-lists?ref=rltdlsts&pos=1&a=4&ltype=l&l=117604&g=2 => 10.41780380803628
+http://www.ranker.com/list/gay-celebrities-who-came-out-in-the-2000s/celebrity-lists?ref=rltdlsts&pos=7&a=40&ltype=l&l=2566503&g=2 => 10.41780380803628
+http://www.ranker.com/list/celebrities-arrested-in-foreign-countries/celebrity-lists?ref=collections&pos=38&ltype=l&l=2293339&g=2&collectionId=1206 => 10.4190535667622
+http://www.ranker.com/list/celebrities-who-wear-fur/celebrity-lists?ref=also_ranked&pos=63&a=0&ltype=n&l=1685563&g=2 => 10.426608692557965
+http://www.ranker.com/list/celebrity-illuminati-videos/mike-rothschild?ref=rltdlsts&pos=5&a=24&ltype=l&l=1844484&g=2 => 10.444321351540856
+http://www.ranker.com/list/best-feel-good-movies/ranker-film?ref=rltdlsts&pos=9&a=19&ltype=l&l=107238&g=2 => 10.476500440869767
+http://www.ranker.com/list/best-feel-good-movies/ranker-film?ref=text_rank&pos=14&a=0&ltype=n&l=1244311 => 10.476500440869767
+http://www.ranker.com/list/famous-children-of-addicts/celebrity-lists?ref=collections&pos=32&ltype=l&l=1248809&g=2&collectionId=1133 => 10.484195624506151
+http://www.ranker.com/list/famous-children-of-addicts/celebrity-lists?ref=collections&pos=32&ltype=l&l=2180249&g=2&collectionId=1133 => 10.484195624506151
+http://posts.people.com.cn/bbs_new/app/src/main/?action=list&bid=3617300 => 10.48477665982616
+http://www.ranker.com/list/best-mtv-original-shows/tvs-frank?ref=rltdlsts&pos=2&a=44&ltype=l&l=1521150&g=2 => 10.488538867270483
+http://www.ranker.com/list/celebrities-charged-with-homicide/celebrity-lists?ref=gnrtednxtlst&pos=1&ltype=l&l=1403938&g=2&a=0 => 10.495861281761933
+http://www.ranker.com/list/most-annoying-tv-hosts/tvs-frank?ref=rltdlsts&pos=9&a=22&ltype=l&l=940578&g=2 => 10.536669749079003
+http://www.ranker.com/list/mtv-video-music-award-for-best-hip-hop-video-nominees-list/reference?ref=fact_based&pos=&a=0&lt=n&l=1571392 => 10.58805720830708
+https://twitter.com/Reuters/status/870351500131704832 => 10.590230772967088
+http://www.ranker.com/list/obscure-40s-horror-movies-films/christopher-myers?ref=rltdlsts&pos=3&a=8&ltype=l&l=2503430&g=2 => 10.628578919500438
+http://www.ranker.com/list/mandy-moore-movies-and-films-and-filmography/reference?ref=text_rank&pos=24&a=0&ltype=n&l=2214947 => 10.658421709501361
+http://www.ranker.com/list/most-common-baby-names-for-twins/info-lists?ref=rltdlsts&pos=2&a=22&ltype=l&l=2101460&g=2 => 10.73180568792279
+http://www.ranker.com/list/most-common-baby-names-for-twins/info-lists?ref=rltdlsts&pos=6&a=12&ltype=l&l=505893&g=2 => 10.73180568792279
+https://en.wikipedia.org/wiki/Big_government => 10.731971004108686
+https://en.wikipedia.org/wiki/Lanfranc_of_Milan => 10.785586842386785
+https://en.wikipedia.org/wiki/William_James_Bennett => 10.790661244586277
+http://www.ranker.com/list/famous-people-named-olivia/reference?ref=also_ranked&pos=13&a=0&ltype=n&l=2205446&g=2 => 10.793505085974882
+http://www.biographyonline.net/scientists/michael-faraday.html => 10.806428209644922
+http://www.ranker.com/list/best-superman-costumes/ranker-comics?ref=text_rank&pos=17&a=0&ltype=n&l=1677048 => 10.848564500692094
+http://www.ranker.com/list/kanye-west-tattoos/tat-fancy?ref=collections&pos=6&ltype=l&l=526526&g=2&collectionId=732 => 10.890986445477326
+http://www.ranker.com/list/best-current-cbs-comedy-shows/ranker-tv?ref=rltdlsts&pos=8&a=12&ltype=l&l=1973888&g=2 => 10.905407843624637
+http://www.ranker.com/list/young-ashton-kutcher/cari-fortier?ref=collections&pos=109&ltype=l&l=2004723&g=2&collectionId=701 => 10.978095037291908
+http://www.ranker.com/list/famous-people-named-jill/reference?ref=rltdlsts&pos=5&a=8&ltype=l&l=2205485&g=2 => 11.010964844230575
+https://books.google.com.br/books?id=jUJGWwD-9x8C&source=gbs_navlinks_s => 11.161482816592269
+https://newtownbee.com/shirley-pitcher/ => 11.24709458413142
+http://www.ranker.com/review/paul-hogan/1768010?ref=name_1430428 => 11.269657481892532
+http://www.yidio.com/movie/how-to-deal/20687?utm_source=Ranker&utm_medium=Display&t_source=64&utm_campaign=moviebuttonROW&utm_term=103198 => 11.58335297212581
+http://target.georiot.com/Proxy.ashx?TSID=5036&GR_URL=http%3A%2F%2Fwww.amazon.com%2Fs%2Fref%3Das_li_ss_tl%3Ffield-keywords%3DWindsor+Premier+Scotch&amazon-ids-by-cc=US%3DRankerbutton2050-20 => 11.751721168704718
+http://target.georiot.com/Proxy.ashx?TSID=5036&GR_URL=http%3A%2F%2Fwww.amazon.com%2Fs%2Fref%3Das_li_ss_tl%3Ffield-keywords%3DWindsor+Premier+Scotch&amazon-ids-by-cc=US%3DRankernode2050-20 => 11.751721168704718
+http://www.yidio.com/movie/mac-and-me/10534?utm_source=Ranker&utm_medium=Display&t_source=64&utm_campaign=moviebuttonROW&utm_term=114258 => 12.04022685784501
+http://www.ranker.com/review/atlas-genius/77006068?ref=name_1407804 => 12.279797279213453
+http://en.wikipedia.org/wiki/Michael_Caine => 19.90218809406071
+http://en.wikipedia.org/wiki/Snapchat => 19.932816992073473
+https://en.wikipedia.org/wiki/Krypton_(comics) => 19.943974627420204
+https://en.wikipedia.org/wiki/Space_tourism => 19.971544630796917
+https://www.facebook.com/VintageLosAngeles/?hc_ref=PAGES_TIMELINE => 20.269649968549345
+http://www.ranker.com/list/best-michael-jackson-songs-of-all-time/voteable?ref=nodelyrel&pos=1&a=0&l=1182160&ltype=n&g=2 => 21.115224014987824
+http://www.ranker.com/list/best-michael-jackson-songs-of-all-time/voteable?ref=nodelyrel&pos=1&a=0&ltype=n&l=1182160&g=2 => 21.115224014987824
+http://www.yidio.com/movie/peter-pan/44856?utm_source=Ranker&utm_medium=Display&t_source=64&utm_campaign=moviebuttonROW&utm_term=685594 => 24.421386260384246
+http://en.wikipedia.org/wiki/Diane_Lane => 30.018061872130996
+http://en.wikipedia.org/wiki/Michael_Vick => 39.722617234029805
+http://en.wikipedia.org/wiki/Samuel_L._Jackson => 39.837578490525495
+http://www.yidio.com/movie/the+godfather/4439?utm_source=Ranker&utm_medium=Display&t_source=64&utm_campaign=moviebuttonROW&utm_term=1064010 => 44.35057638343028
+http://www.yidio.com/movie/the-godfather/4439?utm_source=Ranker&utm_medium=Display&t_source=64&utm_campaign=moviebutton&utm_term=2472947 => 44.35057638343028
+http://www.ranker.com/review/michael-caine/142249?ref=name_504946 => 61.00946205438746
+http://www.ranker.com/review/michael-caine/142249?ref=name_1871396 => 61.01058321981924
+http://www.ranker.com/review/mike-myers/1586135?ref=name_1752553 => 61.82104457269581
+http://www.ranker.com/review/michael-palin/1575730 => 65.38108423235698
+http://www.ranker.com/review/michael-scott/1576309?ref=name_531165 => 65.38108423235698
+http://en.wikipedia.org/wiki/Kirk_Douglas => 79.51117679062817
+http://www.yidio.com/movie/my-best-friends-wedding/15544?utm_source=Ranker&utm_medium=Display&t_source=64&utm_campaign=moviebuttonROW&utm_term=1433797 => 147.6650846745944
+http://en.wikipedia.org/wiki/The_Jackson_5 => 270.2976449481673
+========================
+phelps
+64b7eeabdc3ba950f032d1c6bf8c9f0ec9682134
+PRINTMAP phelps
+http://dgmweb.net/Census/Ely/NE/ElyCenTime-NE.html => 17.929702785072347
+========================
+michael phelps
+0d5479090f6588d33681527a9d776a97ae25ae1b
+Michael Fred Phelps II (born June 30, 1985) is an American competition swimmer and the most decorated Olympian of all time, with a total of 22 medals in three Olympiads. Phelps also holds the all-time records for Olympic gold medals (18, double the second highest record holders), Olympic gold medals in individual events (11), and Olympic medals in individual events for a male (13). In winning eight gold medals at the 2008 Beijing Games, Phelps took the record away from fellow swimmer Mark Spitz (7) for the most first-place finishes at any single Olympic Games. Five of those victories were in individual events, tying the single Games record. In the 2012 Summer Olympics in London, Phelps won four golds and two silver medals, making him the most successful athlete of the Games for the third O
+PRINTMAP michael phelps
+http://www.biographyonline.net/sport/100-sporting-personalities.html => 13.342387294277726
+http://www.ranker.com/list/athletes-who-lost-endorsements/anncasano?ref=collections&pos=37&ltype=l&l=2180259&g=2&collectionId=1206 => 13.750176836558879
+http://www.ranker.com/list/athletes-who-lost-endorsements/anncasano?ref=collections&pos=37&ltype=l&l=2293339&g=2&collectionId=1206 => 13.750176836558879
+http://www.thewrap.com/tag/ll_cool_j/ => 13.80837895558655
+http://www.ranker.com/list/athletes-who-should-get-a-reality-show/the-round-mound?ref=also_ranked&pos=1&a=0&ltype=l&l=524845&g=1 => 13.916401008314066
+http://www.ranker.com/list/ironic-hypothetical-celebrity-deaths/jacob-shelton?ref=also_ranked&pos=41&a=0&ltype=n&l=2141006&g=2 => 14.032895003957021
+http://www.ranker.com/list/ironic-hypothetical-celebrity-deaths/jacob-shelton?ref=text_rank&pos=13&a=0&ltype=n&l=713181 => 14.032895003957021
+http://www.ranker.com/list/the-worst-snl-hosts-of-all-time/videoport-jones?ref=collections&pos=30&ltype=l&l=839660&g=2&collectionId=384 => 14.379463437306216
+http://www.ranker.com/review/lily-donaldson/1448467?ref=name_2187677 => 15.616059253422874
+http://www.ranker.com/list/athletes-who-were-bullied/people-in-sports?ref=rltdlsts&pos=17&a=10&ltype=l&l=2390402&g=2 => 42.04093078929035
+========================

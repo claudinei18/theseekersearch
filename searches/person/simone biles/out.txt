@@ -1,0 +1,19 @@
+simone
+39257e03d854a74a914e315ac0467ffefb88a0e6
+PRINTMAP simone
+http://en.wikipedia.org/wiki/Gattaca => 13.844476233317112
+https://www.amazon.com/s/ref=nb_sb_noss?tag=Rankerbutton1515-20&url=search-alias%3ddvd&field-keywords=Ghost+Story => 13.980707822674857
+http://nflrush.com/?campaign=NFL_footer => 14.119843054820409
+http://www.ranker.com/review/leaving-las-vegas/1426543?ref=name_1366678 => 14.530996722204511
+http://www.ranker.com/review/claudia-cardinale/743538?ref=name_613013 => 15.136407439966927
+http://www.ranker.com/review/simone-signoret/2034109?ref=name_503026 => 15.449611420827537
+https://www.yidio.com/show/damien => 76.50143585967494
+========================
+simone biles
+cb00cd1a83e9182528d569aaee336e2731c76ddf
+PRINTMAP simone biles
+http://www.ranker.com/list/celebrity-couples-we-are-rooting-for/jessica-lawshe?ref=also_ranked&pos=1&a=0&ltype=l&l=534663&g=1 => 15.286345609110459
+http://www.ranker.com/list/celebrity-couples-we-are-rooting-for/jessica-lawshe?ref=also_ranked&pos=13&a=0&ltype=np&l=2228783&g=2 => 15.286659424018746
+http://www.ranker.com/list/famous-people-who-went-to-prep-school/celebrity-lists?ref=also_ranked&pos=40&a=0&ltype=n&l=1684503&g=2 => 15.46927039952959
+http://www.ranker.com/list/kanye-west-tattoos/tat-fancy?ref=collections&pos=6&ltype=l&l=526526&g=2&collectionId=732 => 15.749669558332442
+========================

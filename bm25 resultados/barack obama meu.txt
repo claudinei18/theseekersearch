@@ -1,0 +1,20 @@
+Key : https://en.wikipedia.org/wiki/q:Special:Search/Barack_Obama and Value: 217.89598117546302
+Key : https://en.wikipedia.org/wiki/Barack_Obama and Value: 141.84829465875399
+Key : https://en.wikipedia.org/wiki/Presidency_of_Barack_Obama and Value: 126.58916894503676 
+Key : http://www.barackobama.com and Value: 48.53068080901418 
+Key : https://en.wikipedia.org/wiki/Barack_Obama and Value: 21.095605284194278 
+Key : http://www.biographyonline.net/people/famous-black-people-changed-world.html and Value: 19.77405872169161 
+Key : http://www.ranker.com/list/the-very-best-of-the-bad-luck-brian-meme/robert-wabash?ref=rltdlsts&pos=16&a=16&ltype=l&l=688693&g=2 and Value: 19.56048899895974 
+Key : http://www.ranker.com/list/mk-ultra-victims/jacob-shelton?ref=text_rank&pos=22&a=0&ltype=n&l=1588503 and Value: 19.275962341923712 
+Key : http://www.amazon.co.uk/exec/obidos/ASIN/0813344808/richardpettin-21 and Value: 10.847647446778984 
+Key : http://www.amazon.com/exec/obidos/ASIN/0813344808/richard06-20 and Value: 10.675190460582302 
+Key : http://www.biographyonline.net/politicians/african/changed-world.html and Value: 9.716524323415623 
+Key : http://www.ranker.com/list/famous-methodists/celebrity-lists?ref=also_ranked&pos=14&a=0&ltype=n&l=2463540&g=2 and Value: 9.644152705097667 
+Key : http://www.biographyonline.net/politicians/american/abraham-lincon.html and Value: 9.498688734904626 
+Key : http://www.ranker.com/review/sarah-jessica-parker/1978278?ref=name_1046365 and Value: 9.341460104828409 
+Key : http://www.ranker.com/review/will-smith/2399718?ref=name_1769469 and Value: 9.293785525667339 
+Key : http://www.ranker.com/review/tom-hanks/2258001?ref=name_894906 and Value: 9.293504889180335 
+Key : http://www.ranker.com/review/tom-hanks/2258001?ref=name_1769469 and Value: 9.293504889180335 
+Key : http://www.ranker.com/review/tom-hanks/2258001?ref=name_940578 and Value: 9.293504889180335 
+
+  
