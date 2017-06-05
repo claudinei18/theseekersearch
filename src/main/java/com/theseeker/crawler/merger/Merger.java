@@ -32,6 +32,7 @@ public class Merger {
             if (!(seenURLDAO.exists(e.toString()))) {
                 int peso = 0;
                 String url = e.toString();
+
                 if (url.startsWith("https://en.wikipedia.org/wiki/")) {
                     peso = 10;
                 } else if (url.startsWith("https://en.wikipedia.org/w")) {

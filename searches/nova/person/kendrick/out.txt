@@ -1,0 +1,43 @@
+kendrick
+6d7638a02656ccce9e7663886b897a8c9fe9eb83
+PRINTMAP kendrick
+kendrick => 0.0
+========================
+lamar
+5e5b49651ffbecc70d797ac967f70578de06c243
+PRINTMAP lamar
+http://www.ranker.com/review/kris-jenner/11220195?ref=name_2221476 => 15.313066545841174
+http://www.ranker.com/list/famous-people-who-majored-in-law/reference?ref=fact_based&pos=&a=0&lt=n&l=988922 => 15.4513162911198
+https://www.amazon.com/A-Thailand-Vacation-Pt-3/dp/B00HXT6C7Q/ref=sr_1_2/137-2380361-3623900?ie=UTF8&qid=1496383337&sr=8-2&keywords=A+Trip+to+the+Orphanage#customerReviews => 74.86563575007864
+========================
+kendrick lamar
+1e1e59fb99406843a91c45daf8eb7fbf380d1f83
+PRINTMAP kendrick lamar
+https://www.amazon.com/Brake-Padz-feat-Twizz-Explicit/dp/B01932O7CW/ref=sr_1_16/130-9797512-9292907?ie=UTF8&qid=1496377111&sr=8-16&keywords=Padz => 13.536594919917446
+https://www.amazon.com/Piano-Padz-feat-Edward-Allen/dp/B06XHTMLW7/ref=sr_1_6/130-9797512-9292907?ie=UTF8&qid=1496377111&sr=8-6&keywords=Padz => 13.563810237113879
+http://www.ranker.com/list/best-job-quitting-songs/jacob-shelton?ref=rltdlsts&pos=9&a=34&ltype=l&l=688693&g=2 => 13.578461361412405
+http://www.ranker.com/list/best-job-quitting-songs/jacob-shelton?ref=rltdlsts&pos=12&a=34&ltype=l&l=126403&g=2 => 13.584234828293058
+http://mediadecoder.blogs.nytimes.com/ => 13.59884353361352
+http://www.ranker.com/list/1989-taylor-swift-tour-guests/jacob-shelton?ref=nodelyrel&pos=2&a=0&l=2187677&ltype=n&g=2 => 13.907345400500036
+https://www.amazon.com/gp/bestsellers/music/30/ref=pd_zg_hrsr_m_2_2/141-8132302-4434925 => 14.041504087591415
+https://www.amazon.com/gp/bestsellers/dmusic/digital-music-track/ref=pd_dp_ts_dmusic_1/143-6312272-7549403 => 14.143646204267396
+http://www.huffingtonpost.com/news/celebrity-homes/ => 15.450350759190574
+https://www.youtube.com/results?gl=SG&tab=p1 => 26.201593959574804
+http://www.vibe.com/ => 26.789753148682653
+http://www.ranker.com/list/best-hip-hop-songs-2014/ranker-hip-hop?ref=gnrtedprvlst&pos=1&ltype=l&l=826860&g=2&a=0 => 41.44638378034974
+========================
+
+RESULTADO
+https://www.amazon.com/A-Thailand-Vacation-Pt-3/dp/B00HXT6C7Q/ref=sr_1_2/137-2380361-3623900?ie=UTF8&qid=1496383337&sr=8-2&keywords=A+Trip+to+the+Orphanage#customerReviews => 74.86563575007864
+http://www.ranker.com/list/best-hip-hop-songs-2014/ranker-hip-hop?ref=gnrtedprvlst&pos=1&ltype=l&l=826860&g=2&a=0 => 41.44638378034974
+http://www.vibe.com/ => 26.789753148682653
+https://www.youtube.com/results?gl=SG&tab=p1 => 26.201593959574804
+http://www.huffingtonpost.com/news/celebrity-homes/ => 15.450350759190574
+http://www.ranker.com/list/famous-people-who-majored-in-law/reference?ref=fact_based&pos=&a=0&lt=n&l=988922 => 15.4513162911198
+http://www.ranker.com/review/kris-jenner/11220195?ref=name_2221476 => 15.313066545841174
+https://www.amazon.com/gp/bestsellers/dmusic/digital-music-track/ref=pd_dp_ts_dmusic_1/143-6312272-7549403 => 14.143646204267396
+https://www.amazon.com/gp/bestsellers/music/30/ref=pd_zg_hrsr_m_2_2/141-8132302-4434925 => 14.041504087591415
+http://www.ranker.com/list/1989-taylor-swift-tour-guests/jacob-shelton?ref=nodelyrel&pos=2&a=0&l=2187677&ltype=n&g=2 => 13.907345400500036
+
+
+

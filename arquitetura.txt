@@ -1,0 +1,78 @@
+Initialize
+Verfica toda vez que a aplicação inicia as SEEDS, se existe algo na SEED que não está em seenURL e não está no ORDERED, então insere no ORDERED
+
+DNS
+Uma thread lendo do ordered e fazendo DNS
+
+Uma thread lendo do DNS e vefificando se o tempo é maior ou igual a 30 segundos
+
+ROBOTS
+Uma thread verificando do DNS quais estão SEM robots e baixando
+
+CRAWLER
+Dispatcher
+	Recupera da queedURL e manda para o Fetcher e depois insere no seenURL
+	
+Fetcher
+	Coleta o conteudo da pagina, e se a pagina for da dbpedia, insere no arquivo, senao apenas pega o conteudo da pagina
+	
+Writer
+	insere no banco de dados na tabela FetchedPages
+	
+Reader
+	Fica lendo da tabela FetchedPages e envia para o Parser
+	
+Parser
+	Extrai os links de cada pagina e extrai o conteudo textual de cada pagina
+	Os links envia para o URLMANAGER
+	
+	O conteudo textual envia para o FILTER
+	
+URLMANAGER
+	Pega a lista de urls e envia para o merger
+	
+MERGER
+  if (url.startsWith("https://en.wikipedia.org/wiki/")) {
+            peso = 10;
+	} else if (url.startsWith("https://en.wikipedia.org/w")) {
+            peso = 9;
+        }
+        
+        E insere no ORDERED URL
+        
+FILTER
+	Insere na tabela PAGES
+	
+INDEXER
+Dispatcher
+	Lê do banco de dados da tabela PAGES
+	Envia para o parser
+	
+Parser
+	Consulta o WATSON
+	Insere no vocabulario
+	Se o termo nao existir
+		Salva:
+			TERMO
+			LINK DE DESAMBIGUACAO
+			TIPO
+			LINK
+			CONTADOR
+			RELEVANCIA
+	Se o termo existir, apenda as informações
+		Apenda:
+			LINK
+			CONTADOR
+			RELEVANCIA
+
+	Se a pagina contem algum termo que seja PERSON ou LOCATION ou GeographicFeature
+	Salva a pagina:
+		Salva:
+			DATA
+			TAMANHO DA PAGINA
+			LINK
+			CONTEUDO
+			
+	
+
+

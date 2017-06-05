@@ -189,7 +189,7 @@ public class DispatcherOfFetcher {
                         executorService.submit(new Runnable() {
                             public void run() {
                                 // some code to run in parallel
-//                            System.out.println("DISPATCHER PROCESSANDO: " + qurl.getDominio());
+//                            System.out.println("DISPATCHER PROCESSANDO: " + qurl.getDominio());7
                                 fetcher.start(qurl);
 
                                 seenURL sl = new seenURL(qurl.getDominio(), qurl.getIp());

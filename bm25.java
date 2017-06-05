@@ -147,7 +147,22 @@ public class bm25 {
     }
 
     public static void main(String[] args){
-        teste("atlanta");
+/*
+Albert Einsten
+Cristiano Ronaldo
+Justin Bieber
+Donald Trump
+Kendrick Lamar
+*/
+/*
+New York City
+Washington
+London
+Hong Kong
+Thailand
+*/
+        //teste("thailand");
+        System.out.println(getFileName("cristiano ronaldo"));
         /*
         teste("barack obama sr");
         teste("china");

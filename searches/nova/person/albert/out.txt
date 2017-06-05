@@ -1,0 +1,36 @@
+albert
+7aa129f67fde68c6d88aa58b8b8c5c28eb7dd3a3
+PRINTMAP albert
+http://dgmweb.net/FGS/F/FrenchSimonH-MaryClark.html => 13.415935914051127
+http://www.ranker.com/list/things-in-queen-victoria-s-coffin/cheryl-adams-richkoff?ref=rltdlsts&pos=7&a=8&ltype=l&l=1871392&g=2 => 13.428700205680894
+http://www.ranker.com/list/famous-people-from-new-jersey/reference?ref=fact_based&pos=&a=0&lt=n&l=1573488 => 13.474072630831241
+http://www.ranker.com/list/famous-people-whose-last-name-is-lane/chris-abraham?ref=also_ranked&pos=15&a=0&ltype=n&l=2320596&g=2 => 13.538437935239633
+http://www.today.com/pets => 13.566634130877306
+http://www.ranker.com/list/famous-people-from-belize/reference?ref=rltdlsts&pos=9&a=19&ltype=l&l=991487&g=2 => 13.611265687322657
+http://www.biographyonline.net/actors/marilyn-monroe => 13.757735851237932
+http://www.biographyonline.net/actors/marilyn-monroe.html => 13.757735851237932
+https://en.wikipedia.org/wiki/Israel => 26.19252551931508
+http://www.biographyonline.net/scientists/albert-einstein.html => 27.080476658492923
+========================
+einsten
+bd4c9d836f7c4aa5cdcaace7fb91f0c1ee0258e2
+PRINTMAP einsten
+einsten => 0.0
+========================
+albert einsten
+4ab8030a14d0ca8a292855d051777f60506e5f08
+PRINTMAP albert einsten
+albert einsten => 0.0
+========================
+
+RESULTADO
+
+http://www.biographyonline.net/scientists/albert-einstein.html => 27.080476658492923
+https://en.wikipedia.org/wiki/Israel => 26.19252551931508
+http://www.biographyonline.net/actors/marilyn-monroe.html => 13.757735851237932
+http://www.biographyonline.net/actors/marilyn-monroe => 13.757735851237932
+http://www.ranker.com/list/famous-people-from-belize/reference?ref=rltdlsts&pos=9&a=19&ltype=l&l=991487&g=2 => 13.611265687322657
+http://www.today.com/pets => 13.566634130877306
+http://www.ranker.com/list/famous-people-whose-last-name-is-lane/chris-abraham?ref=also_ranked&pos=15&a=0&ltype=n&l=2320596&g=2 => 13.538437935239633
+http://www.ranker.com/list/famous-people-from-new-jersey/reference?ref=fact_based&pos=&a=0&lt=n&l=1573488 => 13.474072630831241
+http://www.ranker.com/list/things-in-queen-victoria-s-coffin/cheryl-adams-richkoff?ref=rltdlsts&pos=7&a=8&ltype=l&l=1871392&g=2 => 13.428700205680894
