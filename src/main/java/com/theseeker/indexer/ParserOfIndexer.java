@@ -262,10 +262,11 @@ public class ParserOfIndexer {
                     bw = new BufferedWriter(fw);
 
                     String conteudo = "";
+                    conteudo += page.getTitulo() + "\n";
+                    conteudo += page.getDominio() + "\n";
                     Date date = new Date();
                     conteudo += date.toString() + "\n";
                     conteudo += page.getConteudo().length() + "\n";
-                    conteudo += page.getDominio() + "\n";
                     conteudo += page.getConteudo() + "\n";
 
                     antes = System.currentTimeMillis();

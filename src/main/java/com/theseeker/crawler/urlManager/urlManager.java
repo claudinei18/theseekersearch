@@ -105,7 +105,14 @@ public class urlManager {
         }*/
 
         for (Object element : urls) {
-            if (element != null) {/*
+            if (element != null) {
+                String s = element.toString();
+                if(s.contains("#")){
+                    String[] aux = s.split("#");
+                    element = aux[0];
+                }
+
+                /*
                 if(countLinksOff > 50){
                     break;
                 }*/
